@@ -401,11 +401,11 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Clickable overlay for video - captures all clicks */}
+      {/* Clickable overlay for video - captures clicks except nav area on right */}
       <div
         ref={videoAreaRef}
-        className="fixed inset-0 z-10 cursor-none md:cursor-none"
-        style={{ cursor: isMobile ? 'pointer' : 'none' }}
+        className="fixed top-0 left-0 bottom-0 z-10 cursor-none md:cursor-none"
+        style={{ cursor: isMobile ? 'pointer' : 'none', right: '80px' }}
         onMouseMove={handleMouseMove}
         onMouseEnter={handleMouseEnterVideo}
         onMouseLeave={handleMouseLeaveVideo}
