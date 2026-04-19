@@ -30,25 +30,29 @@ export function ProjectNav({
             : currentIndex === index
           const isHovered = hoveredIndex === index
           
+          const displayName = project.title || project.client
+          
           return (
             <button
-              key={project.id}
+              key={project.id || `project-${index}`}
               className="group flex items-center gap-4 transition-all duration-300"
               onMouseEnter={() => onHover(index)}
               onMouseLeave={() => onHover(null)}
               onClick={() => onClick(index)}
-              aria-label={project.title || project.client || `Project ${index + 1}`}
+              aria-label={displayName || `Project ${index + 1}`}
             >
-              {/* Project title - appears on hover */}
-              <span 
-                className={`text-[11px] font-light uppercase tracking-[0.2em] text-right whitespace-nowrap transition-all duration-300 ${
-                  isHovered 
-                    ? "opacity-100 translate-x-0" 
-                    : "opacity-0 translate-x-4 pointer-events-none"
-                }`}
-              >
-                {project.title || project.client || `Project ${index + 1}`}
-              </span>
+              {/* Project title - appears on hover, only if there's a name */}
+              {displayName && (
+                <span 
+                  className={`text-[11px] font-light uppercase tracking-[0.2em] text-right whitespace-nowrap transition-all duration-300 ${
+                    isHovered 
+                      ? "opacity-100 translate-x-0" 
+                      : "opacity-0 translate-x-4 pointer-events-none"
+                  }`}
+                >
+                  {displayName}
+                </span>
+              )}
               
               {/* Horizontal dash line */}
               <div 
