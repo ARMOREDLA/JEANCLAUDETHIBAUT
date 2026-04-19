@@ -167,12 +167,16 @@ export default function Home() {
     setProgress(0)
   }, [])
 
-  const handleModalPrev = useCallback(() => {
-    setModalVideoIndex((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length)
+const handleModalPrev = useCallback(() => {
+  setModalVideoIndex((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length)
+  setIsMuted(false)
+  setProgress(0)
   }, [filteredProjects.length])
-
+  
   const handleModalNext = useCallback(() => {
-    setModalVideoIndex((prev) => (prev + 1) % filteredProjects.length)
+  setModalVideoIndex((prev) => (prev + 1) % filteredProjects.length)
+  setIsMuted(false)
+  setProgress(0)
   }, [filteredProjects.length])
 
   const handleClosePhotoModal = useCallback(() => {
