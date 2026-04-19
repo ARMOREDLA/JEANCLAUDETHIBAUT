@@ -45,19 +45,19 @@ const projects: Project[] = [
   { id: "9", title: "BLUE SERUM - LIU WEN", client: "CHANEL", vimeoId: "258186791", category: "film" },
   { id: "5", title: "VIII", client: "DIOR", vimeoId: "794239674", category: "film" },
   // Photo projects
-  { id: "p1", title: "", client: "EDITORIAL", imageUrl: "https://drive.google.com/file/d/1lHVls4Z5YVC9utIsi2C1l-Oml6KAq5lO/view?usp=share_link", category: "photo" },
-  { id: "p2", title: "", client: "AT LARGE Magazine", imageUrl: "https://drive.google.com/file/d/1mqUKGNTViuVZyupQg7cwxE8wJ8Z7-Lpy/view?usp=share_link", category: "photo" },
-  { id: "p3", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1j1ag9ga5RFul5aHDieeeuV5Lq8X0HM8c/view?usp=share_link", category: "photo" },
-  { id: "p4", title: "INTUITION", client: "ARAMIS", imageUrl: "https://drive.google.com/file/d/15OQJfRWsY0bIOX6UejBSm-ZkkF0vD8uQ/view?usp=share_link", category: "photo" },
-  { id: "p5", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1Ws9d3HNIht2dn0UVMkwUEu0HJqefmjL9/view?usp=share_link", category: "photo" },
-  { id: "p6", title: "", client: "ESTÉE LAUDER", imageUrl: "https://drive.google.com/file/d/1iz2RKVJGWxVMxHn7ZZp-XTp7mlAG5hK9/view?usp=share_link", category: "photo" },
-  { id: "p7", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1dSTXYWxDqSkRniRdg_7MJhhsdiMKKeWp/view?usp=share_link", category: "photo" },
-  { id: "p8", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1mCbhZh-wlS7Z2QtzmEyivl3s4-QndL9Y/view?usp=share_link", category: "photo" },
-  { id: "p9", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1-Rc5VbDz9Sc0h5Mdmz5sLPgcQXuE0bpe/view?usp=share_link", category: "photo" },
-  { id: "p10", title: "", client: "", imageUrl: "https://drive.google.com/file/d/12p0-Ykp337COjRfcdD8lrNc6FGSSpUWc/view?usp=share_link", category: "photo" },
-  { id: "p11", title: "", client: "ESTÉE LAUDER", imageUrl: "https://drive.google.com/file/d/1ux8X7Kz1s5F7bV4OwOABC1zCAY7CuY6x/view?usp=share_link", category: "photo" },
-  { id: "p12", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1O9PsoCEuKypnIoqdh7AHWcypWcHBhk-2/view?usp=share_link", category: "photo" },
-  { id: "p13", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1hYG5D4I9yuyGMXpvUOLgM73wBivmSPM1/view?usp=share_link", category: "photo" },
+  { id: "", title: "", client: "EDITORIAL", imageUrl: "https://drive.google.com/file/d/1lHVls4Z5YVC9utIsi2C1l-Oml6KAq5lO/view?usp=share_link", category: "photo" },
+  { id: "", title: "", client: "AT LARGE Magazine", imageUrl: "https://drive.google.com/file/d/1mqUKGNTViuVZyupQg7cwxE8wJ8Z7-Lpy/view?usp=share_link", category: "photo" },
+  { id: "", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1j1ag9ga5RFul5aHDieeeuV5Lq8X0HM8c/view?usp=share_link", category: "photo" },
+  { id: "", title: "INTUITION", client: "ARAMIS", imageUrl: "https://drive.google.com/file/d/15OQJfRWsY0bIOX6UejBSm-ZkkF0vD8uQ/view?usp=share_link", category: "photo" },
+  { id: "", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1Ws9d3HNIht2dn0UVMkwUEu0HJqefmjL9/view?usp=share_link", category: "photo" },
+  { id: "", title: "", client: "ESTÉE LAUDER", imageUrl: "https://drive.google.com/file/d/1iz2RKVJGWxVMxHn7ZZp-XTp7mlAG5hK9/view?usp=share_link", category: "photo" },
+  { id: "", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1dSTXYWxDqSkRniRdg_7MJhhsdiMKKeWp/view?usp=share_link", category: "photo" },
+  { id: "", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1mCbhZh-wlS7Z2QtzmEyivl3s4-QndL9Y/view?usp=share_link", category: "photo" },
+  { id: "", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1-Rc5VbDz9Sc0h5Mdmz5sLPgcQXuE0bpe/view?usp=share_link", category: "photo" },
+  { id: "", title: "", client: "", imageUrl: "https://drive.google.com/file/d/12p0-Ykp337COjRfcdD8lrNc6FGSSpUWc/view?usp=share_link", category: "photo" },
+  { id: "", title: "", client: "ESTÉE LAUDER", imageUrl: "https://drive.google.com/file/d/1ux8X7Kz1s5F7bV4OwOABC1zCAY7CuY6x/view?usp=share_link", category: "photo" },
+  { id: "", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1O9PsoCEuKypnIoqdh7AHWcypWcHBhk-2/view?usp=share_link", category: "photo" },
+  { id: "", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1hYG5D4I9yuyGMXpvUOLgM73wBivmSPM1/view?usp=share_link", category: "photo" },
 ]
 
 export default function Home() {
@@ -168,16 +168,16 @@ export default function Home() {
     setProgress(0)
   }, [])
 
-const handleModalPrev = useCallback(() => {
-  setModalVideoIndex((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length)
-  setIsMuted(false)
-  setProgress(0)
+  const handleModalPrev = useCallback(() => {
+    setModalVideoIndex((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length)
+    setIsMuted(false)
+    setProgress(0)
   }, [filteredProjects.length])
-  
+
   const handleModalNext = useCallback(() => {
-  setModalVideoIndex((prev) => (prev + 1) % filteredProjects.length)
-  setIsMuted(false)
-  setProgress(0)
+    setModalVideoIndex((prev) => (prev + 1) % filteredProjects.length)
+    setIsMuted(false)
+    setProgress(0)
   }, [filteredProjects.length])
 
   const handleClosePhotoModal = useCallback(() => {
@@ -326,7 +326,7 @@ const handleModalPrev = useCallback(() => {
               const totalProjects = filteredProjects.length
               const prevIndex = (activeIndex - 1 + totalProjects) % totalProjects
               const nextIndex = (activeIndex + 1) % totalProjects
-              
+
               // Only render active video, previous, and next (for preloading)
               const shouldRender = isActive || index === prevIndex || index === nextIndex
               if (!shouldRender) return null
@@ -338,7 +338,7 @@ const handleModalPrev = useCallback(() => {
               // Use 9:16 sizing for vertical videos on mobile, otherwise use appropriate aspect ratio
               let videoWidth: string
               let videoHeight: string
-              
+
               if (useVertical) {
                 // 9:16 vertical video sizing
                 videoWidth = 'max(56.25vh, 100vw)'
