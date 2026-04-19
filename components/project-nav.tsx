@@ -35,10 +35,20 @@ export function ProjectNav({
           return (
             <button
               key={project.id || `project-${index}`}
-              className="group flex items-center gap-4 transition-all duration-300"
-              onMouseEnter={() => onHover(index)}
-              onMouseLeave={() => onHover(null)}
-              onClick={() => onClick(index)}
+              className="group flex items-center justify-end gap-4 transition-all duration-300 min-h-[24px] min-w-[60px] py-1 cursor-pointer"
+              onMouseEnter={() => {
+                console.log("[v0] Mouse enter on index:", index)
+                onHover(index)
+              }}
+              onMouseLeave={() => {
+                console.log("[v0] Mouse leave")
+                onHover(null)
+              }}
+              onClick={(e) => {
+                e.stopPropagation()
+                console.log("[v0] Click on index:", index)
+                onClick(index)
+              }}
               aria-label={displayName || `Project ${index + 1}`}
             >
               {/* Project title - appears on hover, only if there's a name */}
