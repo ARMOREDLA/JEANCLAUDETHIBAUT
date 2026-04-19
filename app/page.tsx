@@ -432,15 +432,13 @@ export default function Home() {
       </div>
 
       {/* Project Navigation - Right side with horizontal dashes */}
-      <div className="relative z-50">
-        <ProjectNav
-          projects={filteredProjects}
-          currentIndex={currentIndex}
-          hoveredIndex={hoveredIndex}
-          onHover={handleProjectHover}
-          onClick={handleProjectClick}
-        />
-      </div>
+      <ProjectNav
+        projects={filteredProjects}
+        currentIndex={currentIndex}
+        hoveredIndex={hoveredIndex}
+        onHover={handleProjectHover}
+        onClick={handleProjectClick}
+      />
 
       {/* Footer */}
       <div className="relative z-50">

@@ -22,7 +22,7 @@ export function ProjectNav({
   onClick 
 }: ProjectNavProps) {
   return (
-    <div className="fixed right-5 md:right-8 top-1/2 -translate-y-1/2 z-40">
+    <div className="fixed right-5 md:right-8 top-1/2 -translate-y-1/2 z-50">
       <nav className="flex flex-col items-end gap-6">
         {projects.map((project, index) => {
           const isActive = hoveredIndex !== null 
