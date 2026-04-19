@@ -65,7 +65,6 @@ export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [isInfoOpen, setIsInfoOpen] = useState(false)
-  const [otherVideosLoaded, setOtherVideosLoaded] = useState(false)
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false)
   const [modalVideoIndex, setModalVideoIndex] = useState(0)
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false)
@@ -283,13 +282,7 @@ const handleModalPrev = useCallback(() => {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [isVideoModalOpen, isPhotoModalOpen, filteredProjects.length])
 
-  // Load other videos after first video has had time to buffer
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setOtherVideosLoaded(true)
-    }, 2000)
-    return () => clearTimeout(timer)
-  }, [])
+
 
   // Auto-rotating reel - every 5 seconds
   useEffect(() => {
@@ -325,12 +318,18 @@ const handleModalPrev = useCallback(() => {
       <div className="fixed inset-0 w-full h-full z-0">
         <div className="absolute inset-0" style={{ overflow: 'hidden' }}>
           {activeCategory === "film" ? (
-            // Video backgrounds for film
+            // Video backgrounds for film - only load active, prev, and next videos
             filteredProjects.map((project, index) => {
-              if (index > 0 && !otherVideosLoaded) return null
               if (!project.vimeoId) return null
 
               const isActive = activeIndex === index
+              const totalProjects = filteredProjects.length
+              const prevIndex = (activeIndex - 1 + totalProjects) % totalProjects
+              const nextIndex = (activeIndex + 1) % totalProjects
+              
+              // Only render active video, previous, and next (for preloading)
+              const shouldRender = isActive || index === prevIndex || index === nextIndex
+              if (!shouldRender) return null
 
               // Use vertical video ID on mobile if available
               const useVertical = isMobile && project.verticalVimeoId
@@ -356,7 +355,7 @@ const handleModalPrev = useCallback(() => {
                   key={`${project.id}-${activeCategory}-${isMobile ? 'mobile' : 'desktop'}`}
                   src={`https://player.vimeo.com/video/${videoId}?background=1&autoplay=1&loop=1&muted=1&controls=0&title=0&byline=0&portrait=0&sidedock=0&playsinline=1&dnt=1&quality=auto`}
                   className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-500 pointer-events-none"
-                  loading={index === 0 ? "eager" : "lazy"}
+                  loading={isActive ? "eager" : "lazy"}
                   style={{
                     opacity: isActive ? 1 : 0,
                     border: 'none',
