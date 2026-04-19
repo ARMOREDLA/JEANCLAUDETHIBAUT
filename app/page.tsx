@@ -323,8 +323,8 @@ export default function Home() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-background">
       {/* Fullscreen Background - Video or Photo */}
-      <div className="fixed inset-0 w-full h-full z-0">
-        <div className="absolute inset-0" style={{ overflow: 'hidden' }}>
+      <div className="fixed inset-0 w-full h-full z-0 bg-black">
+        <div className="absolute inset-0 bg-black" style={{ overflow: 'hidden' }}>
           {activeCategory === "film" ? (
             // Video backgrounds for film - only load active, prev, and next videos
             filteredProjects.map((project, index) => {
