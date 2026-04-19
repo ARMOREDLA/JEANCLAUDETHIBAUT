@@ -42,7 +42,7 @@ const projects: Project[] = [
   { id: "6", title: "THE INVITATION", client: "S9 HUAWEI", vimeoId: "1031749834", category: "film" },
   { id: "7", title: "THE ONE AND ONLY", client: "BLENDER'S PRIDE", vimeoId: "1169793531", category: "film", aspectRatio: "16:9" },
   { id: "8", title: "AT LARGE", client: "MAGAZINE", vimeoId: "1182293334", verticalVimeoId: "1183821352", category: "film" },
-  { id: "3", title: "BLUE SERUM - LIU WEN", client: "CHANEL", vimeoId: "258186791", category: "film" },
+  { id: "9", title: "BLUE SERUM - LIU WEN", client: "CHANEL", vimeoId: "258186791", category: "film" },
   { id: "5", title: "VIII", client: "DIOR", vimeoId: "794239674", category: "film" },
   // Photo projects
   { id: "p1", title: "", client: "EDITORIAL", imageUrl: "https://drive.google.com/file/d/1lHVls4Z5YVC9utIsi2C1l-Oml6KAq5lO/view?usp=share_link", category: "photo" },
