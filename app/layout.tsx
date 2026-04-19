@@ -17,7 +17,6 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'Jean Claude Thibaut | Director & Cinematographer',
   description: 'Personal portfolio of Jean Claude Thibaut - Director, Cinematographer, and Visual Storyteller',
-  generator: 'v0.app',
   icons: {
     icon: [
       {
@@ -34,6 +33,25 @@ export const metadata: Metadata = {
       },
     ],
     apple: '/apple-icon.png',
+  },
+  openGraph: {
+    title: 'Jean Claude Thibaut | Director & Cinematographer',
+    description: 'Personal portfolio of Jean Claude Thibaut - Director, Cinematographer, and Visual Storyteller',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 400,
+        height: 400,
+        alt: 'Armored Pictures',
+      },
+    ],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Jean Claude Thibaut | Director & Cinematographer',
+    description: 'Personal portfolio of Jean Claude Thibaut - Director, Cinematographer, and Visual Storyteller',
+    images: ['/og-image.jpg'],
   },
 }
 
