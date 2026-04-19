@@ -122,9 +122,11 @@ export default function Home() {
       modalPlayerRef.current.on('play', () => setIsPlaying(true))
       modalPlayerRef.current.on('pause', () => setIsPlaying(false))
 
-      // Start playing
+      // Start playing and unmute
       modalPlayerRef.current.play()
+      modalPlayerRef.current.setVolume(1)
       setIsPlaying(true)
+      setIsMuted(false)
     }
 
     return () => {
