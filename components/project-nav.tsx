@@ -35,26 +35,23 @@ export function ProjectNav({
           return (
             <button
               key={project.id || `project-${index}`}
-              className="group flex items-center justify-end gap-4 transition-all duration-300 min-h-[24px] min-w-[60px] py-1 cursor-pointer"
-              onMouseEnter={() => {
-                console.log("[v0] Mouse enter on index:", index)
-                onHover(index)
-              }}
-              onMouseLeave={() => {
-                console.log("[v0] Mouse leave")
-                onHover(null)
-              }}
+              className="group relative flex items-center justify-end transition-all duration-300 cursor-pointer"
+              style={{ minHeight: '32px', minWidth: '120px', padding: '8px 0' }}
+              onMouseEnter={() => onHover(index)}
+              onMouseLeave={() => onHover(null)}
               onClick={(e) => {
                 e.stopPropagation()
-                console.log("[v0] Click on index:", index)
                 onClick(index)
               }}
               aria-label={displayName || `Project ${index + 1}`}
             >
+              {/* Large invisible hit area */}
+              <div className="absolute inset-0" />
+              
               {/* Project title - appears on hover, only if there's a name */}
               {displayName && (
                 <span 
-                  className={`text-[11px] font-light uppercase tracking-[0.2em] text-right whitespace-nowrap transition-all duration-300 ${
+                  className={`text-[11px] font-light uppercase tracking-[0.2em] text-right whitespace-nowrap transition-all duration-300 mr-4 ${
                     isHovered 
                       ? "opacity-100 translate-x-0" 
                       : "opacity-0 translate-x-4 pointer-events-none"
