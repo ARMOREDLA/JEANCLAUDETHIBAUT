@@ -23,7 +23,7 @@ export function ProjectNav({
 }: ProjectNavProps) {
   return (
     <div className="fixed right-5 md:right-8 top-1/2 -translate-y-1/2 z-50">
-      <nav className="flex flex-col items-end gap-6">
+      <nav className="flex flex-col items-end gap-1">
         {projects.map((project, index) => {
           const isActive = hoveredIndex !== null 
             ? hoveredIndex === index 
@@ -36,7 +36,7 @@ export function ProjectNav({
             <button
               key={project.id || `project-${index}`}
               className="group relative flex items-center justify-end transition-all duration-300 cursor-pointer"
-              style={{ minHeight: '32px', minWidth: '120px', padding: '8px 0' }}
+              style={{ minHeight: '20px', minWidth: '120px', padding: '4px 0' }}
               onMouseEnter={() => onHover(index)}
               onMouseLeave={() => onHover(null)}
               onClick={(e) => {
