@@ -272,9 +272,11 @@ export default function Home() {
       if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
         e.preventDefault()
         setCurrentIndex((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length)
+        setUserHasNavigated(true)
       } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
         e.preventDefault()
         setCurrentIndex((prev) => (prev + 1) % filteredProjects.length)
+        setUserHasNavigated(true)
       }
     }
 
@@ -284,8 +286,13 @@ export default function Home() {
 
 
 
-  // Auto-rotating reel - every 5 seconds
+  // Track if user has manually navigated
+  const [userHasNavigated, setUserHasNavigated] = useState(false)
+
+  // Auto-rotating reel - every 5 seconds, stops once user navigates
   useEffect(() => {
+    if (userHasNavigated) return // Don't auto-rotate if user has navigated
+
     const startInterval = () => {
       reelIntervalRef.current = setInterval(() => {
         if (!isPausedRef.current) {
@@ -301,7 +308,7 @@ export default function Home() {
         clearInterval(reelIntervalRef.current)
       }
     }
-  }, [filteredProjects.length])
+  }, [filteredProjects.length, userHasNavigated])
 
   const handleProjectHover = (index: number | null) => {
     setHoveredIndex(index)
@@ -310,6 +317,7 @@ export default function Home() {
 
   const handleProjectClick = (index: number) => {
     setCurrentIndex(index)
+    setUserHasNavigated(true)
   }
 
   return (
