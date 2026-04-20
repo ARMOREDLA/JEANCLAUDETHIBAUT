@@ -124,26 +124,11 @@ export default function Home() {
       modalPlayerRef.current.on('play', () => setIsPlaying(true))
       modalPlayerRef.current.on('pause', () => setIsPlaying(false))
 
-      // Wait for player to be ready, then set volume and play
-      modalPlayerRef.current.ready().then(() => {
-        if (modalPlayerRef.current) {
-          // Set volume first before playing
-          modalPlayerRef.current.setVolume(1).then(() => {
-            setIsMuted(false)
-            if (modalPlayerRef.current) {
-              modalPlayerRef.current.play()
-              setIsPlaying(true)
-            }
-          }).catch(() => {
-            // Volume failed, still try to play
-            setIsMuted(true)
-            if (modalPlayerRef.current) {
-              modalPlayerRef.current.play()
-              setIsPlaying(true)
-            }
-          })
-        }
-      })
+      // Play immediately - don't wait for volume promises
+      modalPlayerRef.current.play()
+      modalPlayerRef.current.setVolume(1)
+      setIsPlaying(true)
+      setIsMuted(false)
     }
 
     return () => {
