@@ -57,7 +57,6 @@ const projects: Project[] = [
   { id: "p9", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1-Rc5VbDz9Sc0h5Mdmz5sLPgcQXuE0bpe/view?usp=share_link", category: "photo" },
   { id: "p10", title: "", client: "", imageUrl: "https://drive.google.com/file/d/12p0-Ykp337COjRfcdD8lrNc6FGSSpUWc/view?usp=share_link", category: "photo" },
   { id: "p11", title: "", client: "ESTÉE LAUDER", imageUrl: "https://drive.google.com/file/d/1ux8X7Kz1s5F7bV4OwOABC1zCAY7CuY6x/view?usp=share_link", category: "photo" },
-  { id: "p12", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1O9PsoCEuKypnIoqdh7AHWcypWcHBhk-2/view?usp=share_link", category: "photo" },
   { id: "p13", title: "", client: "", vimeoId: "1184968043", category: "photo" },
   { id: "p14", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1hYG5D4I9yuyGMXpvUOLgM73wBivmSPM1/view?usp=share_link", category: "photo" },
 ]
@@ -85,7 +84,7 @@ export default function Home() {
   const [duration, setDuration] = useState(0)
   const modalPlayerRef = useRef<Player | null>(null)
   const modalIframeRef = useRef<HTMLIFrameElement>(null)
-  
+
   // Photo modal video player state
   const [photoVideoPlaying, setPhotoVideoPlaying] = useState(true)
   const photoModalPlayerRef = useRef<Player | null>(null)
@@ -886,7 +885,7 @@ export default function Home() {
                   title={modalPhoto.title || modalPhoto.client || "Video"}
                 />
                 {/* Click overlay for play/pause */}
-                <div 
+                <div
                   className="absolute inset-0 cursor-pointer z-10"
                   onClick={togglePhotoVideo}
                   onTouchEnd={(e) => { e.preventDefault(); e.stopPropagation(); togglePhotoVideo(); }}
