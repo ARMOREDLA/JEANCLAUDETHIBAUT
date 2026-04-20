@@ -124,30 +124,15 @@ export default function Home() {
       modalPlayerRef.current.on('play', () => setIsPlaying(true))
       modalPlayerRef.current.on('pause', () => setIsPlaying(false))
 
-      // Wait for player to be ready before setting volume
-      modalPlayerRef.current.ready().then(async () => {
+      // Start playing with sound - iframe already has muted=0
+      modalPlayerRef.current.play().then(() => {
+        setIsPlaying(true)
+        // Ensure volume is set to max
         if (modalPlayerRef.current) {
-          // Unmute first, then play - this order works better on mobile
-          try {
-            await modalPlayerRef.current.setVolume(1)
-            setIsMuted(false)
-          } catch {
-            // If unmute fails, try again after play starts
-            setIsMuted(true)
-          }
-          
-          await modalPlayerRef.current.play()
-          setIsPlaying(true)
-          
-          // Double-check volume is set after play starts
-          try {
-            await modalPlayerRef.current.setVolume(1)
-            setIsMuted(false)
-          } catch {
-            // Keep current muted state
-          }
+          modalPlayerRef.current.setVolume(1)
         }
       })
+      setIsMuted(false)
     }
 
     return () => {
