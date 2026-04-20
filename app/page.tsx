@@ -57,6 +57,7 @@ const projects: Project[] = [
   { id: "p10", title: "", client: "", imageUrl: "https://drive.google.com/file/d/12p0-Ykp337COjRfcdD8lrNc6FGSSpUWc/view?usp=share_link", category: "photo" },
   { id: "p11", title: "", client: "ESTÉE LAUDER", imageUrl: "https://drive.google.com/file/d/1ux8X7Kz1s5F7bV4OwOABC1zCAY7CuY6x/view?usp=share_link", category: "photo" },
   { id: "p12", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1O9PsoCEuKypnIoqdh7AHWcypWcHBhk-2/view?usp=share_link", category: "photo" },
+  { id: "9", title: "", client: "LOUIS VUITTON - HEATHER DIAMOND STRONGARM", vimeoId: "1154436685", category: "photo" },
   { id: "p13", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1hYG5D4I9yuyGMXpvUOLgM73wBivmSPM1/view?usp=share_link", category: "photo" },
 ]
 
@@ -328,7 +329,7 @@ export default function Home() {
   const handleProjectClick = (index: number) => {
     setCurrentIndex(index)
     setUserHasNavigated(true)
-    
+
     // Open modal for the clicked project
     if (activeCategory === "film") {
       setModalVideoIndex(index)
