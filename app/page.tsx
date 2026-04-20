@@ -548,7 +548,7 @@ export default function Home() {
                 return (
                   <div
                     key={`${project.id}-${activeCategory}`}
-                    className="absolute inset-0 transition-opacity duration-300 flex items-center justify-center bg-background"
+                    className="absolute inset-0 transition-opacity duration-300 flex items-center justify-center bg-black"
                     style={{ opacity: isActive ? 1 : 0 }}
                   >
                     <iframe
