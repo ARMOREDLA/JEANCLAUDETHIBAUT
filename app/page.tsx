@@ -124,15 +124,26 @@ export default function Home() {
       modalPlayerRef.current.on('play', () => setIsPlaying(true))
       modalPlayerRef.current.on('pause', () => setIsPlaying(false))
 
-      // Start playing with sound - iframe already has muted=0
-      modalPlayerRef.current.play().then(() => {
-        setIsPlaying(true)
-        // Ensure volume is set to max
+      // Wait for player to be ready, then set volume and play
+      modalPlayerRef.current.ready().then(() => {
         if (modalPlayerRef.current) {
-          modalPlayerRef.current.setVolume(1)
+          // Set volume first before playing
+          modalPlayerRef.current.setVolume(1).then(() => {
+            setIsMuted(false)
+            if (modalPlayerRef.current) {
+              modalPlayerRef.current.play()
+              setIsPlaying(true)
+            }
+          }).catch(() => {
+            // Volume failed, still try to play
+            setIsMuted(true)
+            if (modalPlayerRef.current) {
+              modalPlayerRef.current.play()
+              setIsPlaying(true)
+            }
+          })
         }
       })
-      setIsMuted(false)
     }
 
     return () => {
