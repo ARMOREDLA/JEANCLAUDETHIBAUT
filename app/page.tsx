@@ -167,10 +167,7 @@ export default function Home() {
   }, [])
 
 const handleVideoClick = () => {
-  console.log("[v0] handleVideoClick called, currentIndex:", currentIndex, "activeCategory:", activeCategory)
-  console.log("[v0] filteredProjects[currentIndex]:", filteredProjects[currentIndex])
   if (activeCategory === "film") {
-    console.log("[v0] Opening video modal for index:", currentIndex)
     setModalVideoIndex(currentIndex)
     setProgress(0)
     setIsMuted(false)
@@ -752,10 +749,11 @@ const toggleMute = () => {
             </div>
           </div>
 
-          {/* Navigation Arrows - Modal */}
+          {/* Navigation Arrows - Modal - centered relative to video area (excluding bottom controls) */}
           <button
             onClick={(e) => { e.stopPropagation(); handleModalPrev(); }}
-            className="absolute left-6 md:left-10 top-1/2 -translate-y-1/2 z-30 text-foreground/50 hover:text-foreground transition-colors duration-300 pointer-events-auto"
+            className="absolute left-6 md:left-10 z-30 text-foreground/50 hover:text-foreground transition-colors duration-300 pointer-events-auto"
+            style={{ top: 'calc(50% - 2.5rem)', transform: 'translateY(-50%)' }}
           >
             <svg className="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -763,7 +761,8 @@ const toggleMute = () => {
           </button>
           <button
             onClick={(e) => { e.stopPropagation(); handleModalNext(); }}
-            className="absolute right-6 md:right-10 top-1/2 -translate-y-1/2 z-30 text-foreground/50 hover:text-foreground transition-colors duration-300 pointer-events-auto"
+            className="absolute right-6 md:right-10 z-30 text-foreground/50 hover:text-foreground transition-colors duration-300 pointer-events-auto"
+            style={{ top: 'calc(50% - 2.5rem)', transform: 'translateY(-50%)' }}
           >
             <svg className="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
