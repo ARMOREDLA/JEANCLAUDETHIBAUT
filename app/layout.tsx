@@ -65,8 +65,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="dark bg-black" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-black text-foreground`}>
+    <html lang="en" className="dark bg-black" style={{ backgroundColor: '#000' }} suppressHydrationWarning>
+      <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-black text-foreground`} style={{ backgroundColor: '#000' }}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
