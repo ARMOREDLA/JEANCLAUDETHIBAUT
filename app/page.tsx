@@ -675,11 +675,11 @@ const toggleMute = () => {
             </div>
           </div>
 
-          {/* Custom Controls - Bottom */}
-          <div className="px-6 md:px-10 pb-6 md:pb-8 relative z-20">
+          {/* Custom Controls - Bottom - smaller in landscape */}
+          <div className="px-4 landscape:px-3 md:px-10 pb-3 landscape:pb-2 md:pb-8 relative z-20">
             {/* Progress Bar - Clickable/Draggable */}
             <div
-              className="w-full h-4 relative mb-4 cursor-pointer group flex items-center"
+              className="w-full h-3 landscape:h-2 relative mb-2 landscape:mb-1 md:mb-4 cursor-pointer group flex items-center"
               onClick={handleSeek}
               onMouseDown={(e) => {
                 handleSeek(e)
@@ -717,13 +717,13 @@ const toggleMute = () => {
             {/* Controls Row */}
             <div className="flex items-center justify-between">
               {/* Left: Prev Arrow, Play/Pause, Volume, Time */}
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2 landscape:gap-1 md:gap-4">
                 {/* Previous Video */}
                 <button
                   onClick={(e) => { e.stopPropagation(); handleModalPrev(); }}
                   className="text-foreground/50 hover:text-foreground transition-colors duration-300"
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                  <svg className="w-4 h-4 landscape:w-3 landscape:h-3 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                   </svg>
                 </button>
@@ -734,12 +734,12 @@ const toggleMute = () => {
                   className="text-foreground/70 hover:text-foreground transition-colors duration-300"
                 >
                   {isPlaying ? (
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 landscape:w-3 landscape:h-3 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 24 24">
                       <rect x="6" y="4" width="4" height="16" />
                       <rect x="14" y="4" width="4" height="16" />
                     </svg>
                   ) : (
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 landscape:w-3 landscape:h-3 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 24 24">
                       <polygon points="5,3 19,12 5,21" />
                     </svg>
                   )}
@@ -750,7 +750,7 @@ const toggleMute = () => {
                   onClick={(e) => { e.stopPropagation(); handleModalNext(); }}
                   className="text-foreground/50 hover:text-foreground transition-colors duration-300"
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                  <svg className="w-4 h-4 landscape:w-3 landscape:h-3 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                   </svg>
                 </button>
@@ -761,29 +761,29 @@ const toggleMute = () => {
                   className="text-foreground/70 hover:text-foreground transition-colors duration-300"
                 >
                   {isMuted ? (
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                    <svg className="w-4 h-4 landscape:w-3 landscape:h-3 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
                       <path strokeLinecap="round" strokeLinejoin="round" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
                     </svg>
                   ) : (
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                    <svg className="w-4 h-4 landscape:w-3 landscape:h-3 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
                     </svg>
                   )}
                 </button>
 
                 {/* Time Display */}
-                <span className="text-xs text-foreground/50 font-light tracking-wider">
+                <span className="text-[10px] landscape:text-[8px] md:text-xs text-foreground/50 font-light tracking-wider">
                   {formatTime(progress)} / {formatTime(duration)}
                 </span>
               </div>
 
               {/* Right: Project Info */}
               <div className="text-right">
-                <h2 className="text-sm md:text-base font-light uppercase tracking-[0.1em] text-foreground">
+                <h2 className="text-xs landscape:text-[10px] md:text-base font-light uppercase tracking-[0.1em] text-foreground">
                   {modalProject.title}
                 </h2>
-                <p className="text-[10px] md:text-xs text-foreground/50 font-light uppercase tracking-[0.15em]">
+                <p className="text-[8px] landscape:text-[7px] md:text-xs text-foreground/50 font-light uppercase tracking-[0.15em]">
                   {modalProject.client}
                 </p>
               </div>
