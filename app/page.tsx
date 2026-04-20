@@ -837,11 +837,11 @@ export default function Home() {
           </button>
 
           {/* Full photo, Canva embed, or Vimeo video */}
-          <div className="relative w-[90vw] h-[90vh] flex items-center justify-center">
+          <div className="relative w-[90vw] h-[90vh] flex items-center justify-center bg-black">
             {modalPhoto.vimeoId ? (
               <iframe
                 key={`photo-modal-video-${modalPhoto.vimeoId}`}
-                src={`https://player.vimeo.com/video/${modalPhoto.vimeoId}?autoplay=1&loop=1&muted=0&controls=1&title=0&byline=0&portrait=0&playsinline=1&quality=1080p`}
+                src={`https://player.vimeo.com/video/${modalPhoto.vimeoId}?autoplay=1&loop=1&muted=0&controls=1&title=0&byline=0&portrait=0&playsinline=1&quality=1080p&transparent=0`}
                 className="w-full h-full"
                 style={{ border: 'none', backgroundColor: '#000' }}
                 allow="autoplay; fullscreen; picture-in-picture"
