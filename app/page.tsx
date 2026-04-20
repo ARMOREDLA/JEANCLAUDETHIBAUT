@@ -58,7 +58,7 @@ const projects: Project[] = [
   { id: "p10", title: "", client: "", imageUrl: "https://drive.google.com/file/d/12p0-Ykp337COjRfcdD8lrNc6FGSSpUWc/view?usp=share_link", category: "photo" },
   { id: "p11", title: "", client: "ESTÉE LAUDER", imageUrl: "https://drive.google.com/file/d/1ux8X7Kz1s5F7bV4OwOABC1zCAY7CuY6x/view?usp=share_link", category: "photo" },
   { id: "p12", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1O9PsoCEuKypnIoqdh7AHWcypWcHBhk-2/view?usp=share_link", category: "photo" },
-  { id: "p13", title: "", client: "", canvaUrl: "https://www.canva.com/design/DAHHbDt8KAs/doVhFD4evndqJlTec5g54Q/view?embed", category: "photo" },
+  { id: "p13", title: "", client: "", canvaUrl: "https://www.canva.com/design/DAHHbDt8KAs/doVhFD4evndqJlTec5g54Q/watch?embed&autoplay=1&loop=1", category: "photo" },
   { id: "p14", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1hYG5D4I9yuyGMXpvUOLgM73wBivmSPM1/view?usp=share_link", category: "photo" },
 ]
 
@@ -549,7 +549,7 @@ export default function Home() {
                     style={{ opacity: isActive ? 1 : 0 }}
                   >
                     <iframe
-                      src={`${project.canvaUrl}${project.canvaUrl.includes('?') ? '&' : '?'}autoplay=1`}
+                      src={project.canvaUrl}
                       className="w-full h-full pointer-events-none"
                       style={{ border: 'none' }}
                       allow="autoplay; fullscreen"
