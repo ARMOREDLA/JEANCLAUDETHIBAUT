@@ -236,7 +236,7 @@ export default function Home() {
     }
   }
 
-  // Swipe gesture handlers for mobile video modal navigation
+  // Swipe gesture handlers for mobile modal navigation
   const minSwipeDistance = 50
   
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -248,7 +248,7 @@ export default function Home() {
     setTouchEnd(e.targetTouches[0].clientX)
   }
 
-  const handleTouchEnd = () => {
+  const handleVideoTouchEnd = () => {
     if (!touchStart || !touchEnd) return
     const distance = touchStart - touchEnd
     const isLeftSwipe = distance > minSwipeDistance
@@ -258,6 +258,22 @@ export default function Home() {
       handleModalNext()
     } else if (isRightSwipe) {
       handleModalPrev()
+    }
+    
+    setTouchStart(null)
+    setTouchEnd(null)
+  }
+
+  const handlePhotoTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > minSwipeDistance
+    const isRightSwipe = distance < -minSwipeDistance
+    
+    if (isLeftSwipe) {
+      handlePhotoNext()
+    } else if (isRightSwipe) {
+      handlePhotoPrev()
     }
     
     setTouchStart(null)
@@ -584,7 +600,7 @@ const toggleMute = () => {
           style={{ backgroundColor: '#000' }}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
+          onTouchEnd={handleVideoTouchEnd}
         >
           {/* Close button */}
           <button
@@ -754,7 +770,12 @@ const toggleMute = () => {
 
       {/* Photo Lightbox Modal */}
       {isPhotoModalOpen && modalPhoto?.imageUrl && (
-        <div className="fixed inset-0 z-[100] bg-black flex items-center justify-center">
+        <div 
+          className="fixed inset-0 z-[100] bg-black flex items-center justify-center"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handlePhotoTouchEnd}
+        >
           {/* Close button */}
           <button
             onClick={handleClosePhotoModal}
