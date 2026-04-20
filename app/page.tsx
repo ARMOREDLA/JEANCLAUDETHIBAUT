@@ -520,21 +520,29 @@ export default function Home() {
             filteredProjects.map((project, index) => {
               const isActive = activeIndex === index
 
-              // If project has vimeoId, show as video
+              // If project has vimeoId, show as video with Vimeo thumbnail
               if (project.vimeoId) {
                 return (
-                  <iframe
+                  <div
                     key={`${project.id}-${activeCategory}`}
-                    src={`https://player.vimeo.com/video/${project.vimeoId}?background=1&autoplay=1&loop=1&muted=1&controls=0&title=0&byline=0&portrait=0&sidedock=0&playsinline=1&dnt=1&quality=1080p`}
-                    className="absolute inset-0 w-full h-full transition-opacity duration-500 pointer-events-none"
-                    style={{
-                      opacity: isActive ? 1 : 0,
-                      border: 'none',
-                      backgroundColor: '#000',
-                    }}
-                    allow="autoplay; fullscreen; picture-in-picture"
-                    title={project.title || project.client || "Motion"}
-                  />
+                    className="absolute inset-0 transition-opacity duration-300 flex items-center justify-center bg-background"
+                    style={{ opacity: isActive ? 1 : 0 }}
+                  >
+                    <div className="relative w-full h-full max-w-[90vw] max-h-[90vh] flex items-center justify-center">
+                      <iframe
+                        src={`https://player.vimeo.com/video/${project.vimeoId}?background=1&autoplay=1&loop=1&muted=1&controls=0&title=0&byline=0&portrait=0&sidedock=0&playsinline=1&dnt=1&quality=1080p`}
+                        className="w-full h-full pointer-events-none"
+                        style={{
+                          border: 'none',
+                          aspectRatio: '16/9',
+                          maxWidth: '100%',
+                          maxHeight: '100%',
+                        }}
+                        allow="autoplay; fullscreen; picture-in-picture"
+                        title={project.title || project.client || "Motion"}
+                      />
+                    </div>
+                  </div>
                 )
               }
 
