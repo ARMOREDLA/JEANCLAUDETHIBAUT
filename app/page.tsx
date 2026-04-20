@@ -548,7 +548,7 @@ export default function Home() {
                 return (
                   <iframe
                     key={`${project.id}-${activeCategory}`}
-                    src={`https://player.vimeo.com/video/${project.vimeoId}?background=1&autoplay=1&loop=1&muted=1&controls=0&title=0&byline=0&portrait=0&sidedock=0&playsinline=1&dnt=1&quality=4k&keyboard=0`}
+                    src={`https://player.vimeo.com/video/${project.vimeoId}?background=1&autoplay=1&loop=1&muted=1&controls=0&title=0&byline=0&portrait=0&sidedock=0&playsinline=1&dnt=1&quality=4k&keyboard=0&autopause=0`}
                     className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 pointer-events-none"
                     style={{
                       opacity: isActive ? 1 : 0,
@@ -557,6 +557,7 @@ export default function Home() {
                       height: 'max(100vh, 56.25vw)',
                       backgroundColor: '#000',
                     }}
+                    loading="eager"
                     allow="autoplay; fullscreen; picture-in-picture"
                     title={project.title || project.client || "Motion"}
                   />
