@@ -166,17 +166,25 @@ export default function Home() {
     setIsCursorVisible(false)
   }, [])
 
-  const handleVideoClick = useCallback(() => {
-    if (activeCategory === "film") {
-      setModalVideoIndex(activeIndex)
+const handleVideoClick = () => {
+  if (activeCategory === "film") {
+    setModalVideoIndex(currentIndex)
+    setProgress(0)
+    setIsMuted(false)
+    setIsVideoModalOpen(true)
+  } else if (activeCategory === "photo") {
+    const clickedProject = filteredProjects[currentIndex]
+    if (clickedProject?.vimeoId) {
+      setModalVideoIndex(currentIndex)
       setProgress(0)
       setIsMuted(false)
       setIsVideoModalOpen(true)
-    } else if (activeCategory === "photo") {
-      setModalPhotoIndex(activeIndex)
+    } else {
+      setModalPhotoIndex(currentIndex)
       setIsPhotoModalOpen(true)
     }
-  }, [activeIndex, activeCategory])
+  }
+}
 
   const handleCloseModal = useCallback(() => {
     setIsVideoModalOpen(false)
