@@ -289,7 +289,7 @@ export default function Home() {
   // Track if user has manually navigated
   const [userHasNavigated, setUserHasNavigated] = useState(false)
 
-  // Auto-rotating reel - every 5 seconds, stops once user navigates
+  // Auto-rotating reel - every 7 seconds, stops once user navigates
   useEffect(() => {
     if (userHasNavigated) return // Don't auto-rotate if user has navigated
 
@@ -298,7 +298,7 @@ export default function Home() {
         if (!isPausedRef.current) {
           setCurrentIndex((prev) => (prev + 1) % filteredProjects.length)
         }
-      }, 5000)
+      }, 7000)
     }
 
     startInterval()
@@ -326,7 +326,7 @@ export default function Home() {
       <div className="fixed inset-0 w-full h-full z-0 bg-black">
         <div className="absolute inset-0 bg-black" style={{ overflow: 'hidden' }}>
           {activeCategory === "film" ? (
-            // Video backgrounds for film - only load active, prev, and next videos
+            // Video backgrounds for film - preload active, prev, and next 2 videos
             filteredProjects.map((project, index) => {
               if (!project.vimeoId) return null
 
@@ -334,9 +334,10 @@ export default function Home() {
               const totalProjects = filteredProjects.length
               const prevIndex = (activeIndex - 1 + totalProjects) % totalProjects
               const nextIndex = (activeIndex + 1) % totalProjects
+              const nextIndex2 = (activeIndex + 2) % totalProjects
 
-              // Only render active video, previous, and next (for preloading)
-              const shouldRender = isActive || index === prevIndex || index === nextIndex
+              // Render active, previous, and next 2 videos for smoother preloading
+              const shouldRender = isActive || index === prevIndex || index === nextIndex || index === nextIndex2
               if (!shouldRender) return null
 
               // Use vertical video ID on mobile if available
