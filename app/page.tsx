@@ -289,7 +289,7 @@ export default function Home() {
   // Track if user has manually navigated
   const [userHasNavigated, setUserHasNavigated] = useState(false)
 
-  // Auto-rotating reel - every 7 seconds, stops once user navigates
+  // Auto-rotating reel - every 6 seconds, stops once user navigates
   useEffect(() => {
     if (userHasNavigated) return // Don't auto-rotate if user has navigated
 
@@ -298,7 +298,7 @@ export default function Home() {
         if (!isPausedRef.current) {
           setCurrentIndex((prev) => (prev + 1) % filteredProjects.length)
         }
-      }, 7000)
+      }, 6000)
     }
 
     startInterval()
