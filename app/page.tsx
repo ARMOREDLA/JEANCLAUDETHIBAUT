@@ -124,9 +124,18 @@ export default function Home() {
       modalPlayerRef.current.on('play', () => setIsPlaying(true))
       modalPlayerRef.current.on('pause', () => setIsPlaying(false))
 
-      // Play immediately - don't wait for volume promises
-      modalPlayerRef.current.play()
-      modalPlayerRef.current.setVolume(1)
+      // Play with sound - must wait for ready
+      modalPlayerRef.current.ready().then(() => {
+        console.log("[v0] Player ready, setting volume and playing")
+        if (modalPlayerRef.current) {
+          modalPlayerRef.current.setVolume(1)
+          modalPlayerRef.current.play()
+          modalPlayerRef.current.getVolume().then((vol: number) => {
+            console.log("[v0] Current volume:", vol)
+            setIsMuted(vol === 0)
+          })
+        }
+      })
       setIsPlaying(true)
       setIsMuted(false)
     }
