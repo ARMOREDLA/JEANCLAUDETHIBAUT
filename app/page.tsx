@@ -298,7 +298,7 @@ export default function Home() {
     return () => clearTimeout(timer)
   }, [])
 
-  // Auto-rotating reel - every 6 seconds, stops once user navigates
+  // Auto-rotating reel - every 5 seconds, stops once user navigates
   useEffect(() => {
     if (userHasNavigated) return // Don't auto-rotate if user has navigated
 
@@ -307,7 +307,7 @@ export default function Home() {
         if (!isPausedRef.current) {
           setCurrentIndex((prev) => (prev + 1) % filteredProjects.length)
         }
-      }, 6000)
+      }, 5000)
     }
 
     startInterval()
