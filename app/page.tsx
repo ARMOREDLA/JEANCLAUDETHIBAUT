@@ -638,20 +638,23 @@ const toggleMute = () => {
           {/* Navigation overlay zones - on top of video */}
           {/* Left side - Previous video */}
           <div
-            className="absolute left-0 top-0 bottom-20 w-1/4 md:w-20 cursor-pointer z-20"
+            className="absolute left-0 top-0 bottom-20 w-1/4 md:w-20 cursor-pointer z-30"
             onClick={handleModalPrev}
+            onTouchEnd={(e) => { e.preventDefault(); e.stopPropagation(); handleModalPrev(); }}
           />
 
           {/* Right side - Next video */}
           <div
-            className="absolute right-0 top-0 bottom-20 w-1/4 md:w-20 cursor-pointer z-20"
+            className="absolute right-0 top-0 bottom-20 w-1/4 md:w-20 cursor-pointer z-30"
             onClick={handleModalNext}
+            onTouchEnd={(e) => { e.preventDefault(); e.stopPropagation(); handleModalNext(); }}
           />
 
           {/* Center area - Play/Pause */}
           <div
-            className="absolute left-1/4 right-1/4 md:left-20 md:right-20 top-0 bottom-20 cursor-pointer z-10"
+            className="absolute left-1/4 right-1/4 md:left-20 md:right-20 top-0 bottom-20 cursor-pointer z-30"
             onClick={togglePlay}
+            onTouchEnd={(e) => { e.preventDefault(); e.stopPropagation(); togglePlay(); }}
           />
 
           {/* Video player - Full width on all devices */}
