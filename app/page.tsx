@@ -124,15 +124,32 @@ export default function Home() {
       modalPlayerRef.current.on('play', () => setIsPlaying(true))
       modalPlayerRef.current.on('pause', () => setIsPlaying(false))
 
-      // Set volume first, then play - autoplay is disabled in iframe so we control the order
+      // Start muted (accurate UI), then try to unmute after play
+      setIsMuted(true)
+      setIsPlaying(false)
+      
       modalPlayerRef.current.ready().then(() => {
         if (modalPlayerRef.current) {
-          modalPlayerRef.current.setVolume(1).then(() => {
+          // Play first
+          modalPlayerRef.current.play().then(() => {
+            setIsPlaying(true)
+            // Then try to unmute
             if (modalPlayerRef.current) {
-              modalPlayerRef.current.play()
-              setIsPlaying(true)
-              setIsMuted(false)
+              modalPlayerRef.current.setVolume(1).then(() => {
+                // Check actual volume to update UI accurately
+                if (modalPlayerRef.current) {
+                  modalPlayerRef.current.getVolume().then((vol: number) => {
+                    setIsMuted(vol === 0)
+                  })
+                }
+              }).catch(() => {
+                // Volume setting failed, keep muted
+                setIsMuted(true)
+              })
             }
+          }).catch(() => {
+            // Play failed
+            setIsPlaying(false)
           })
         }
       })
