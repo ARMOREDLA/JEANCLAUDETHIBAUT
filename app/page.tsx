@@ -543,24 +543,29 @@ export default function Home() {
             filteredProjects.map((project, index) => {
               const isActive = activeIndex === index
 
-              // If project has vimeoId, show as video - use same sizing as film videos
+              // If project has vimeoId, show as video - contained with black bars
               if (project.vimeoId) {
                 return (
-                  <iframe
+                  <div
                     key={`${project.id}-${activeCategory}`}
-                    src={`https://player.vimeo.com/video/${project.vimeoId}?background=1&autoplay=1&loop=1&muted=1&controls=0&title=0&byline=0&portrait=0&sidedock=0&playsinline=1&dnt=1&quality=4k&keyboard=0&autopause=0`}
-                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 pointer-events-none"
-                    style={{
-                      opacity: isActive ? 1 : 0,
-                      border: 'none',
-                      width: 'max(177.78vh, 100vw)',
-                      height: 'max(100vh, 56.25vw)',
-                      backgroundColor: '#000',
-                    }}
-                    loading="eager"
-                    allow="autoplay; fullscreen; picture-in-picture"
-                    title={project.title || project.client || "Motion"}
-                  />
+                    className="absolute inset-0 transition-opacity duration-300 flex items-center justify-center bg-black"
+                    style={{ opacity: isActive ? 1 : 0 }}
+                  >
+                    <iframe
+                      src={`https://player.vimeo.com/video/${project.vimeoId}?background=1&autoplay=1&loop=1&muted=1&controls=0&title=0&byline=0&portrait=0&sidedock=0&playsinline=1&dnt=1&quality=4k&keyboard=0&autopause=0`}
+                      className="pointer-events-none"
+                      style={{
+                        border: 'none',
+                        width: 'min(100vw, 177.78vh)',
+                        height: 'min(100vh, 56.25vw)',
+                        maxWidth: '100%',
+                        maxHeight: '100%',
+                      }}
+                      loading="eager"
+                      allow="autoplay; fullscreen; picture-in-picture"
+                      title={project.title || project.client || "Motion"}
+                    />
+                  </div>
                 )
               }
 
