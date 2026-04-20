@@ -89,8 +89,8 @@ export default function Home() {
   // Filter projects by category
   const filteredProjects = projects.filter(p => p.category === activeCategory)
 
-  // Calculate active index early so it can be used in callbacks
-  const activeIndex = hoveredIndex !== null ? hoveredIndex : currentIndex
+  // activeIndex is only based on currentIndex - hovering doesn't change the background video
+  const activeIndex = currentIndex
   const currentProject = filteredProjects[activeIndex]
   const modalProject = filteredProjects[modalVideoIndex]
   const modalPhoto = filteredProjects[modalPhotoIndex]
@@ -321,12 +321,24 @@ export default function Home() {
 
   const handleProjectHover = (index: number | null) => {
     setHoveredIndex(index)
+    // Pause auto-rotation when hovering but don't change the video
     isPausedRef.current = index !== null
   }
 
   const handleProjectClick = (index: number) => {
     setCurrentIndex(index)
     setUserHasNavigated(true)
+    
+    // Open modal for the clicked project
+    if (activeCategory === "film") {
+      setModalVideoIndex(index)
+      setProgress(0)
+      setIsMuted(false)
+      setIsVideoModalOpen(true)
+    } else if (activeCategory === "photo") {
+      setModalPhotoIndex(index)
+      setIsPhotoModalOpen(true)
+    }
   }
 
   return (
