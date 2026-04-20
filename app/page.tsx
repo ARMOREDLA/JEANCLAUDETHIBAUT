@@ -661,14 +661,14 @@ const toggleMute = () => {
             onTouchEnd={(e) => { e.preventDefault(); e.stopPropagation(); console.log("[v0] Center tap detected"); togglePlay(); }}
           />
 
-          {/* Video player - Full width on all devices */}
-          <div className="flex-1 flex items-center justify-center px-0 relative z-0 pointer-events-none">
-            <div className="video-modal-container relative w-full max-w-[100vw] max-h-[calc(100vh-5rem)] bg-black" style={{ aspectRatio: '2.39/1', backgroundColor: '#000' }}>
+          {/* Video player - Maximum size on all devices */}
+          <div className="flex-1 flex items-center justify-center px-0 relative z-0 pointer-events-none w-full h-full">
+            <div className="video-modal-container relative w-full h-full max-w-[100vw] max-h-[calc(100vh-4rem)] md:max-h-[calc(100vh-5rem)] bg-black" style={{ backgroundColor: '#000' }}>
               <iframe
                 ref={modalIframeRef}
                 src={`https://player.vimeo.com/video/${modalProject.vimeoId}?autoplay=0&loop=0&muted=0&controls=0&title=0&byline=0&portrait=0&playsinline=1&transparent=0&quality=1080p`}
                 className="absolute inset-0 w-full h-full bg-black"
-                style={{ border: 'none', backgroundColor: '#000', objectFit: 'contain' }}
+                style={{ border: 'none', backgroundColor: '#000', objectFit: 'cover' }}
                 allow="autoplay; fullscreen; picture-in-picture"
                 title={modalProject.title || modalProject.client}
                 loading="eager"
