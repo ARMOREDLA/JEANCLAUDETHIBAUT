@@ -614,25 +614,25 @@ const toggleMute = () => {
 
           {/* Left side - Previous video */}
           <div
-            className="absolute left-0 top-0 bottom-24 w-1/3 cursor-pointer z-0"
+            className="absolute left-0 top-0 bottom-20 w-16 md:w-20 cursor-pointer z-20"
             onClick={handleModalPrev}
           />
 
           {/* Right side - Next video */}
           <div
-            className="absolute right-0 top-0 bottom-24 w-1/3 cursor-pointer z-0"
+            className="absolute right-0 top-0 bottom-20 w-16 md:w-20 cursor-pointer z-20"
             onClick={handleModalNext}
           />
 
           {/* Center area - Play/Pause */}
           <div
-            className="absolute left-1/3 right-1/3 top-0 bottom-24 cursor-pointer z-0"
+            className="absolute left-16 right-16 md:left-20 md:right-20 top-0 bottom-20 cursor-pointer z-10"
             onClick={togglePlay}
           />
 
           {/* Video player */}
-          <div className="flex-1 flex items-center justify-center p-4 md:p-8 relative z-10 pointer-events-none">
-            <div className="video-modal-container relative w-full max-w-[95vw] max-h-[80vh] bg-black" style={{ aspectRatio: '2.39/1', backgroundColor: '#000' }}>
+          <div className="flex-1 flex items-center justify-center px-2 py-2 md:px-4 md:py-4 relative z-0 pointer-events-none">
+            <div className="video-modal-container relative w-full max-w-[98vw] md:max-w-[96vw] max-h-[85vh] md:max-h-[88vh] bg-black" style={{ aspectRatio: '2.39/1', backgroundColor: '#000' }}>
               <iframe
                 ref={modalIframeRef}
                 src={`https://player.vimeo.com/video/${modalProject.vimeoId}?autoplay=1&loop=0&muted=0&controls=0&title=0&byline=0&portrait=0&playsinline=1&transparent=0&quality=1080p`}
