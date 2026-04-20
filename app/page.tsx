@@ -125,21 +125,27 @@ export default function Home() {
       modalPlayerRef.current.on('pause', () => setIsPlaying(false))
 
       // Wait for player to be ready before setting volume
-      modalPlayerRef.current.ready().then(() => {
+      modalPlayerRef.current.ready().then(async () => {
         if (modalPlayerRef.current) {
-          modalPlayerRef.current.play()
-          // Set volume after a brief delay to ensure player is fully initialized
-          setTimeout(() => {
-            if (modalPlayerRef.current) {
-              modalPlayerRef.current.setVolume(1).then(() => {
-                setIsMuted(false)
-              }).catch(() => {
-                // If setVolume fails (browser policy), keep muted state
-                setIsMuted(true)
-              })
-            }
-          }, 100)
+          // Unmute first, then play - this order works better on mobile
+          try {
+            await modalPlayerRef.current.setVolume(1)
+            setIsMuted(false)
+          } catch {
+            // If unmute fails, try again after play starts
+            setIsMuted(true)
+          }
+          
+          await modalPlayerRef.current.play()
           setIsPlaying(true)
+          
+          // Double-check volume is set after play starts
+          try {
+            await modalPlayerRef.current.setVolume(1)
+            setIsMuted(false)
+          } catch {
+            // Keep current muted state
+          }
         }
       })
     }
