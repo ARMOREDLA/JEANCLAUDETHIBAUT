@@ -57,7 +57,6 @@ const projects: Project[] = [
   { id: "p10", title: "", client: "", imageUrl: "https://drive.google.com/file/d/12p0-Ykp337COjRfcdD8lrNc6FGSSpUWc/view?usp=share_link", category: "photo" },
   { id: "p11", title: "", client: "ESTÉE LAUDER", imageUrl: "https://drive.google.com/file/d/1ux8X7Kz1s5F7bV4OwOABC1zCAY7CuY6x/view?usp=share_link", category: "photo" },
   { id: "p12", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1O9PsoCEuKypnIoqdh7AHWcypWcHBhk-2/view?usp=share_link", category: "photo" },
-  { id: "9", title: "", client: "LOUIS VUITTON - HEATHER DIAMOND STRONGARM", vimeoId: "1154436685", category: "photo" },
   { id: "p13", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1hYG5D4I9yuyGMXpvUOLgM73wBivmSPM1/view?usp=share_link", category: "photo" },
 ]
 
@@ -349,7 +348,7 @@ export default function Home() {
     setUserHasNavigated(true)
 
     const clickedProject = filteredProjects[index]
-    
+
     // Open modal for the clicked project
     if (activeCategory === "film") {
       setModalVideoIndex(index)
@@ -432,7 +431,7 @@ export default function Home() {
             // Photo backgrounds (can be images or motion/video)
             filteredProjects.map((project, index) => {
               const isActive = activeIndex === index
-              
+
               // If project has vimeoId, show as video
               if (project.vimeoId) {
                 return (
@@ -452,7 +451,7 @@ export default function Home() {
                   />
                 )
               }
-              
+
               // Otherwise show as image
               if (!project.imageUrl) return null
               const imageUrl = convertGoogleDriveUrl(project.imageUrl)
