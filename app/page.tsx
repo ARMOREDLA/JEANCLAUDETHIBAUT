@@ -246,11 +246,14 @@ const handleVideoClick = () => {
   }, [filteredProjects.length])
 
   const togglePlay = () => {
+    console.log("[v0] togglePlay called, isPlaying:", isPlaying)
     if (modalPlayerRef.current) {
       if (isPlaying) {
         modalPlayerRef.current.pause()
+        setIsPlaying(false)
       } else {
         modalPlayerRef.current.play()
+        setIsPlaying(true)
       }
     }
   }
@@ -654,7 +657,8 @@ const toggleMute = () => {
           <div
             className="absolute left-1/4 right-1/4 md:left-20 md:right-20 top-0 bottom-20 cursor-pointer z-30"
             onClick={togglePlay}
-            onTouchEnd={(e) => { e.preventDefault(); e.stopPropagation(); togglePlay(); }}
+            onTouchStart={(e) => { e.stopPropagation(); }}
+            onTouchEnd={(e) => { e.preventDefault(); e.stopPropagation(); console.log("[v0] Center tap detected"); togglePlay(); }}
           />
 
           {/* Video player - Full width on all devices */}
