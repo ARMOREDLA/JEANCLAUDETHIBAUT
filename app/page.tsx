@@ -326,18 +326,19 @@ export default function Home() {
       <div className="fixed inset-0 w-full h-full z-0 bg-black">
         <div className="absolute inset-0 bg-black" style={{ overflow: 'hidden' }}>
           {activeCategory === "film" ? (
-            // Video backgrounds for film - preload active, prev, and next 2 videos
+            // Video backgrounds for film - always load first video, plus active and adjacent
             filteredProjects.map((project, index) => {
               if (!project.vimeoId) return null
 
               const isActive = activeIndex === index
+              const isFirst = index === 0
               const totalProjects = filteredProjects.length
               const prevIndex = (activeIndex - 1 + totalProjects) % totalProjects
               const nextIndex = (activeIndex + 1) % totalProjects
               const nextIndex2 = (activeIndex + 2) % totalProjects
 
-              // Render active, previous, and next 2 videos for smoother preloading
-              const shouldRender = isActive || index === prevIndex || index === nextIndex || index === nextIndex2
+              // Always render first video (for instant load), plus active and adjacent videos
+              const shouldRender = isFirst || isActive || index === prevIndex || index === nextIndex || index === nextIndex2
               if (!shouldRender) return null
 
               // Use vertical video ID on mobile if available
@@ -364,7 +365,7 @@ export default function Home() {
                   key={`${project.id}-${activeCategory}-${isMobile ? 'mobile' : 'desktop'}`}
                   src={`https://player.vimeo.com/video/${videoId}?background=1&autoplay=1&loop=1&muted=1&controls=0&title=0&byline=0&portrait=0&sidedock=0&playsinline=1&dnt=1&quality=auto`}
                   className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-500 pointer-events-none"
-                  loading={isActive ? "eager" : "lazy"}
+                  loading={isFirst || isActive ? "eager" : "lazy"}
                   style={{
                     opacity: isActive ? 1 : 0,
                     border: 'none',
