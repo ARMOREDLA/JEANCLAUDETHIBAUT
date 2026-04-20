@@ -635,11 +635,12 @@ const toggleMute = () => {
             <div className="video-modal-container relative w-full max-w-[95vw] max-h-[80vh] bg-black" style={{ aspectRatio: '2.39/1', backgroundColor: '#000' }}>
               <iframe
                 ref={modalIframeRef}
-                src={`https://player.vimeo.com/video/${modalProject.vimeoId}?autoplay=1&loop=0&muted=0&controls=0&title=0&byline=0&portrait=0&playsinline=1&transparent=0`}
+                src={`https://player.vimeo.com/video/${modalProject.vimeoId}?autoplay=1&loop=0&muted=0&controls=0&title=0&byline=0&portrait=0&playsinline=1&transparent=0&quality=${isMobile ? '540p' : '1080p'}`}
                 className="absolute inset-0 w-full h-full bg-black"
                 style={{ border: 'none', backgroundColor: '#000', objectFit: 'contain' }}
                 allow="autoplay; fullscreen; picture-in-picture"
                 title={modalProject.title || modalProject.client}
+                loading="eager"
               />
             </div>
           </div>
