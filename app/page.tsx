@@ -186,16 +186,9 @@ export default function Home() {
       setIsMuted(false)
       setIsVideoModalOpen(true)
     } else if (activeCategory === "photo") {
-      const clickedProject = filteredProjects[currentIndex]
-      if (clickedProject?.vimeoId) {
-        setModalVideoIndex(currentIndex)
-        setProgress(0)
-        setIsMuted(false)
-        setIsVideoModalOpen(true)
-      } else {
-        setModalPhotoIndex(currentIndex)
-        setIsPhotoModalOpen(true)
-      }
+      // All photo items open in photo modal (including those with vimeoId)
+      setModalPhotoIndex(currentIndex)
+      setIsPhotoModalOpen(true)
     }
   }
 
@@ -826,7 +819,7 @@ export default function Home() {
       )}
 
       {/* Photo Lightbox Modal */}
-      {isPhotoModalOpen && (modalPhoto?.imageUrl || modalPhoto?.canvaUrl) && (
+      {isPhotoModalOpen && (modalPhoto?.imageUrl || modalPhoto?.canvaUrl || modalPhoto?.vimeoId) && (
         <div
           className="fixed inset-0 z-[100] bg-black flex items-center justify-center"
           onTouchStart={handleTouchStart}
@@ -843,9 +836,17 @@ export default function Home() {
             </svg>
           </button>
 
-          {/* Full photo or Canva embed */}
+          {/* Full photo, Canva embed, or Vimeo video */}
           <div className="relative w-[90vw] h-[90vh] flex items-center justify-center">
-            {modalPhoto.canvaUrl ? (
+            {modalPhoto.vimeoId ? (
+              <iframe
+                src={`https://player.vimeo.com/video/${modalPhoto.vimeoId}?autoplay=1&loop=1&muted=0&controls=1&title=0&byline=0&portrait=0&playsinline=1&quality=1080p`}
+                className="w-full h-full"
+                style={{ border: 'none' }}
+                allow="autoplay; fullscreen; picture-in-picture"
+                title={modalPhoto.title || modalPhoto.client || "Video"}
+              />
+            ) : modalPhoto.canvaUrl ? (
               <iframe
                 src={modalPhoto.canvaUrl}
                 className="w-full h-full"
