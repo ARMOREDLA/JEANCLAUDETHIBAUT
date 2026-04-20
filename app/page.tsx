@@ -630,9 +630,9 @@ const toggleMute = () => {
             onClick={togglePlay}
           />
 
-          {/* Video player - Full width on mobile */}
-          <div className="flex-1 flex items-center justify-center px-0 md:px-4 relative z-0 pointer-events-none">
-            <div className="video-modal-container relative w-full max-w-[100vw] md:max-w-[96vw] max-h-[90vh] md:max-h-[88vh] bg-black" style={{ aspectRatio: '2.39/1', backgroundColor: '#000' }}>
+          {/* Video player - Full width on all devices */}
+          <div className="flex-1 flex items-center justify-center px-0 relative z-0 pointer-events-none">
+            <div className="video-modal-container relative w-full max-w-[100vw] max-h-[calc(100vh-5rem)] bg-black" style={{ aspectRatio: '2.39/1', backgroundColor: '#000' }}>
               <iframe
                 ref={modalIframeRef}
                 src={`https://player.vimeo.com/video/${modalProject.vimeoId}?autoplay=1&loop=0&muted=0&controls=0&title=0&byline=0&portrait=0&playsinline=1&transparent=0&quality=1080p`}
