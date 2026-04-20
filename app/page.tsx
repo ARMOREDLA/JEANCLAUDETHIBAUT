@@ -540,11 +540,11 @@ const toggleMute = () => {
         </div>
       </div>
 
-      {/* Clickable overlay for video - captures clicks except nav area on right */}
+      {/* Clickable overlay for video - covers most of screen except nav dashes on right */}
       <div
         ref={videoAreaRef}
         className="fixed top-0 left-0 bottom-0 z-20 cursor-none md:cursor-none"
-        style={{ cursor: isMobile ? 'pointer' : 'none', right: '80px' }}
+        style={{ cursor: isMobile ? 'pointer' : 'none', right: isMobile ? '50px' : '80px' }}
         onMouseMove={handleMouseMove}
         onMouseEnter={handleMouseEnterVideo}
         onMouseLeave={handleMouseLeaveVideo}
