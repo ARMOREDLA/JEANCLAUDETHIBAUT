@@ -771,8 +771,8 @@ const toggleMute = () => {
             </div>
           </div>
 
-          {/* Navigation Arrows - Below video */}
-          <div className="absolute bottom-16 left-0 right-0 flex justify-between px-8 md:px-16 z-30 pointer-events-auto">
+          {/* Navigation Arrows - Above bottom controls */}
+          <div className="absolute bottom-24 left-0 right-0 flex justify-between px-8 md:px-16 z-30 pointer-events-auto">
             <button
               onClick={(e) => { e.stopPropagation(); handleModalPrev(); }}
               className="text-foreground/50 hover:text-foreground transition-colors duration-300"
