@@ -167,7 +167,10 @@ export default function Home() {
   }, [])
 
 const handleVideoClick = () => {
+  console.log("[v0] handleVideoClick called, currentIndex:", currentIndex, "activeCategory:", activeCategory)
+  console.log("[v0] filteredProjects[currentIndex]:", filteredProjects[currentIndex])
   if (activeCategory === "film") {
+    console.log("[v0] Opening video modal for index:", currentIndex)
     setModalVideoIndex(currentIndex)
     setProgress(0)
     setIsMuted(false)
