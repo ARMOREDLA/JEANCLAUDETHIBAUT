@@ -66,6 +66,7 @@ export default function Home() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [isInfoOpen, setIsInfoOpen] = useState(false)
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false)
+  const [initialLoadComplete, setInitialLoadComplete] = useState(false)
   const [modalVideoIndex, setModalVideoIndex] = useState(0)
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false)
   const [modalPhotoIndex, setModalPhotoIndex] = useState(0)
@@ -289,6 +290,14 @@ export default function Home() {
   // Track if user has manually navigated
   const [userHasNavigated, setUserHasNavigated] = useState(false)
 
+  // Delay loading other videos until first video has time to load
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setInitialLoadComplete(true)
+    }, 3000)
+    return () => clearTimeout(timer)
+  }, [])
+
   // Auto-rotating reel - every 6 seconds, stops once user navigates
   useEffect(() => {
     if (userHasNavigated) return // Don't auto-rotate if user has navigated
@@ -337,8 +346,8 @@ export default function Home() {
               const nextIndex = (activeIndex + 1) % totalProjects
               const nextIndex2 = (activeIndex + 2) % totalProjects
 
-              // Always render first video (for instant load), plus active and adjacent videos
-              const shouldRender = isFirst || isActive || index === prevIndex || index === nextIndex || index === nextIndex2
+              // On initial load, only render first video. After 3s, load adjacent videos too
+              const shouldRender = isFirst || (initialLoadComplete && (isActive || index === prevIndex || index === nextIndex || index === nextIndex2))
               if (!shouldRender) return null
 
               // Use vertical video ID on mobile if available
