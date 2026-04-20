@@ -516,23 +516,25 @@ export default function Home() {
               // If project has vimeoId, show as video
               if (project.vimeoId) {
                 return (
-                  <iframe
+                  <div
                     key={`${project.id}-${activeCategory}`}
-                    src={`https://player.vimeo.com/video/${project.vimeoId}?background=1&autoplay=1&loop=1&muted=1&controls=0&title=0&byline=0&portrait=0&sidedock=0&playsinline=1&dnt=1&quality=1080p`}
-                    className="absolute inset-0 w-full h-full transition-opacity duration-500 pointer-events-none"
-                    style={{
-                      opacity: isActive ? 1 : 0,
-                      border: 'none',
-                      backgroundColor: '#000',
-                      maxWidth: '90vw',
-                      maxHeight: '90vh',
-                      left: '50%',
-                      top: '50%',
-                      transform: 'translate(-50%, -50%)',
-                    }}
-                    allow="autoplay; fullscreen; picture-in-picture"
-                    title={project.title || project.client || "Motion"}
-                  />
+                    className="absolute inset-0 transition-opacity duration-300 flex items-center justify-center bg-background"
+                    style={{ opacity: isActive ? 1 : 0 }}
+                  >
+                    <iframe
+                      src={`https://player.vimeo.com/video/${project.vimeoId}?background=1&autoplay=1&loop=1&muted=1&controls=0&title=0&byline=0&portrait=0&sidedock=0&playsinline=1&dnt=1&quality=1080p`}
+                      className="max-w-full max-h-full pointer-events-none"
+                      style={{
+                        border: 'none',
+                        width: '100%',
+                        height: '100%',
+                        maxWidth: '100%',
+                        maxHeight: '100%',
+                      }}
+                      allow="autoplay; fullscreen; picture-in-picture"
+                      title={project.title || project.client || "Motion"}
+                    />
+                  </div>
                 )
               }
 
