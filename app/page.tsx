@@ -85,6 +85,11 @@ export default function Home() {
   const [duration, setDuration] = useState(0)
   const modalPlayerRef = useRef<Player | null>(null)
   const modalIframeRef = useRef<HTMLIFrameElement>(null)
+  
+  // Photo modal video player state
+  const [photoVideoPlaying, setPhotoVideoPlaying] = useState(true)
+  const photoModalPlayerRef = useRef<Player | null>(null)
+  const photoModalIframeRef = useRef<HTMLIFrameElement>(null)
 
   const reelIntervalRef = useRef<NodeJS.Timeout | null>(null)
   const isPausedRef = useRef(false)
@@ -165,6 +170,31 @@ export default function Home() {
       }
     }
   }, [isVideoModalOpen, modalVideoIndex])
+
+  // Initialize photo modal video player
+  useEffect(() => {
+    if (isPhotoModalOpen && modalPhoto?.vimeoId && photoModalIframeRef.current) {
+      photoModalPlayerRef.current = new Player(photoModalIframeRef.current)
+      photoModalPlayerRef.current.play()
+      setPhotoVideoPlaying(true)
+    }
+
+    return () => {
+      photoModalPlayerRef.current = null
+    }
+  }, [isPhotoModalOpen, modalPhotoIndex, modalPhoto?.vimeoId])
+
+  const togglePhotoVideo = () => {
+    if (photoModalPlayerRef.current) {
+      if (photoVideoPlaying) {
+        photoModalPlayerRef.current.pause()
+        setPhotoVideoPlaying(false)
+      } else {
+        photoModalPlayerRef.current.play()
+        setPhotoVideoPlaying(true)
+      }
+    }
+  }
 
   // Custom cursor tracking
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
@@ -523,12 +553,13 @@ export default function Home() {
                   >
                     <iframe
                       src={`https://player.vimeo.com/video/${project.vimeoId}?background=1&autoplay=1&loop=1&muted=1&controls=0&title=0&byline=0&portrait=0&sidedock=0&playsinline=1&dnt=1&quality=4k&keyboard=0`}
-                      className="max-w-full max-h-full pointer-events-none"
+                      className="pointer-events-none"
                       style={{
                         border: 'none',
-                        width: '100%',
-                        height: '100%',
+                        width: '90vw',
+                        height: 'auto',
                         aspectRatio: '16/9',
+                        maxHeight: '85vh',
                       }}
                       allow="autoplay; fullscreen; picture-in-picture"
                       title={project.title || project.client || "Motion"}
@@ -841,16 +872,25 @@ export default function Home() {
           </button>
 
           {/* Full photo, Canva embed, or Vimeo video */}
-          <div className="relative w-[90vw] h-[90vh] flex items-center justify-center bg-black">
+          <div className="relative w-[95vw] h-[95vh] flex items-center justify-center bg-black">
             {modalPhoto.vimeoId ? (
-              <iframe
-                key={`photo-modal-video-${modalPhoto.vimeoId}`}
-                src={`https://player.vimeo.com/video/${modalPhoto.vimeoId}?autoplay=1&loop=1&muted=0&controls=0&title=0&byline=0&portrait=0&playsinline=1&quality=4k&transparent=0&background=0&keyboard=0`}
-                className="w-full h-full"
-                style={{ border: 'none', backgroundColor: '#000' }}
-                allow="autoplay; fullscreen; picture-in-picture"
-                title={modalPhoto.title || modalPhoto.client || "Video"}
-              />
+              <>
+                <iframe
+                  ref={photoModalIframeRef}
+                  key={`photo-modal-video-${modalPhoto.vimeoId}`}
+                  src={`https://player.vimeo.com/video/${modalPhoto.vimeoId}?autoplay=1&loop=1&muted=0&controls=0&title=0&byline=0&portrait=0&playsinline=1&quality=4k&transparent=0&background=0&keyboard=0`}
+                  className="w-full h-full"
+                  style={{ border: 'none', backgroundColor: '#000' }}
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  title={modalPhoto.title || modalPhoto.client || "Video"}
+                />
+                {/* Click overlay for play/pause */}
+                <div 
+                  className="absolute inset-0 cursor-pointer z-10"
+                  onClick={togglePhotoVideo}
+                  onTouchEnd={(e) => { e.preventDefault(); e.stopPropagation(); togglePhotoVideo(); }}
+                />
+              </>
             ) : modalPhoto.canvaUrl ? (
               <iframe
                 src={modalPhoto.canvaUrl}
