@@ -124,11 +124,18 @@ export default function Home() {
       modalPlayerRef.current.on('play', () => setIsPlaying(true))
       modalPlayerRef.current.on('pause', () => setIsPlaying(false))
 
-      // Play with sound immediately - don't use callbacks which lose user gesture context
-      modalPlayerRef.current.setVolume(1)
-      modalPlayerRef.current.play()
-      setIsPlaying(true)
-      setIsMuted(false)
+      // Set volume first, then play - autoplay is disabled in iframe so we control the order
+      modalPlayerRef.current.ready().then(() => {
+        if (modalPlayerRef.current) {
+          modalPlayerRef.current.setVolume(1).then(() => {
+            if (modalPlayerRef.current) {
+              modalPlayerRef.current.play()
+              setIsPlaying(true)
+              setIsMuted(false)
+            }
+          })
+        }
+      })
     }
 
     return () => {
@@ -631,7 +638,7 @@ const toggleMute = () => {
             <div className="video-modal-container relative w-full max-w-[100vw] max-h-[calc(100vh-5rem)] bg-black" style={{ aspectRatio: '2.39/1', backgroundColor: '#000' }}>
               <iframe
                 ref={modalIframeRef}
-                src={`https://player.vimeo.com/video/${modalProject.vimeoId}?autoplay=1&loop=0&muted=0&controls=0&title=0&byline=0&portrait=0&playsinline=1&transparent=0&quality=1080p`}
+                src={`https://player.vimeo.com/video/${modalProject.vimeoId}?autoplay=0&loop=0&muted=0&controls=0&title=0&byline=0&portrait=0&playsinline=1&transparent=0&quality=1080p`}
                 className="absolute inset-0 w-full h-full bg-black"
                 style={{ border: 'none', backgroundColor: '#000', objectFit: 'contain' }}
                 allow="autoplay; fullscreen; picture-in-picture"
