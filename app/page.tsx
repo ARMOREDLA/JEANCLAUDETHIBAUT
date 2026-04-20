@@ -246,7 +246,6 @@ const handleVideoClick = () => {
   }, [filteredProjects.length])
 
   const togglePlay = () => {
-    console.log("[v0] togglePlay called, isPlaying:", isPlaying)
     if (modalPlayerRef.current) {
       if (isPlaying) {
         modalPlayerRef.current.pause()
@@ -658,7 +657,7 @@ const toggleMute = () => {
             className="absolute left-1/4 right-1/4 md:left-20 md:right-20 top-0 bottom-20 cursor-pointer z-30"
             onClick={togglePlay}
             onTouchStart={(e) => { e.stopPropagation(); }}
-            onTouchEnd={(e) => { e.preventDefault(); e.stopPropagation(); console.log("[v0] Center tap detected"); togglePlay(); }}
+            onTouchEnd={(e) => { e.preventDefault(); e.stopPropagation(); togglePlay(); }}
           />
 
           {/* Video player - Maximum size on all devices */}
@@ -717,8 +716,18 @@ const toggleMute = () => {
 
             {/* Controls Row */}
             <div className="flex items-center justify-between">
-              {/* Left: Play/Pause, Volume, Time */}
+              {/* Left: Prev Arrow, Play/Pause, Volume, Time */}
               <div className="flex items-center gap-4">
+                {/* Previous Video */}
+                <button
+                  onClick={(e) => { e.stopPropagation(); handleModalPrev(); }}
+                  className="text-foreground/50 hover:text-foreground transition-colors duration-300"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+
                 {/* Play/Pause Button */}
                 <button
                   onClick={togglePlay}
@@ -734,6 +743,16 @@ const toggleMute = () => {
                       <polygon points="5,3 19,12 5,21" />
                     </svg>
                   )}
+                </button>
+
+                {/* Next Video */}
+                <button
+                  onClick={(e) => { e.stopPropagation(); handleModalNext(); }}
+                  className="text-foreground/50 hover:text-foreground transition-colors duration-300"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
                 </button>
 
                 {/* Mute/Unmute Button */}
@@ -769,26 +788,6 @@ const toggleMute = () => {
                 </p>
               </div>
             </div>
-          </div>
-
-          {/* Navigation Arrows - Above bottom controls */}
-          <div className="absolute bottom-24 left-0 right-0 flex justify-between px-8 md:px-16 z-30 pointer-events-auto">
-            <button
-              onClick={(e) => { e.stopPropagation(); handleModalPrev(); }}
-              className="text-foreground/50 hover:text-foreground transition-colors duration-300"
-            >
-              <svg className="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <button
-              onClick={(e) => { e.stopPropagation(); handleModalNext(); }}
-              className="text-foreground/50 hover:text-foreground transition-colors duration-300"
-            >
-              <svg className="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
           </div>
         </div>
       )}
