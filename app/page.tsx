@@ -67,6 +67,8 @@ export default function Home() {
   const [isInfoOpen, setIsInfoOpen] = useState(false)
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false)
   const [initialLoadComplete, setInitialLoadComplete] = useState(false)
+  const [touchStart, setTouchStart] = useState<number | null>(null)
+  const [touchEnd, setTouchEnd] = useState<number | null>(null)
   const [modalVideoIndex, setModalVideoIndex] = useState(0)
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false)
   const [modalPhotoIndex, setModalPhotoIndex] = useState(0)
@@ -232,6 +234,34 @@ export default function Home() {
         modalPlayerRef.current.play()
       }
     }
+  }
+
+  // Swipe gesture handlers for mobile video modal navigation
+  const minSwipeDistance = 50
+  
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null)
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > minSwipeDistance
+    const isRightSwipe = distance < -minSwipeDistance
+    
+    if (isLeftSwipe) {
+      handleModalNext()
+    } else if (isRightSwipe) {
+      handleModalPrev()
+    }
+    
+    setTouchStart(null)
+    setTouchEnd(null)
   }
 
 const toggleMute = () => {
@@ -549,7 +579,13 @@ const toggleMute = () => {
 
       {/* Video Modal with Custom Controls */}
       {isVideoModalOpen && modalProject?.vimeoId && (
-        <div className="fixed inset-0 z-[100] bg-black flex flex-col" style={{ backgroundColor: '#000' }}>
+        <div 
+          className="fixed inset-0 z-[100] bg-black flex flex-col" 
+          style={{ backgroundColor: '#000' }}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
           {/* Close button */}
           <button
             onClick={(e) => { e.stopPropagation(); handleCloseModal(); }}
