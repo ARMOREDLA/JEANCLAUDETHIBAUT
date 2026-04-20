@@ -771,25 +771,25 @@ const toggleMute = () => {
             </div>
           </div>
 
-          {/* Navigation Arrows - Modal - centered relative to video area (excluding bottom controls) */}
-          <button
-            onClick={(e) => { e.stopPropagation(); handleModalPrev(); }}
-            className="absolute left-6 md:left-10 z-30 text-foreground/50 hover:text-foreground transition-colors duration-300 pointer-events-auto"
-            style={{ top: 'calc(50% - 2.5rem)', transform: 'translateY(-50%)' }}
-          >
-            <svg className="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <button
-            onClick={(e) => { e.stopPropagation(); handleModalNext(); }}
-            className="absolute right-6 md:right-10 z-30 text-foreground/50 hover:text-foreground transition-colors duration-300 pointer-events-auto"
-            style={{ top: 'calc(50% - 2.5rem)', transform: 'translateY(-50%)' }}
-          >
-            <svg className="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
+          {/* Navigation Arrows - Below video */}
+          <div className="absolute bottom-16 left-0 right-0 flex justify-between px-8 md:px-16 z-30 pointer-events-auto">
+            <button
+              onClick={(e) => { e.stopPropagation(); handleModalPrev(); }}
+              className="text-foreground/50 hover:text-foreground transition-colors duration-300"
+            >
+              <svg className="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              onClick={(e) => { e.stopPropagation(); handleModalNext(); }}
+              className="text-foreground/50 hover:text-foreground transition-colors duration-300"
+            >
+              <svg className="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
         </div>
       )}
 
