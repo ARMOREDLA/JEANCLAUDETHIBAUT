@@ -122,11 +122,24 @@ export default function Home() {
       modalPlayerRef.current.on('play', () => setIsPlaying(true))
       modalPlayerRef.current.on('pause', () => setIsPlaying(false))
 
-      // Start playing and unmute
-      modalPlayerRef.current.play()
-      modalPlayerRef.current.setVolume(1)
-      setIsPlaying(true)
-      setIsMuted(false)
+      // Wait for player to be ready before setting volume
+      modalPlayerRef.current.ready().then(() => {
+        if (modalPlayerRef.current) {
+          modalPlayerRef.current.play()
+          // Set volume after a brief delay to ensure player is fully initialized
+          setTimeout(() => {
+            if (modalPlayerRef.current) {
+              modalPlayerRef.current.setVolume(1).then(() => {
+                setIsMuted(false)
+              }).catch(() => {
+                // If setVolume fails (browser policy), keep muted state
+                setIsMuted(true)
+              })
+            }
+          }, 100)
+          setIsPlaying(true)
+        }
+      })
     }
 
     return () => {
@@ -221,11 +234,16 @@ export default function Home() {
     }
   }
 
-  const toggleMute = () => {
-    if (modalPlayerRef.current) {
-      modalPlayerRef.current.setMuted(!isMuted)
-      setIsMuted(!isMuted)
-    }
+const toggleMute = () => {
+  if (modalPlayerRef.current) {
+    const newMutedState = !isMuted
+    modalPlayerRef.current.setVolume(newMutedState ? 0 : 1).then(() => {
+      setIsMuted(newMutedState)
+    }).catch(() => {
+      // Fallback if setVolume fails
+      setIsMuted(newMutedState)
+    })
+  }
   }
 
   const formatTime = (seconds: number) => {
