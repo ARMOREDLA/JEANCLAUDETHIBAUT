@@ -171,16 +171,34 @@ export default function Home() {
   }, [])
 
   const handleModalPrev = useCallback(() => {
-    setModalVideoIndex((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length)
+    // Find previous project with vimeoId
+    setModalVideoIndex((prev) => {
+      let newIndex = (prev - 1 + filteredProjects.length) % filteredProjects.length
+      let attempts = 0
+      while (!filteredProjects[newIndex]?.vimeoId && attempts < filteredProjects.length) {
+        newIndex = (newIndex - 1 + filteredProjects.length) % filteredProjects.length
+        attempts++
+      }
+      return newIndex
+    })
     setIsMuted(false)
     setProgress(0)
-  }, [filteredProjects.length])
+  }, [filteredProjects])
 
   const handleModalNext = useCallback(() => {
-    setModalVideoIndex((prev) => (prev + 1) % filteredProjects.length)
+    // Find next project with vimeoId
+    setModalVideoIndex((prev) => {
+      let newIndex = (prev + 1) % filteredProjects.length
+      let attempts = 0
+      while (!filteredProjects[newIndex]?.vimeoId && attempts < filteredProjects.length) {
+        newIndex = (newIndex + 1) % filteredProjects.length
+        attempts++
+      }
+      return newIndex
+    })
     setIsMuted(false)
     setProgress(0)
-  }, [filteredProjects.length])
+  }, [filteredProjects])
 
   const handleClosePhotoModal = useCallback(() => {
     setIsPhotoModalOpen(false)
@@ -514,7 +532,7 @@ export default function Home() {
 
       {/* Video Modal with Custom Controls */}
       {isVideoModalOpen && modalProject?.vimeoId && (
-        <div className="fixed inset-0 z-[100] bg-black flex flex-col">
+        <div className="fixed inset-0 z-[100] bg-black flex flex-col" style={{ backgroundColor: '#000' }}>
           {/* Close button */}
           <button
             onClick={(e) => { e.stopPropagation(); handleCloseModal(); }}
