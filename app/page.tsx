@@ -346,9 +346,12 @@ export default function Home() {
               const nextIndex = (activeIndex + 1) % totalProjects
               const nextIndex2 = (activeIndex + 2) % totalProjects
 
-              // On initial load, only render first video. After 3s, load adjacent videos too
-              const shouldRender = isFirst || (initialLoadComplete && (isActive || index === prevIndex || index === nextIndex || index === nextIndex2))
+              // On initial load, only render first video. After initial load, render all videos
+              // but use lazy loading for non-adjacent ones
+              const shouldRender = isFirst || initialLoadComplete
               if (!shouldRender) return null
+              
+              const isAdjacent = isActive || index === prevIndex || index === nextIndex || index === nextIndex2
 
               // Use vertical video ID on mobile if available
               const useVertical = isMobile && project.verticalVimeoId
@@ -374,7 +377,7 @@ export default function Home() {
                   key={`${project.id}-${activeCategory}-${isMobile ? 'mobile' : 'desktop'}`}
                   src={`https://player.vimeo.com/video/${videoId}?background=1&autoplay=1&loop=1&muted=1&controls=0&title=0&byline=0&portrait=0&sidedock=0&playsinline=1&dnt=1&quality=auto`}
                   className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-500 pointer-events-none"
-                  loading={isFirst || isActive ? "eager" : "lazy"}
+                  loading={isFirst || isAdjacent ? "eager" : "lazy"}
                   style={{
                     opacity: isActive ? 1 : 0,
                     border: 'none',
