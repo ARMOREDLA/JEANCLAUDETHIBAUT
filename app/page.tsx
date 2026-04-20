@@ -449,7 +449,8 @@ export default function Home() {
         setProgress(0)
         setIsMuted(false)
         setIsVideoModalOpen(true)
-      } else {
+      } else if (clickedProject?.imageUrl || clickedProject?.canvaUrl) {
+        // Open photo modal for images or Canva embeds
         setModalPhotoIndex(index)
         setIsPhotoModalOpen(true)
       }
@@ -548,10 +549,11 @@ export default function Home() {
                     style={{ opacity: isActive ? 1 : 0 }}
                   >
                     <iframe
-                      src={project.canvaUrl}
+                      src={`${project.canvaUrl}${project.canvaUrl.includes('?') ? '&' : '?'}autoplay=1`}
                       className="w-full h-full pointer-events-none"
                       style={{ border: 'none' }}
                       allow="autoplay; fullscreen"
+                      allowFullScreen
                       title={project.title || project.client || "Canva Design"}
                     />
                   </div>
@@ -824,7 +826,7 @@ export default function Home() {
       )}
 
       {/* Photo Lightbox Modal */}
-      {isPhotoModalOpen && modalPhoto?.imageUrl && (
+      {isPhotoModalOpen && (modalPhoto?.imageUrl || modalPhoto?.canvaUrl) && (
         <div
           className="fixed inset-0 z-[100] bg-black flex items-center justify-center"
           onTouchStart={handleTouchStart}
@@ -841,13 +843,23 @@ export default function Home() {
             </svg>
           </button>
 
-          {/* Full photo */}
+          {/* Full photo or Canva embed */}
           <div className="relative w-[90vw] h-[90vh] flex items-center justify-center">
-            <img
-              src={convertGoogleDriveUrl(modalPhoto.imageUrl)}
-              alt={modalPhoto.title || modalPhoto.client || "Photo"}
-              className="max-w-full max-h-full object-contain"
-            />
+            {modalPhoto.canvaUrl ? (
+              <iframe
+                src={modalPhoto.canvaUrl}
+                className="w-full h-full"
+                style={{ border: 'none' }}
+                allow="autoplay; fullscreen"
+                title={modalPhoto.title || modalPhoto.client || "Canva Design"}
+              />
+            ) : (
+              <img
+                src={convertGoogleDriveUrl(modalPhoto.imageUrl!)}
+                alt={modalPhoto.title || modalPhoto.client || "Photo"}
+                className="max-w-full max-h-full object-contain"
+              />
+            )}
           </div>
 
           {/* Photo info */}
