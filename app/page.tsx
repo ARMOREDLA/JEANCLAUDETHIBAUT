@@ -330,6 +330,8 @@ export default function Home() {
     setCurrentIndex(index)
     setUserHasNavigated(true)
 
+    const clickedProject = filteredProjects[index]
+    
     // Open modal for the clicked project
     if (activeCategory === "film") {
       setModalVideoIndex(index)
@@ -337,8 +339,16 @@ export default function Home() {
       setIsMuted(false)
       setIsVideoModalOpen(true)
     } else if (activeCategory === "photo") {
-      setModalPhotoIndex(index)
-      setIsPhotoModalOpen(true)
+      // If photo has vimeoId, open video modal instead
+      if (clickedProject?.vimeoId) {
+        setModalVideoIndex(index)
+        setProgress(0)
+        setIsMuted(false)
+        setIsVideoModalOpen(true)
+      } else {
+        setModalPhotoIndex(index)
+        setIsPhotoModalOpen(true)
+      }
     }
   }
 
@@ -401,10 +411,32 @@ export default function Home() {
               )
             })
           ) : (
-            // Photo backgrounds
+            // Photo backgrounds (can be images or motion/video)
             filteredProjects.map((project, index) => {
-              if (!project.imageUrl) return null
               const isActive = activeIndex === index
+              
+              // If project has vimeoId, show as video
+              if (project.vimeoId) {
+                return (
+                  <iframe
+                    key={`${project.id}-${activeCategory}`}
+                    src={`https://player.vimeo.com/video/${project.vimeoId}?background=1&autoplay=1&loop=1&muted=1&controls=0&title=0&byline=0&portrait=0&sidedock=0&playsinline=1&dnt=1&quality=1080p`}
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-500 pointer-events-none"
+                    style={{
+                      opacity: isActive ? 1 : 0,
+                      border: 'none',
+                      width: 'max(177.78vh, 100vw)',
+                      height: 'max(100vh, 56.25vw)',
+                      backgroundColor: '#000',
+                    }}
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    title={project.title || project.client || "Motion"}
+                  />
+                )
+              }
+              
+              // Otherwise show as image
+              if (!project.imageUrl) return null
               const imageUrl = convertGoogleDriveUrl(project.imageUrl)
 
               return (
