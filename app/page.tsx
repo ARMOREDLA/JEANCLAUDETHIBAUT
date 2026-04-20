@@ -543,14 +543,18 @@ const toggleMute = () => {
       {/* Clickable overlay for video - captures clicks except nav area on right */}
       <div
         ref={videoAreaRef}
-        className="fixed top-0 left-0 bottom-0 z-10 cursor-none md:cursor-none"
+        className="fixed top-0 left-0 bottom-0 z-20 cursor-none md:cursor-none"
         style={{ cursor: isMobile ? 'pointer' : 'none', right: '80px' }}
         onMouseMove={handleMouseMove}
         onMouseEnter={handleMouseEnterVideo}
         onMouseLeave={handleMouseLeaveVideo}
         onClick={handleVideoClick}
+        onTouchStart={(e) => {
+          e.stopPropagation()
+        }}
         onTouchEnd={(e) => {
           e.preventDefault()
+          e.stopPropagation()
           handleVideoClick()
         }}
       />
