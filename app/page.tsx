@@ -543,26 +543,23 @@ export default function Home() {
             filteredProjects.map((project, index) => {
               const isActive = activeIndex === index
 
-              // If project has vimeoId, show as video - same style as images with black bars
+              // If project has vimeoId, show as video - use same sizing as film videos
               if (project.vimeoId) {
                 return (
-                  <div
+                  <iframe
                     key={`${project.id}-${activeCategory}`}
-                    className="absolute inset-0 transition-opacity duration-300 flex items-center justify-center bg-black"
-                    style={{ opacity: isActive ? 1 : 0 }}
-                  >
-                    <iframe
-                      src={`https://player.vimeo.com/video/${project.vimeoId}?background=1&autoplay=1&loop=1&muted=1&controls=0&title=0&byline=0&portrait=0&sidedock=0&playsinline=1&dnt=1&quality=4k&keyboard=0`}
-                      className="max-w-full max-h-full pointer-events-none"
-                      style={{
-                        border: 'none',
-                        width: '100%',
-                        height: '100%',
-                      }}
-                      allow="autoplay; fullscreen; picture-in-picture"
-                      title={project.title || project.client || "Motion"}
-                    />
-                  </div>
+                    src={`https://player.vimeo.com/video/${project.vimeoId}?background=1&autoplay=1&loop=1&muted=1&controls=0&title=0&byline=0&portrait=0&sidedock=0&playsinline=1&dnt=1&quality=4k&keyboard=0`}
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 pointer-events-none"
+                    style={{
+                      opacity: isActive ? 1 : 0,
+                      border: 'none',
+                      width: 'max(177.78vh, 100vw)',
+                      height: 'max(100vh, 56.25vw)',
+                      backgroundColor: '#000',
+                    }}
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    title={project.title || project.client || "Motion"}
+                  />
                 )
               }
 
