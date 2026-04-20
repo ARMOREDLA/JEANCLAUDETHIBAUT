@@ -28,6 +28,7 @@ interface Project {
   vimeoId?: string
   verticalVimeoId?: string
   imageUrl?: string
+  canvaUrl?: string
   category: "film" | "photo"
   aspectRatio?: "cinemascope" | "16:9" // defaults to cinemascope
 }
@@ -57,7 +58,8 @@ const projects: Project[] = [
   { id: "p10", title: "", client: "", imageUrl: "https://drive.google.com/file/d/12p0-Ykp337COjRfcdD8lrNc6FGSSpUWc/view?usp=share_link", category: "photo" },
   { id: "p11", title: "", client: "ESTÉE LAUDER", imageUrl: "https://drive.google.com/file/d/1ux8X7Kz1s5F7bV4OwOABC1zCAY7CuY6x/view?usp=share_link", category: "photo" },
   { id: "p12", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1O9PsoCEuKypnIoqdh7AHWcypWcHBhk-2/view?usp=share_link", category: "photo" },
-  { id: "p13", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1hYG5D4I9yuyGMXpvUOLgM73wBivmSPM1/view?usp=share_link", category: "photo" },
+  { id: "p13", title: "", client: "", canvaUrl: "https://www.canva.com/design/DAHHbDt8KAs/doVhFD4evndqJlTec5g54Q/view?embed", category: "photo" },
+  { id: "p14", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1hYG5D4I9yuyGMXpvUOLgM73wBivmSPM1/view?usp=share_link", category: "photo" },
 ]
 
 export default function Home() {
@@ -127,7 +129,7 @@ export default function Home() {
       // Start muted (accurate UI), then try to unmute after play
       setIsMuted(true)
       setIsPlaying(false)
-      
+
       modalPlayerRef.current.ready().then(() => {
         if (modalPlayerRef.current) {
           // Play first
@@ -177,25 +179,25 @@ export default function Home() {
     setIsCursorVisible(false)
   }, [])
 
-const handleVideoClick = () => {
-  if (activeCategory === "film") {
-    setModalVideoIndex(currentIndex)
-    setProgress(0)
-    setIsMuted(false)
-    setIsVideoModalOpen(true)
-  } else if (activeCategory === "photo") {
-    const clickedProject = filteredProjects[currentIndex]
-    if (clickedProject?.vimeoId) {
+  const handleVideoClick = () => {
+    if (activeCategory === "film") {
       setModalVideoIndex(currentIndex)
       setProgress(0)
       setIsMuted(false)
       setIsVideoModalOpen(true)
-    } else {
-      setModalPhotoIndex(currentIndex)
-      setIsPhotoModalOpen(true)
+    } else if (activeCategory === "photo") {
+      const clickedProject = filteredProjects[currentIndex]
+      if (clickedProject?.vimeoId) {
+        setModalVideoIndex(currentIndex)
+        setProgress(0)
+        setIsMuted(false)
+        setIsVideoModalOpen(true)
+      } else {
+        setModalPhotoIndex(currentIndex)
+        setIsPhotoModalOpen(true)
+      }
     }
   }
-}
 
   const handleCloseModal = useCallback(() => {
     setIsVideoModalOpen(false)
@@ -259,7 +261,7 @@ const handleVideoClick = () => {
 
   // Swipe gesture handlers for mobile modal navigation
   const minSwipeDistance = 50
-  
+
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchEnd(null)
     setTouchStart(e.targetTouches[0].clientX)
@@ -274,13 +276,13 @@ const handleVideoClick = () => {
     const distance = touchStart - touchEnd
     const isLeftSwipe = distance > minSwipeDistance
     const isRightSwipe = distance < -minSwipeDistance
-    
+
     if (isLeftSwipe) {
       handleModalNext()
     } else if (isRightSwipe) {
       handleModalPrev()
     }
-    
+
     setTouchStart(null)
     setTouchEnd(null)
   }
@@ -290,27 +292,27 @@ const handleVideoClick = () => {
     const distance = touchStart - touchEnd
     const isLeftSwipe = distance > minSwipeDistance
     const isRightSwipe = distance < -minSwipeDistance
-    
+
     if (isLeftSwipe) {
       handlePhotoNext()
     } else if (isRightSwipe) {
       handlePhotoPrev()
     }
-    
+
     setTouchStart(null)
     setTouchEnd(null)
   }
 
-const toggleMute = () => {
-  if (modalPlayerRef.current) {
-    const newMutedState = !isMuted
-    modalPlayerRef.current.setVolume(newMutedState ? 0 : 1).then(() => {
-      setIsMuted(newMutedState)
-    }).catch(() => {
-      // Fallback if setVolume fails
-      setIsMuted(newMutedState)
-    })
-  }
+  const toggleMute = () => {
+    if (modalPlayerRef.current) {
+      const newMutedState = !isMuted
+      modalPlayerRef.current.setVolume(newMutedState ? 0 : 1).then(() => {
+        setIsMuted(newMutedState)
+      }).catch(() => {
+        // Fallback if setVolume fails
+        setIsMuted(newMutedState)
+      })
+    }
   }
 
   const formatTime = (seconds: number) => {
@@ -513,7 +515,7 @@ const toggleMute = () => {
               )
             })
           ) : (
-            // Photo backgrounds (can be images or motion/video)
+            // Photo backgrounds (can be images, video, or Canva embeds)
             filteredProjects.map((project, index) => {
               const isActive = activeIndex === index
 
@@ -534,6 +536,25 @@ const toggleMute = () => {
                     allow="autoplay; fullscreen; picture-in-picture"
                     title={project.title || project.client || "Motion"}
                   />
+                )
+              }
+
+              // If project has canvaUrl, show as Canva embed
+              if (project.canvaUrl) {
+                return (
+                  <div
+                    key={`${project.id}-${activeCategory}`}
+                    className="absolute inset-0 transition-opacity duration-500 flex items-center justify-center bg-black"
+                    style={{ opacity: isActive ? 1 : 0 }}
+                  >
+                    <iframe
+                      src={project.canvaUrl}
+                      className="w-full h-full pointer-events-none"
+                      style={{ border: 'none' }}
+                      allow="autoplay; fullscreen"
+                      title={project.title || project.client || "Canva Design"}
+                    />
+                  </div>
                 )
               }
 
@@ -620,8 +641,8 @@ const toggleMute = () => {
 
       {/* Video Modal with Custom Controls */}
       {isVideoModalOpen && modalProject?.vimeoId && (
-        <div 
-          className="fixed inset-0 z-[100] bg-black flex flex-col" 
+        <div
+          className="fixed inset-0 z-[100] bg-black flex flex-col"
           style={{ backgroundColor: '#000' }}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
@@ -804,7 +825,7 @@ const toggleMute = () => {
 
       {/* Photo Lightbox Modal */}
       {isPhotoModalOpen && modalPhoto?.imageUrl && (
-        <div 
+        <div
           className="fixed inset-0 z-[100] bg-black flex items-center justify-center"
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
