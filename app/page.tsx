@@ -658,11 +658,11 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Clickable overlay for video - covers most of screen except nav and info on right */}
+      {/* Clickable overlay for video - covers most of screen except nav/info on right and footer at bottom */}
       <div
         ref={videoAreaRef}
-        className="fixed top-0 left-0 bottom-0 z-[60]"
-        style={{ cursor: isMobile ? 'pointer' : (activeCategory === 'film' ? 'none' : 'pointer'), right: isMobile ? '80px' : '120px' }}
+        className="fixed top-0 left-0 z-[60]"
+        style={{ cursor: isMobile ? 'pointer' : (activeCategory === 'film' ? 'none' : 'pointer'), right: isMobile ? '80px' : '120px', bottom: isMobile ? '80px' : '60px' }}
         onMouseMove={handleMouseMove}
         onMouseEnter={handleMouseEnterVideo}
         onMouseLeave={handleMouseLeaveVideo}
