@@ -85,54 +85,6 @@ export default function Home() {
   const modalPlayerRef = useRef<Player | null>(null)
   const modalIframeRef = useRef<HTMLIFrameElement>(null)
 
-  // --- Audio Unlock (scoped to modal only) ---
-  let audioUnlocked = false;
-
-  function unlockAudio() {
-    if (audioUnlocked) return;
-    audioUnlocked = true;
-    const ctx = new AudioContext();
-    ctx.resume();
-  }
-
-  // Unlock on any general user interaction
-  document.addEventListener('click', unlockAudio, { once: true });
-  document.addEventListener('touchstart', unlockAudio, { once: true });
-  document.addEventListener('scroll', unlockAudio, { once: true });
-
-
-  // --- Modal Video: plays WITH sound ---
-  function openModal(videoSrc) {
-    const modal = document.getElementById('video-modal');
-    const modalVideo = document.getElementById('modal-video');
-
-    modalVideo.src = videoSrc;
-    modalVideo.muted = false; // 🔊 Sound ON
-    modal.style.display = 'flex';
-
-    modalVideo.play().catch(() => {
-      // Fallback if audio still blocked
-      modalVideo.muted = true;
-      modalVideo.play();
-    });
-  }
-
-  function closeModal() {
-    const modal = document.getElementById('video-modal');
-    const modalVideo = document.getElementById('modal-video');
-
-    modalVideo.pause();
-    modalVideo.src = '';
-    modal.style.display = 'none';
-  }
-
-
-  // --- Background Videos: always MUTED ---
-  document.querySelectorAll('.background-video').forEach(video => {
-    video.muted = true; // 🔇 Sound OFF, always
-    video.play().catch(err => console.warn('Background video error:', err));
-  });
-
   // Photo modal video player state
   const [photoVideoPlaying, setPhotoVideoPlaying] = useState(true)
   const photoModalPlayerRef = useRef<Player | null>(null)
