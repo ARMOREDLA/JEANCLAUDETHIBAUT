@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Jean Claude Thibaut - Director',
-  description: 'Jean Claude Thibaut - Director',
+  title: 'JEAN CLAUDE THIBAUT - Director',
+  description: 'JEAN CLAUDE THIBAUT - Director',
   icons: {
     icon: [
       {
@@ -35,22 +35,22 @@ export const metadata: Metadata = {
     apple: '/apple-icon.png',
   },
   openGraph: {
-    title: 'Jean Claude Thibaut - Director',
-    description: 'Jean Claude Thibaut - Director',
+    title: 'JEAN CLAUDE THIBAUT - Director',
+    description: 'JEAN CLAUDE THIBAUT - Director',
     images: [
       {
         url: '/og-image.jpg',
         width: 400,
         height: 400,
-        alt: 'Jean Claude Thibaut',
+        alt: 'JEAN CLAUDE THIBAUT',
       },
     ],
     type: 'website',
   },
   twitter: {
     card: 'summary',
-    title: 'Jean Claude Thibaut - Director',
-    description: 'Jean Claude Thibaut - Director',
+    title: 'JEAN CLAUDE THIBAUT - Director',
+    description: 'JEAN CLAUDE THIBAUT - Director',
     images: ['/og-image.jpg'],
   },
 }
