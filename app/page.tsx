@@ -480,7 +480,7 @@ export default function Home() {
   }
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-background">
+    <main className="relative h-screen h-[100dvh] overflow-hidden bg-background">
       {/* Fullscreen Background - Video or Photo */}
       <div className="fixed inset-0 w-full h-full z-0 bg-black">
         <div className="absolute inset-0 bg-black" style={{ overflow: 'hidden' }}>
