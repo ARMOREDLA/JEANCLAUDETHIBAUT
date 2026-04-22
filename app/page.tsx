@@ -36,6 +36,9 @@ interface Project {
 // Jean Claude Thibaut's projects
 const projects: Project[] = [
   // Film projects
+  { id: "1", title: "MAKE SPECIAL HAPPEN", client: "FAIRMONT HOTELS", vimeoId: "1081604699", category: "film" },
+  { id: "1", title: "MOMENTS", client: "PENINSULA HOTELS", vimeoId: "322138841", category: "film" },
+  { id: "1", title: "WHEN LA IS A MAN", client: "LOUIS VUITTON", vimeoId: "798226174", category: "film" },
   { id: "1", title: "INTUITION - DWAYNE WADE", client: "ARAMIS", vimeoId: "1112466337", verticalVimeoId: "1183814123", category: "film" },
   { id: "2", title: "RE-Nutriv DIAMOND LIPS - ANA DE ARMAS", client: "ESTÉE LAUDER", vimeoId: "1183986630", category: "film" },
   { id: "3", title: "DARE - IMAAN HAMMAM, GRACE ELIZABETH", client: "ESTÉE LAUDER", vimeoId: "896626191", category: "film" },
