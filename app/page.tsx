@@ -198,6 +198,46 @@ export default function Home() {
     }
   }
 
+  // URL hash support for direct video links
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.slice(1) // Remove the #
+      if (!hash) return
+
+      const [category, indexStr] = hash.split('/')
+      const index = parseInt(indexStr, 10)
+
+      if (category === 'film' && !isNaN(index)) {
+        const filmProjects = projects.filter(p => p.category === 'film')
+        if (index >= 0 && index < filmProjects.length) {
+          setActiveCategory('film')
+          setCurrentIndex(index)
+          setModalVideoIndex(index)
+          setProgress(0)
+          setIsMuted(false)
+          setIsVideoModalOpen(true)
+        }
+      } else if (category === 'photo' && !isNaN(index)) {
+        const photoProjects = projects.filter(p => p.category === 'photo')
+        if (index >= 0 && index < photoProjects.length) {
+          setActiveCategory('photo')
+          setCurrentIndex(index)
+          setModalPhotoIndex(index)
+          setIsPhotoModalOpen(true)
+        }
+      }
+    }
+
+    // Check hash on initial load
+    if (window.location.hash) {
+      handleHashChange()
+    }
+
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange)
+    return () => window.removeEventListener('hashchange', handleHashChange)
+  }, [])
+
   // Custom cursor tracking
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     setCursorPosition({ x: e.clientX, y: e.clientY })
@@ -217,10 +257,14 @@ export default function Home() {
       setProgress(0)
       setIsMuted(false)
       setIsVideoModalOpen(true)
+      // Update URL hash for direct linking
+      window.history.replaceState(null, '', `#film/${currentIndex}`)
     } else if (activeCategory === "photo") {
       // All photo items open in photo modal (including those with vimeoId)
       setModalPhotoIndex(currentIndex)
       setIsPhotoModalOpen(true)
+      // Update URL hash for direct linking
+      window.history.replaceState(null, '', `#photo/${currentIndex}`)
     }
   }
 
@@ -228,6 +272,8 @@ export default function Home() {
     setIsVideoModalOpen(false)
     setIsPlaying(false)
     setProgress(0)
+    // Clear URL hash
+    window.history.replaceState(null, '', window.location.pathname)
   }, [])
 
   const handleModalPrev = useCallback(() => {
@@ -262,7 +308,22 @@ export default function Home() {
 
   const handleClosePhotoModal = useCallback(() => {
     setIsPhotoModalOpen(false)
+    // Clear URL hash
+    window.history.replaceState(null, '', window.location.pathname)
   }, [])
+
+  // Update URL hash when navigating between videos in modal
+  useEffect(() => {
+    if (isVideoModalOpen) {
+      window.history.replaceState(null, '', `#film/${modalVideoIndex}`)
+    }
+  }, [isVideoModalOpen, modalVideoIndex])
+
+  useEffect(() => {
+    if (isPhotoModalOpen) {
+      window.history.replaceState(null, '', `#photo/${modalPhotoIndex}`)
+    }
+  }, [isPhotoModalOpen, modalPhotoIndex])
 
   const handlePhotoPrev = useCallback(() => {
     setModalPhotoIndex((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length)
