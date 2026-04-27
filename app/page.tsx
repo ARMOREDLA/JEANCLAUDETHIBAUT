@@ -37,17 +37,17 @@ interface Project {
 const projects: Project[] = [
   // Film projects
   { id: "1", title: "MAKE SPECIAL HAPPEN", client: "FAIRMONT HOTELS", vimeoId: "1081604699", category: "film" },
-  { id: "1", title: "MOMENTS", client: "PENINSULA HOTELS", vimeoId: "322138841", category: "film" },
-  { id: "1", title: "WHEN LA IS A MAN", client: "LOUIS VUITTON", vimeoId: "798226174", category: "film" },
-  { id: "1", title: "INTUITION - DWAYNE WADE", client: "ARAMIS", vimeoId: "1112466337", verticalVimeoId: "1183814123", category: "film" },
-  { id: "2", title: "RE-Nutriv DIAMOND LIPS - ANA DE ARMAS", client: "ESTÉE LAUDER", vimeoId: "1183986630", category: "film" },
-  { id: "3", title: "DARE - IMAAN HAMMAM, GRACE ELIZABETH", client: "ESTÉE LAUDER", vimeoId: "896626191", category: "film" },
-  { id: "4", title: "OLD FASHIONED - LUCIEN LAVISCOUNT", client: "KILIAN PARIS", vimeoId: "995446230", category: "film", aspectRatio: "16:9" },
+  { id: "2", title: "INTUITION - DWAYNE WADE", client: "ARAMIS", vimeoId: "1112466337", verticalVimeoId: "1183814123", category: "film" },
+  { id: "3", title: "RE-Nutriv DIAMOND LIPS - ANA DE ARMAS", client: "ESTÉE LAUDER", vimeoId: "1183986630", category: "film" },
+  { id: "4", title: "DARE - IMAAN HAMMAM, GRACE ELIZABETH", client: "ESTÉE LAUDER", vimeoId: "896626191", category: "film" },
+  { id: "5", title: "OLD FASHIONED - LUCIEN LAVISCOUNT", client: "KILIAN PARIS", vimeoId: "995446230", category: "film", aspectRatio: "16:9" },
   { id: "6", title: "THE INVITATION", client: "S9 HUAWEI", vimeoId: "1031749834", category: "film" },
   { id: "7", title: "THE ONE AND ONLY", client: "BLENDER'S PRIDE", vimeoId: "1169793531", category: "film", aspectRatio: "16:9" },
   { id: "8", title: "AT LARGE", client: "MAGAZINE", vimeoId: "1182293334", verticalVimeoId: "1183821352", category: "film" },
   { id: "9", title: "BLUE SERUM - LIU WEN", client: "CHANEL", vimeoId: "258186791", category: "film" },
-  { id: "5", title: "VIII", client: "DIOR", vimeoId: "794239674", category: "film", aspectRatio: "16:9" },
+  { id: "10", title: "WHEN LA IS A MAN", client: "LOUIS VUITTON", vimeoId: "798226174", category: "film" },
+  { id: "11", title: "VIII", client: "DIOR", vimeoId: "794239674", category: "film", aspectRatio: "16:9" },
+  { id: "12", title: "MOMENTS", client: "PENINSULA HOTELS", vimeoId: "322138841", category: "film" },
   // Photo projects
   { id: "p1", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1lHVls4Z5YVC9utIsi2C1l-Oml6KAq5lO/view?usp=share_link", category: "photo" },
   { id: "p2", title: "", client: "AT LARGE Magazine", imageUrl: "https://drive.google.com/file/d/1mqUKGNTViuVZyupQg7cwxE8wJ8Z7-Lpy/view?usp=share_link", category: "photo" },
@@ -565,7 +565,7 @@ export default function Home() {
       {/* Fullscreen Background - Video or Photo */}
       <div className="fixed inset-0 w-full h-full z-0 bg-black">
         {/* Transition overlay to prevent flash */}
-        <div 
+        <div
           className="absolute inset-0 bg-black z-10 pointer-events-none transition-opacity duration-150"
           style={{ opacity: isTransitioning ? 1 : 0 }}
         />
@@ -731,12 +731,12 @@ export default function Home() {
       </div>
 
       {/* Header */}
-<div className="relative z-50">
-          <Header
-            activeCategory={activeCategory}
-            onCategoryChange={handleCategoryChange}
-          />
-        </div>
+      <div className="relative z-50">
+        <Header
+          activeCategory={activeCategory}
+          onCategoryChange={handleCategoryChange}
+        />
+      </div>
 
       {/* Project Navigation - Right side with horizontal dashes */}
       <ProjectNav
