@@ -581,9 +581,8 @@ export default function Home() {
               const prevIndex = (activeIndex - 1 + totalProjects) % totalProjects
               const nextIndex = (activeIndex + 1) % totalProjects
 
-              // Only render first video initially, then adjacent after initial load
-              const isAdjacent = index === prevIndex || index === nextIndex
-              const shouldRender = isFirst || (initialLoadComplete && (isActive || isAdjacent))
+              // Render all videos after initial load for smooth hover transitions
+              const shouldRender = isFirst || initialLoadComplete
               if (!shouldRender) return null
 
               // Use vertical video ID on mobile if available
@@ -681,7 +680,7 @@ export default function Home() {
               return (
                 <div
                   key={`${project.id}-${activeCategory}`}
-                  className="absolute inset-0 transition-opacity duration-300 flex items-center justify-center bg-background"
+                  className="absolute inset-0 transition-opacity duration-300 flex items-center justify-center bg-black"
                   style={{ opacity: isActive ? 1 : 0 }}
                 >
                   <img
