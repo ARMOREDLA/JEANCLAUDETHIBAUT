@@ -101,8 +101,8 @@ export default function Home() {
   // Filter projects by category
   const filteredProjects = projects.filter(p => p.category === activeCategory)
 
-  // activeIndex is only based on currentIndex - hovering doesn't change the background video
-  const activeIndex = currentIndex
+  // activeIndex: for photos, hovering shows other images; for film, hovering doesn't change the background video
+  const activeIndex = activeCategory === "photo" && hoveredIndex !== null ? hoveredIndex : currentIndex
   const currentProject = filteredProjects[activeIndex]
   const modalProject = filteredProjects[modalVideoIndex]
   const modalPhoto = filteredProjects[modalPhotoIndex]
@@ -538,7 +538,6 @@ export default function Home() {
     setUserHasNavigated(true)
 
     const clickedProject = filteredProjects[index]
-    console.log("[v0] handleProjectClick", { index, clickedProject, activeCategory, hasVimeoId: !!clickedProject?.vimeoId, hasImageUrl: !!clickedProject?.imageUrl })
 
     // Open modal for the clicked project
     if (activeCategory === "film") {
