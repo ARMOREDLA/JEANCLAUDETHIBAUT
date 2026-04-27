@@ -79,6 +79,7 @@ export default function Home() {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 })
   const [isCursorVisible, setIsCursorVisible] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [isTransitioning, setIsTransitioning] = useState(false)
 
   // Modal video player state
   const [isPlaying, setIsPlaying] = useState(false)
@@ -311,6 +312,22 @@ export default function Home() {
     // Clear URL hash
     window.history.replaceState(null, '', window.location.pathname)
   }, [])
+
+  // Handle category change - reset index to 0 with transition
+  const handleCategoryChange = useCallback((category: WorkCategory) => {
+    if (category === activeCategory) return
+    setIsTransitioning(true)
+    // Brief delay to fade to black before switching
+    setTimeout(() => {
+      setActiveCategory(category)
+      setCurrentIndex(0)
+      setUserHasNavigated(false)
+      // Allow new content to fade in
+      setTimeout(() => {
+        setIsTransitioning(false)
+      }, 50)
+    }, 150)
+  }, [activeCategory])
 
   // Update URL hash when navigating between videos in modal
   useEffect(() => {
@@ -547,6 +564,11 @@ export default function Home() {
     <main className="relative h-screen h-[100dvh] overflow-hidden bg-background">
       {/* Fullscreen Background - Video or Photo */}
       <div className="fixed inset-0 w-full h-full z-0 bg-black">
+        {/* Transition overlay to prevent flash */}
+        <div 
+          className="absolute inset-0 bg-black z-10 pointer-events-none transition-opacity duration-150"
+          style={{ opacity: isTransitioning ? 1 : 0 }}
+        />
         <div className="absolute inset-0 bg-black" style={{ overflow: 'hidden' }}>
           {activeCategory === "film" ? (
             // Video backgrounds for film - always load first video, plus active and adjacent
@@ -709,12 +731,12 @@ export default function Home() {
       </div>
 
       {/* Header */}
-      <div className="relative z-50">
-        <Header
-          activeCategory={activeCategory}
-          onCategoryChange={setActiveCategory}
-        />
-      </div>
+<div className="relative z-50">
+          <Header
+            activeCategory={activeCategory}
+            onCategoryChange={handleCategoryChange}
+          />
+        </div>
 
       {/* Project Navigation - Right side with horizontal dashes */}
       <ProjectNav
