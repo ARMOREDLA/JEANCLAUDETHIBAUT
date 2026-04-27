@@ -538,6 +538,7 @@ export default function Home() {
     setUserHasNavigated(true)
 
     const clickedProject = filteredProjects[index]
+    console.log("[v0] handleProjectClick", { index, clickedProject, activeCategory, hasVimeoId: !!clickedProject?.vimeoId, hasImageUrl: !!clickedProject?.imageUrl })
 
     // Open modal for the clicked project
     if (activeCategory === "film") {
