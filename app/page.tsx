@@ -101,8 +101,8 @@ export default function Home() {
   // Filter projects by category
   const filteredProjects = projects.filter(p => p.category === activeCategory)
 
-  // activeIndex: for photos, hovering shows other images; for film, hovering doesn't change the background video
-  const activeIndex = activeCategory === "photo" && hoveredIndex !== null ? hoveredIndex : currentIndex
+  // activeIndex: hovering over navigation shows the corresponding content for both film and photo
+  const activeIndex = hoveredIndex !== null ? hoveredIndex : currentIndex
   const currentProject = filteredProjects[activeIndex]
   const modalProject = filteredProjects[modalVideoIndex]
   const modalPhoto = filteredProjects[modalPhotoIndex]
