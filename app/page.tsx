@@ -652,8 +652,14 @@ export default function Home() {
                     muted
                     playsInline
                     preload={isActive ? "auto" : "none"}
-                    onLoadedMetadata={(e) => {
-                      if (startTime > 0) {
+                    onLoadedData={(e) => {
+                      if (startTime > 0 && e.currentTarget.currentTime < startTime) {
+                        e.currentTarget.currentTime = startTime
+                      }
+                    }}
+                    onSeeked={(e) => {
+                      // When video loops back to 0, seek to startTime
+                      if (startTime > 0 && e.currentTarget.currentTime < 1) {
                         e.currentTarget.currentTime = startTime
                       }
                     }}
