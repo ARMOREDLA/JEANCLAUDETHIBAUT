@@ -644,11 +644,14 @@ export default function Home() {
                     key={`${project.id}-${activeCategory}-${isMobile ? 'mobile' : 'desktop'}`}
                     src={videoUrl}
                     className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-500 pointer-events-none"
+                    crossOrigin="anonymous"
                     autoPlay
                     loop
                     muted
                     playsInline
                     preload={(isFirst || isMobile) ? "auto" : "metadata"}
+                    onError={(e) => console.log("[v0] Video error:", project.id, project.title, e)}
+                    onLoadedData={() => console.log("[v0] Video loaded:", project.id, project.title)}
                     style={{
                       opacity: isActive ? 1 : 0,
                       width: videoWidth,
