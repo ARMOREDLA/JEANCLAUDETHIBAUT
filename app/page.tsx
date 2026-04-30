@@ -37,18 +37,18 @@ interface Project {
 
 // Jean Claude Thibaut's projects
 const projects: Project[] = [
-  // Film projects - using Vercel Blob URLs (with Vimeo fallback for videos not yet uploaded to Blob)
-  { id: "1", title: "INTUITION - DWAYNE WADE", client: "ARAMIS", vimeoId: "1112466337", category: "film" },
-  { id: "2", title: "RE-Nutriv DIAMOND LIPS - ANA DE ARMAS", client: "ESTÉE LAUDER", vimeoId: "1183986630", category: "film" },
+  // Film projects - using Vercel Blob URLs
+  { id: "1", title: "INTUITION - DWAYNE WADE", client: "ARAMIS", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/ARAMIS%20THIBAUT_ARMORED.mp4", verticalVideoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/ARAMIS_HERO_30_2160x3840_webmix_Super_global_Compressed_1.mp4" category: "film" },
+  { id: "2", title: "RE-Nutriv DIAMOND LIPS - ANA DE ARMAS", client: "ESTÉE LAUDER", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/RN_DiamondLips.mp4", category: "film" },
   { id: "3", title: "THE INVITATION", client: "S9 HUAWEI", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/JEANCLAUDETHIBAUT_s9.mp4", category: "film" },
-  { id: "4", title: "DARE - IMAAN HAMMAM, GRACE ELIZABETH", client: "ESTÉE LAUDER", vimeoId: "896626191", category: "film" },
+  { id: "4", title: "DARE - IMAAN HAMMAM, GRACE ELIZABETH", client: "ESTÉE LAUDER", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/EL_PURECOLOR_DARE_THIBAUT.mov-.mp4", category: "film" },
   { id: "5", title: "MAKE SPECIAL HAPPEN", client: "FAIRMONT HOTELS", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/FAIRMONT_MSH_JEANCLAUDETHIBAUT.mp4", category: "film" },
   { id: "6", title: "OLD FASHIONED - LUCIEN LAVISCOUNT", client: "KILIAN PARIS", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/KILIANPARIS_OLD%20FASHIONED_JEANCLAUDETHIBAUT_ARMORED.mp4", category: "film", aspectRatio: "16:9" },
   { id: "7", title: "THE ONE AND ONLY", client: "BLENDER'S PRIDE", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/BP-ONLY_JeanClaudeThibaut.mp4", category: "film", aspectRatio: "16:9" },
   { id: "8", title: "AT LARGE", client: "MAGAZINE", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/ATLARGE_IAM_JEANCLAUDETHIBAUT_3840x2160_1.mp4", category: "film" },
-  { id: "9", title: "BLUE SERUM - LIU WEN", client: "CHANEL", vimeoId: "258186791", category: "film" },
+  { id: "9", title: "BLUE SERUM - LIU WEN", client: "CHANEL", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/CHANEL_BLUE%20SERUM_UK_LIUWEN_THIBAUT-.mp4", category: "film" },
   { id: "10", title: "WHEN LA IS A MAN", client: "LOUIS VUITTON", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/vuitton_-_la_is_a_man_v1%20%281080p%29.mp4", category: "film" },
-  { id: "11", title: "VIII", client: "DIOR", vimeoId: "794239674", category: "film", aspectRatio: "16:9" },
+  { id: "11", title: "VIII", client: "DIOR", videoUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/THIBAUT_dior_8_v2-xp90cJiXsM9VJ23WlYNGm6bNWN4NYn.mp4", category: "film", aspectRatio: "16:9" },
   { id: "12", title: "MOMENTS", client: "PENINSULA HOTELS", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/HOTELPENINSULA_MOMENT_JEANCLAUDETHIBAUT.mp4", category: "film" },
   // Photo projects - keeping Google Drive images
   { id: "p1", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1lHVls4Z5YVC9utIsi2C1l-Oml6KAq5lO/view?usp=share_link", category: "photo" },
@@ -451,7 +451,7 @@ export default function Home() {
     const x = e.clientX - rect.left
     const percentage = x / rect.width
     const seekTime = percentage * duration
-    
+
     // HTML5 video (Blob)
     if (modalVideoRef.current) {
       modalVideoRef.current.currentTime = seekTime
@@ -644,14 +644,11 @@ export default function Home() {
                     key={`${project.id}-${activeCategory}-${isMobile ? 'mobile' : 'desktop'}`}
                     src={videoUrl}
                     className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-500 pointer-events-none"
-                    crossOrigin="anonymous"
                     autoPlay
                     loop
                     muted
                     playsInline
                     preload={(isFirst || isMobile) ? "auto" : "metadata"}
-                    onError={(e) => console.log("[v0] Video error:", project.id, project.title, e)}
-                    onLoadedData={() => console.log("[v0] Video loaded:", project.id, project.title)}
                     style={{
                       opacity: isActive ? 1 : 0,
                       width: videoWidth,
