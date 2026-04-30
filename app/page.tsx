@@ -43,13 +43,13 @@ const projects: Project[] = [
   { id: "3", title: "THE INVITATION", client: "S9 HUAWEI", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/JEANCLAUDETHIBAUT_s9.mp4", category: "film" },
   { id: "4", title: "DARE - IMAAN HAMMAM, GRACE ELIZABETH", client: "ESTÉE LAUDER", videoUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/EL_PURECOLOR_DARE_THIBAUT.mov--c7l9NMvHvKHJYvI3PCJuWy5uJ1vwb.mp4", category: "film" },
   { id: "5", title: "MAKE SPECIAL HAPPEN", client: "FAIRMONT HOTELS", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/FAIRMONT_MSH_JEANCLAUDETHIBAUT.mp4", category: "film" },
-  { id: "6", title: "OLD FASHIONED - LUCIEN LAVISCOUNT", client: "KILIAN PARIS", videoUrl: "", category: "film", aspectRatio: "16:9" },
-  { id: "7", title: "THE ONE AND ONLY", client: "BLENDER'S PRIDE", vimeoId: "1169793531", category: "film", aspectRatio: "16:9" },
-  { id: "8", title: "AT LARGE", client: "MAGAZINE", vimeoId: "1182293334", category: "film" },
+  { id: "6", title: "OLD FASHIONED - LUCIEN LAVISCOUNT", client: "KILIAN PARIS", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/KILIANPARIS_OLD%20FASHIONED_JEANCLAUDETHIBAUT_ARMORED.mp4", category: "film", aspectRatio: "16:9" },
+  { id: "7", title: "THE ONE AND ONLY", client: "BLENDER'S PRIDE", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/BP-ONLY_JeanClaudeThibaut.mp4", category: "film", aspectRatio: "16:9" },
+  { id: "8", title: "AT LARGE", client: "MAGAZINE", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/ATLARGE_IAM_JEANCLAUDETHIBAUT_3840x2160_1.mp4", category: "film" },
   { id: "9", title: "BLUE SERUM - LIU WEN", client: "CHANEL", videoUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/CHANEL_BLUE%20SERUM_UK_LIUWEN_THIBAUT--0XJyIIAjZzOexe14rvCO2rCZfOWA3.mp4", category: "film" },
-  { id: "10", title: "WHEN LA IS A MAN", client: "LOUIS VUITTON", vimeoId: "798226174", category: "film" },
+  { id: "10", title: "WHEN LA IS A MAN", client: "LOUIS VUITTON", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/vuitton_-_la_is_a_man_v1%20%281080p%29.mp4", category: "film" },
   { id: "11", title: "VIII", client: "DIOR", videoUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/THIBAUT_dior_8_v2-xp90cJiXsM9VJ23WlYNGm6bNWN4NYn.mp4", category: "film", aspectRatio: "16:9" },
-  { id: "12", title: "MOMENTS", client: "PENINSULA HOTELS", vimeoId: "322138841", category: "film" },
+  { id: "12", title: "MOMENTS", client: "PENINSULA HOTELS", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/HOTELPENINSULA_MOMENT_JEANCLAUDETHIBAUT.mp4", category: "film" },
   // Photo projects - keeping Google Drive images
   { id: "p1", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1lHVls4Z5YVC9utIsi2C1l-Oml6KAq5lO/view?usp=share_link", category: "photo" },
   { id: "p2", title: "", client: "AT LARGE Magazine", imageUrl: "https://drive.google.com/file/d/1mqUKGNTViuVZyupQg7cwxE8wJ8Z7-Lpy/view?usp=share_link", category: "photo" },
@@ -62,7 +62,7 @@ const projects: Project[] = [
   { id: "p9", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1-Rc5VbDz9Sc0h5Mdmz5sLPgcQXuE0bpe/view?usp=share_link", category: "photo" },
   { id: "p10", title: "", client: "", imageUrl: "https://drive.google.com/file/d/12p0-Ykp337COjRfcdD8lrNc6FGSSpUWc/view?usp=share_link", category: "photo" },
   { id: "p11", title: "", client: "ESTÉE LAUDER", imageUrl: "https://drive.google.com/file/d/1ux8X7Kz1s5F7bV4OwOABC1zCAY7CuY6x/view?usp=share_link", category: "photo" },
-  { id: "p13", title: "", client: "", vimeoId: "1184968043", category: "photo" },
+  { id: "p13", title: "", client: "", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/jeanclaudethibaut_heather_strongarm_louisvuitton_v1.mov", category: "photo" },
   { id: "p14", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1hYG5D4I9yuyGMXpvUOLgM73wBivmSPM1/view?usp=share_link", category: "photo" },
 ]
 
