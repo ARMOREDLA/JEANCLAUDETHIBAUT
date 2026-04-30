@@ -37,20 +37,20 @@ interface Project {
 
 // Jean Claude Thibaut's projects
 const projects: Project[] = [
-  // Film projects
-  { id: "1", title: "INTUITION - DWAYNE WADE", client: "ARAMIS", vimeoId: "1112466337", verticalVimeoId: "1183814123", category: "film" },
-  { id: "2", title: "RE-Nutriv DIAMOND LIPS - ANA DE ARMAS", client: "ESTÉE LAUDER", vimeoId: "1183986630", category: "film" },
+  // Film projects - using Vercel Blob URLs
+  { id: "1", title: "INTUITION - DWAYNE WADE", client: "ARAMIS", videoUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ARAMIS%20THIBAUT_ARMORED-bvWLMNGWrfGVww4T2eBDV4GHGmCEUH.mp4", category: "film" },
+  { id: "2", title: "RE-Nutriv DIAMOND LIPS - ANA DE ARMAS", client: "ESTÉE LAUDER", videoUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/RN_DiamondLips-wKwKTMUGC3t3B6MEFZ1T1bBCaWLpKC.mp4", category: "film" },
   { id: "3", title: "THE INVITATION", client: "S9 HUAWEI", vimeoId: "1031749834", category: "film" },
-  { id: "4", title: "DARE - IMAAN HAMMAM, GRACE ELIZABETH", client: "ESTÉE LAUDER", vimeoId: "896626191", category: "film" },
+  { id: "4", title: "DARE - IMAAN HAMMAM, GRACE ELIZABETH", client: "ESTÉE LAUDER", videoUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/EL_PURECOLOR_DARE_THIBAUT.mov--c7l9NMvHvKHJYvI3PCJuWy5uJ1vwb.mp4", category: "film" },
   { id: "5", title: "MAKE SPECIAL HAPPEN", client: "FAIRMONT HOTELS", vimeoId: "1081604699", category: "film" },
   { id: "6", title: "OLD FASHIONED - LUCIEN LAVISCOUNT", client: "KILIAN PARIS", vimeoId: "995446230", category: "film", aspectRatio: "16:9" },
   { id: "7", title: "THE ONE AND ONLY", client: "BLENDER'S PRIDE", vimeoId: "1169793531", category: "film", aspectRatio: "16:9" },
-  { id: "8", title: "AT LARGE", client: "MAGAZINE", vimeoId: "1182293334", verticalVimeoId: "1183821352", category: "film" },
-  { id: "9", title: "BLUE SERUM - LIU WEN", client: "CHANEL", vimeoId: "258186791", category: "film" },
+  { id: "8", title: "AT LARGE", client: "MAGAZINE", vimeoId: "1182293334", category: "film" },
+  { id: "9", title: "BLUE SERUM - LIU WEN", client: "CHANEL", videoUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/CHANEL_BLUE%20SERUM_UK_LIUWEN_THIBAUT--0XJyIIAjZzOexe14rvCO2rCZfOWA3.mp4", category: "film" },
   { id: "10", title: "WHEN LA IS A MAN", client: "LOUIS VUITTON", vimeoId: "798226174", category: "film" },
-  { id: "11", title: "VIII", client: "DIOR", vimeoId: "794239674", category: "film", aspectRatio: "16:9" },
+  { id: "11", title: "VIII", client: "DIOR", videoUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/THIBAUT_dior_8_v2-xp90cJiXsM9VJ23WlYNGm6bNWN4NYn.mp4", category: "film", aspectRatio: "16:9" },
   { id: "12", title: "MOMENTS", client: "PENINSULA HOTELS", vimeoId: "322138841", category: "film" },
-  // Photo projects
+  // Photo projects - keeping Google Drive images
   { id: "p1", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1lHVls4Z5YVC9utIsi2C1l-Oml6KAq5lO/view?usp=share_link", category: "photo" },
   { id: "p2", title: "", client: "AT LARGE Magazine", imageUrl: "https://drive.google.com/file/d/1mqUKGNTViuVZyupQg7cwxE8wJ8Z7-Lpy/view?usp=share_link", category: "photo" },
   { id: "p3", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1j1ag9ga5RFul5aHDieeeuV5Lq8X0HM8c/view?usp=share_link", category: "photo" },
