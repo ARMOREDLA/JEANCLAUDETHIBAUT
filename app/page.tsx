@@ -642,30 +642,25 @@ export default function Home() {
               // Use Vercel Blob video if available, otherwise fall back to Vimeo
               if (videoUrl) {
                 const startTime = project.startTime || 0
+                const hasStartTime = startTime > 0
                 return (
                   <video
                     key={`${project.id}-${activeCategory}-${isMobile ? 'mobile' : 'desktop'}`}
                     src={videoUrl}
-                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-500 pointer-events-none"
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
                     autoPlay
                     loop
                     muted
                     playsInline
                     preload={isActive ? "auto" : "none"}
                     onLoadedData={(e) => {
-                      const video = e.currentTarget
-                      if (startTime > 0) {
-                        // Hide video, seek, then show after seek completes
-                        video.style.visibility = 'hidden'
-                        video.currentTime = startTime
+                      if (hasStartTime) {
+                        e.currentTarget.currentTime = startTime
                       }
-                    }}
-                    onSeeked={(e) => {
-                      // Show video after seek is complete
-                      e.currentTarget.style.visibility = 'visible'
                     }}
                     style={{
                       opacity: isActive ? 1 : 0,
+                      transition: 'opacity 0.5s',
                       width: videoWidth,
                       height: videoHeight,
                       objectFit: 'cover',
