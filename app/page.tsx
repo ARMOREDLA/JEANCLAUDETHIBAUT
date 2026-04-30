@@ -27,6 +27,8 @@ interface Project {
   client: string
   vimeoId?: string
   verticalVimeoId?: string
+  videoUrl?: string // Vercel Blob video URL
+  verticalVideoUrl?: string // Vercel Blob vertical video URL
   imageUrl?: string
   canvaUrl?: string
   category: "film" | "photo"
@@ -88,6 +90,7 @@ export default function Home() {
   const [duration, setDuration] = useState(0)
   const modalPlayerRef = useRef<Player | null>(null)
   const modalIframeRef = useRef<HTMLIFrameElement>(null)
+  const modalVideoRef = useRef<HTMLVideoElement>(null)
 
   // Photo modal video player state
   const [photoVideoPlaying, setPhotoVideoPlaying] = useState(true)
@@ -351,6 +354,16 @@ export default function Home() {
   }, [filteredProjects.length])
 
   const togglePlay = () => {
+    // HTML5 video (Blob)
+    if (modalVideoRef.current) {
+      if (isPlaying) {
+        modalVideoRef.current.pause()
+      } else {
+        modalVideoRef.current.play()
+      }
+      return
+    }
+    // Vimeo player
     if (modalPlayerRef.current) {
       if (isPlaying) {
         modalPlayerRef.current.pause()
@@ -407,6 +420,14 @@ export default function Home() {
   }
 
   const toggleMute = () => {
+    // HTML5 video (Blob)
+    if (modalVideoRef.current) {
+      const newMutedState = !isMuted
+      modalVideoRef.current.muted = newMutedState
+      setIsMuted(newMutedState)
+      return
+    }
+    // Vimeo player
     if (modalPlayerRef.current) {
       const newMutedState = !isMuted
       modalPlayerRef.current.setVolume(newMutedState ? 0 : 1).then(() => {
@@ -425,13 +446,23 @@ export default function Home() {
   }
 
   const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!modalPlayerRef.current || duration <= 0) return
+    if (duration <= 0) return
     const rect = e.currentTarget.getBoundingClientRect()
     const x = e.clientX - rect.left
     const percentage = x / rect.width
     const seekTime = percentage * duration
-    modalPlayerRef.current.setCurrentTime(seekTime)
-    setProgress(seekTime)
+    
+    // HTML5 video (Blob)
+    if (modalVideoRef.current) {
+      modalVideoRef.current.currentTime = seekTime
+      setProgress(seekTime)
+      return
+    }
+    // Vimeo player
+    if (modalPlayerRef.current) {
+      modalPlayerRef.current.setCurrentTime(seekTime)
+      setProgress(seekTime)
+    }
   }
 
   // Keyboard navigation for video modal
@@ -585,8 +616,9 @@ export default function Home() {
               const shouldRender = isFirst || initialLoadComplete
               if (!shouldRender) return null
 
-              // Use vertical video ID on mobile if available
-              const useVertical = isMobile && project.verticalVimeoId
+              // Use vertical video on mobile if available
+              const useVertical = isMobile && (project.verticalVideoUrl || project.verticalVimeoId)
+              const videoUrl = useVertical ? (project.verticalVideoUrl || null) : project.videoUrl
               const videoId = useVertical ? project.verticalVimeoId : project.vimeoId
 
               // Use 9:16 sizing for vertical videos on mobile, otherwise use appropriate aspect ratio
@@ -604,6 +636,30 @@ export default function Home() {
                 videoHeight = is16by9 ? 'max(100vh, 56.25vw)' : 'max(100vh, 41.84vw)'
               }
 
+              // Use Vercel Blob video if available, otherwise fall back to Vimeo
+              if (videoUrl) {
+                return (
+                  <video
+                    key={`${project.id}-${activeCategory}-${isMobile ? 'mobile' : 'desktop'}`}
+                    src={videoUrl}
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-500 pointer-events-none"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload={(isFirst || isMobile) ? "auto" : "metadata"}
+                    style={{
+                      opacity: isActive ? 1 : 0,
+                      width: videoWidth,
+                      height: videoHeight,
+                      objectFit: 'cover',
+                      backgroundColor: '#000',
+                    }}
+                  />
+                )
+              }
+
+              // Fall back to Vimeo iframe
               return (
                 <iframe
                   key={`${project.id}-${activeCategory}-${isMobile ? 'mobile' : 'desktop'}`}
@@ -799,16 +855,33 @@ export default function Home() {
           {/* Video player - Maximum size on all devices */}
           <div className="flex-1 flex items-center justify-center px-0 relative z-0 pointer-events-none w-full h-full">
             <div className="video-modal-container relative w-full h-full max-w-[100vw] max-h-[calc(100vh-4rem)] md:max-h-[calc(100vh-5rem)] bg-black" style={{ backgroundColor: '#000' }}>
-              <iframe
-                key={`modal-video-${modalProject.vimeoId}`}
-                ref={modalIframeRef}
-                src={`https://player.vimeo.com/video/${modalProject.vimeoId}?autoplay=1&loop=0&muted=0&controls=0&title=0&byline=0&portrait=0&playsinline=1&transparent=0&quality=1080p`}
-                className="absolute inset-0 w-full h-full bg-black"
-                style={{ border: 'none', backgroundColor: '#000', objectFit: 'cover' }}
-                allow="autoplay; fullscreen; picture-in-picture"
-                title={modalProject.title || modalProject.client}
-                loading="eager"
-              />
+              {modalProject.videoUrl ? (
+                <video
+                  key={`modal-video-blob-${modalProject.id}`}
+                  ref={modalVideoRef}
+                  src={modalProject.videoUrl}
+                  className="absolute inset-0 w-full h-full bg-black"
+                  style={{ backgroundColor: '#000', objectFit: 'contain' }}
+                  autoPlay
+                  playsInline
+                  onTimeUpdate={(e) => setProgress(e.currentTarget.currentTime)}
+                  onLoadedMetadata={(e) => setDuration(e.currentTarget.duration)}
+                  onPlay={() => setIsPlaying(true)}
+                  onPause={() => setIsPlaying(false)}
+                  onEnded={() => setIsPlaying(false)}
+                />
+              ) : (
+                <iframe
+                  key={`modal-video-${modalProject.vimeoId}`}
+                  ref={modalIframeRef}
+                  src={`https://player.vimeo.com/video/${modalProject.vimeoId}?autoplay=1&loop=0&muted=0&controls=0&title=0&byline=0&portrait=0&playsinline=1&transparent=0&quality=1080p`}
+                  className="absolute inset-0 w-full h-full bg-black"
+                  style={{ border: 'none', backgroundColor: '#000', objectFit: 'cover' }}
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  title={modalProject.title || modalProject.client}
+                  loading="eager"
+                />
+              )}
             </div>
           </div>
 
@@ -825,9 +898,16 @@ export default function Home() {
                   const x = Math.max(0, Math.min(moveEvent.clientX - rect.left, rect.width))
                   const percentage = x / rect.width
                   const seekTime = percentage * duration
-                  if (modalPlayerRef.current && duration > 0) {
-                    modalPlayerRef.current.setCurrentTime(seekTime)
-                    setProgress(seekTime)
+                  if (duration > 0) {
+                    // HTML5 video (Blob)
+                    if (modalVideoRef.current) {
+                      modalVideoRef.current.currentTime = seekTime
+                      setProgress(seekTime)
+                    } else if (modalPlayerRef.current) {
+                      // Vimeo player
+                      modalPlayerRef.current.setCurrentTime(seekTime)
+                      setProgress(seekTime)
+                    }
                   }
                 }
                 const onMouseUp = () => {
