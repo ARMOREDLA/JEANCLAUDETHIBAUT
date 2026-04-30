@@ -29,6 +29,7 @@ interface Project {
   verticalVimeoId?: string
   videoUrl?: string // Vercel Blob video URL
   verticalVideoUrl?: string // Vercel Blob vertical video URL
+  startTime?: number // Start time in seconds for video preview
   imageUrl?: string
   canvaUrl?: string
   category: "film" | "photo"
@@ -643,7 +644,7 @@ export default function Home() {
                 return (
                   <video
                     key={`${project.id}-${activeCategory}-${isMobile ? 'mobile' : 'desktop'}`}
-                    src={videoUrl}
+                    src={videoUrl + (project.startTime ? `#t=${project.startTime}` : '')}
                     className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-500 pointer-events-none"
                     autoPlay
                     loop
