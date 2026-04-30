@@ -63,8 +63,8 @@ const projects: Project[] = [
   { id: "p9", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1-Rc5VbDz9Sc0h5Mdmz5sLPgcQXuE0bpe/view?usp=share_link", category: "photo" },
   { id: "p10", title: "", client: "", imageUrl: "https://drive.google.com/file/d/12p0-Ykp337COjRfcdD8lrNc6FGSSpUWc/view?usp=share_link", category: "photo" },
   { id: "p11", title: "", client: "ESTÉE LAUDER", imageUrl: "https://drive.google.com/file/d/1ux8X7Kz1s5F7bV4OwOABC1zCAY7CuY6x/view?usp=share_link", category: "photo" },
-  { id: "p13", title: "", client: "", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/jeanclaudethibaut_heather_strongarm_louisvuitton_v1.mov", category: "photo" },
-  { id: "p14", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1hYG5D4I9yuyGMXpvUOLgM73wBivmSPM1/view?usp=share_link", category: "photo" },
+  { id: "p12", title: "", client: "", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/jeanclaudethibaut_heather_strongarm_louisvuitton_v1.mov", category: "photo" },
+  { id: "p13", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1hYG5D4I9yuyGMXpvUOLgM73wBivmSPM1/view?usp=share_link", category: "photo" },
 ]
 
 export default function Home() {
