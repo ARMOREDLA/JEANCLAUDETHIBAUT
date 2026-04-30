@@ -641,16 +641,22 @@ export default function Home() {
 
               // Use Vercel Blob video if available, otherwise fall back to Vimeo
               if (videoUrl) {
+                const startTime = project.startTime || 0
                 return (
                   <video
                     key={`${project.id}-${activeCategory}-${isMobile ? 'mobile' : 'desktop'}`}
-                    src={videoUrl + (project.startTime ? `#t=${project.startTime}` : '')}
+                    src={videoUrl}
                     className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-500 pointer-events-none"
                     autoPlay
                     loop
                     muted
                     playsInline
-                    preload={(isFirst || isMobile) ? "auto" : "metadata"}
+                    preload={isActive ? "auto" : "none"}
+                    onLoadedMetadata={(e) => {
+                      if (startTime > 0) {
+                        e.currentTarget.currentTime = startTime
+                      }
+                    }}
                     style={{
                       opacity: isActive ? 1 : 0,
                       width: videoWidth,
