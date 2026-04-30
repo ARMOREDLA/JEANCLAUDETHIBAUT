@@ -38,7 +38,7 @@ interface Project {
 // Jean Claude Thibaut's projects
 const projects: Project[] = [
   // Film projects - using Vercel Blob URLs
-  { id: "1", title: "INTUITION - DWAYNE WADE", client: "ARAMIS", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/ARAMIS%20THIBAUT_ARMORED.mp4", verticalVideoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/ARAMIS_HERO_30_2160x3840_webmix_Super_global_Compressed_1.mp4" category: "film" },
+  { id: "1", title: "INTUITION - DWAYNE WADE", client: "ARAMIS", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/ARAMIS%20THIBAUT_ARMORED.mp4", verticalVideoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/ARAMIS_HERO_30_2160x3840_webmix_Super_global_Compressed_1.mp4", category: "film" },
   { id: "2", title: "RE-Nutriv DIAMOND LIPS - ANA DE ARMAS", client: "ESTÉE LAUDER", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/RN_DiamondLips.mp4", category: "film" },
   { id: "3", title: "THE INVITATION", client: "S9 HUAWEI", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/JEANCLAUDETHIBAUT_s9.mp4", category: "film" },
   { id: "4", title: "DARE - IMAAN HAMMAM, GRACE ELIZABETH", client: "ESTÉE LAUDER", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/EL_PURECOLOR_DARE_THIBAUT.mov-.mp4", category: "film" },
