@@ -653,13 +653,15 @@ export default function Home() {
                     playsInline
                     preload={isActive ? "auto" : "none"}
                     onLoadedData={(e) => {
-                      if (startTime > 0 && e.currentTarget.currentTime < startTime) {
+                      console.log("[v0] onLoadedData", project.id, "startTime:", startTime)
+                      if (startTime > 0) {
                         e.currentTarget.currentTime = startTime
+                        console.log("[v0] Set time to", startTime)
                       }
                     }}
-                    onSeeked={(e) => {
-                      // When video loops back to 0, seek to startTime
-                      if (startTime > 0 && e.currentTarget.currentTime < 1) {
+                    onTimeUpdate={(e) => {
+                      // When video loops back near 0, seek to startTime
+                      if (startTime > 0 && e.currentTarget.currentTime < 0.5) {
                         e.currentTarget.currentTime = startTime
                       }
                     }}
