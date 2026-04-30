@@ -29,7 +29,6 @@ interface Project {
   verticalVimeoId?: string
   videoUrl?: string // Vercel Blob video URL
   verticalVideoUrl?: string // Vercel Blob vertical video URL
-  startTime?: number // Start time in seconds for video preview
   imageUrl?: string
   canvaUrl?: string
   category: "film" | "photo"
@@ -39,15 +38,15 @@ interface Project {
 // Jean Claude Thibaut's projects
 const projects: Project[] = [
   // Film projects - using Vercel Blob URLs
-  { id: "1", title: "INTUITION - DWAYNE WADE", client: "ARAMIS", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/ARAMIS%20THIBAUT_ARMORED.mp4", verticalVideoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/ARAMIS_HERO_30_2160x3840_webmix_Super_global_Compressed_1.mp4", startTime: 7.5, category: "film" },
+  { id: "1", title: "INTUITION - DWAYNE WADE", client: "ARAMIS", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/ARAMIS%20THIBAUT_ARMORED.mp4", verticalVideoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/ARAMIS_HERO_30_2160x3840_webmix_Super_global_Compressed_1.mp4", category: "film" },
   { id: "2", title: "RE-Nutriv DIAMOND LIPS - ANA DE ARMAS", client: "ESTÉE LAUDER", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/RN_DiamondLips.mp4", category: "film" },
   { id: "3", title: "THE INVITATION", client: "S9 HUAWEI", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/JEANCLAUDETHIBAUT_s9.mp4", category: "film" },
   { id: "4", title: "DARE - IMAAN HAMMAM, GRACE ELIZABETH", client: "ESTÉE LAUDER", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/EL_PURECOLOR_DARE_THIBAUT.mov-.mp4", category: "film" },
   { id: "5", title: "MAKE SPECIAL HAPPEN", client: "FAIRMONT HOTELS", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/FAIRMONT_MSH_JEANCLAUDETHIBAUT.mp4", category: "film" },
   { id: "6", title: "OLD FASHIONED - LUCIEN LAVISCOUNT", client: "KILIAN PARIS", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/KILIANPARIS_OLD%20FASHIONED_JEANCLAUDETHIBAUT_ARMORED.mp4", category: "film", aspectRatio: "16:9" },
   { id: "7", title: "THE ONE AND ONLY", client: "BLENDER'S PRIDE", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/BP-ONLY_JeanClaudeThibaut.mp4", category: "film", aspectRatio: "16:9" },
-  { id: "8", title: "AT LARGE", client: "MAGAZINE", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/ATLARGE_IAM_JEANCLAUDETHIBAUT_3840x2160_1.mp4", startTime: 10, category: "film" },
-  { id: "9", title: "BLUE SERUM - LIU WEN", client: "CHANEL", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/CHANEL_BLUE%20SERUM_UK_LIUWEN_THIBAUT-.mp4", startTime: 15, category: "film" },
+  { id: "8", title: "AT LARGE", client: "MAGAZINE", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/ATLARGE_IAM_JEANCLAUDETHIBAUT_3840x2160_1.mp4", category: "film" },
+  { id: "9", title: "BLUE SERUM - LIU WEN", client: "CHANEL", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/CHANEL_BLUE%20SERUM_UK_LIUWEN_THIBAUT-.mp4", category: "film" },
   { id: "10", title: "WHEN LA IS A MAN", client: "LOUIS VUITTON", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/vuitton_-_la_is_a_man_v1%20%281080p%29.mp4", category: "film" },
   { id: "11", title: "VIII", client: "DIOR", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/THIBAUT_dior_8_v2.mp4", category: "film", aspectRatio: "16:9" },
   { id: "12", title: "MOMENTS", client: "PENINSULA HOTELS", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/HOTELPENINSULA_MOMENT_JEANCLAUDETHIBAUT.mp4", category: "film" },
@@ -641,8 +640,6 @@ export default function Home() {
 
               // Use Vercel Blob video if available, otherwise fall back to Vimeo
               if (videoUrl) {
-                const startTime = project.startTime || 0
-                const hasStartTime = startTime > 0
                 return (
                   <video
                     key={`${project.id}-${activeCategory}-${isMobile ? 'mobile' : 'desktop'}`}
@@ -653,11 +650,6 @@ export default function Home() {
                     muted
                     playsInline
                     preload={isActive ? "auto" : "none"}
-                    onLoadedData={(e) => {
-                      if (hasStartTime) {
-                        e.currentTarget.currentTime = startTime
-                      }
-                    }}
                     style={{
                       opacity: isActive ? 1 : 0,
                       transition: 'opacity 0.5s',
