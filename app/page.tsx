@@ -47,7 +47,7 @@ const projects: Project[] = [
   { id: "6", title: "OLD FASHIONED - LUCIEN LAVISCOUNT", client: "KILIAN PARIS", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/KILIANPARIS_OLD%20FASHIONED_JEANCLAUDETHIBAUT_ARMORED.mp4", category: "film", aspectRatio: "16:9" },
   { id: "7", title: "THE ONE AND ONLY", client: "BLENDER'S PRIDE", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/BP-ONLY_JeanClaudeThibaut.mp4", category: "film", aspectRatio: "16:9" },
   { id: "8", title: "AT LARGE", client: "MAGAZINE", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/ATLARGE_IAM_JEANCLAUDETHIBAUT_3840x2160_1.mp4", startTime: 10, category: "film" },
-  { id: "9", title: "BLUE SERUM - LIU WEN", client: "CHANEL", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/CHANEL_BLUE%20SERUM_UK_LIUWEN_THIBAUT-.mp4", category: "film" },
+  { id: "9", title: "BLUE SERUM - LIU WEN", client: "CHANEL", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/CHANEL_BLUE%20SERUM_UK_LIUWEN_THIBAUT-.mp4", startTime:15, category: "film" },
   { id: "10", title: "WHEN LA IS A MAN", client: "LOUIS VUITTON", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/vuitton_-_la_is_a_man_v1%20%281080p%29.mp4", category: "film" },
   { id: "11", title: "VIII", client: "DIOR", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/THIBAUT_dior_8_v2.mp4", category: "film", aspectRatio: "16:9" },
   { id: "12", title: "MOMENTS", client: "PENINSULA HOTELS", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/HOTELPENINSULA_MOMENT_JEANCLAUDETHIBAUT.mp4", category: "film" },
