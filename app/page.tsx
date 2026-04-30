@@ -604,7 +604,8 @@ export default function Home() {
           {activeCategory === "film" ? (
             // Video backgrounds for film - always load first video, plus active and adjacent
             filteredProjects.map((project, index) => {
-              if (!project.vimeoId) return null
+              // Skip if no video source (either Blob or Vimeo)
+              if (!project.videoUrl && !project.vimeoId) return null
 
               const isActive = activeIndex === index
               const isFirst = index === 0
@@ -811,7 +812,7 @@ export default function Home() {
       <InfoPanel isOpen={isInfoOpen} onClose={() => setIsInfoOpen(false)} />
 
       {/* Video Modal with Custom Controls */}
-      {isVideoModalOpen && modalProject?.vimeoId && (
+      {isVideoModalOpen && modalProject && (modalProject.videoUrl || modalProject.vimeoId) && (
         <div
           className="fixed inset-0 z-[100] bg-black flex flex-col"
           style={{ backgroundColor: '#000' }}
@@ -864,8 +865,17 @@ export default function Home() {
                   style={{ backgroundColor: '#000', objectFit: 'contain' }}
                   autoPlay
                   playsInline
+                  muted={isMuted}
                   onTimeUpdate={(e) => setProgress(e.currentTarget.currentTime)}
-                  onLoadedMetadata={(e) => setDuration(e.currentTarget.duration)}
+                  onLoadedMetadata={(e) => {
+                    setDuration(e.currentTarget.duration)
+                    setIsPlaying(true)
+                    // Unmute after autoplay starts
+                    if (e.currentTarget) {
+                      e.currentTarget.muted = false
+                      setIsMuted(false)
+                    }
+                  }}
                   onPlay={() => setIsPlaying(true)}
                   onPause={() => setIsPlaying(false)}
                   onEnded={() => setIsPlaying(false)}
