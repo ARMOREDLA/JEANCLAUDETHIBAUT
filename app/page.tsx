@@ -209,7 +209,7 @@ export default function Home() {
       const hash = window.location.hash.slice(1) // Remove the #
       if (!hash) return
 
-      const [category, indexStr] = hash.split('/')
+      const [category, indexStr] = hash.split('-')
       const index = parseInt(indexStr, 10)
 
       if (category === 'film' && !isNaN(index)) {
@@ -263,13 +263,13 @@ export default function Home() {
       setIsMuted(false)
       setIsVideoModalOpen(true)
       // Update URL hash for direct linking
-      window.history.replaceState(null, '', `#film/${currentIndex}`)
+      window.history.replaceState(null, '', `#film-${currentIndex}`)
     } else if (activeCategory === "photo") {
       // All photo items open in photo modal (including those with vimeoId)
       setModalPhotoIndex(currentIndex)
       setIsPhotoModalOpen(true)
       // Update URL hash for direct linking
-      window.history.replaceState(null, '', `#photo/${currentIndex}`)
+      window.history.replaceState(null, '', `#photo-${currentIndex}`)
     }
   }
 
@@ -336,13 +336,13 @@ export default function Home() {
   // Update URL hash when navigating between videos in modal
   useEffect(() => {
     if (isVideoModalOpen) {
-      window.history.replaceState(null, '', `#film/${modalVideoIndex}`)
+      window.history.replaceState(null, '', `#film-${modalVideoIndex}`)
     }
   }, [isVideoModalOpen, modalVideoIndex])
 
   useEffect(() => {
     if (isPhotoModalOpen) {
-      window.history.replaceState(null, '', `#photo/${modalPhotoIndex}`)
+      window.history.replaceState(null, '', `#photo-${modalPhotoIndex}`)
     }
   }, [isPhotoModalOpen, modalPhotoIndex])
 
