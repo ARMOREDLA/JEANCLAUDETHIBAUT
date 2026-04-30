@@ -613,8 +613,9 @@ export default function Home() {
               const prevIndex = (activeIndex - 1 + totalProjects) % totalProjects
               const nextIndex = (activeIndex + 1) % totalProjects
 
-              // Render all videos after initial load for smooth hover transitions
-              const shouldRender = isFirst || initialLoadComplete
+              // Only render active video and adjacent ones for performance
+              const isAdjacent = index === prevIndex || index === nextIndex
+              const shouldRender = isFirst || (initialLoadComplete && (isActive || isAdjacent))
               if (!shouldRender) return null
 
               // Use vertical video on mobile if available
