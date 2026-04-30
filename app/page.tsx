@@ -642,29 +642,18 @@ export default function Home() {
               // Use Vercel Blob video if available, otherwise fall back to Vimeo
               if (videoUrl) {
                 const startTime = project.startTime || 0
+                // Append #t= fragment to start video at specific time (browser-native, no glitch)
+                const videoSrc = startTime > 0 ? `${videoUrl}#t=${startTime}` : videoUrl
                 return (
                   <video
-                    key={`${project.id}-${activeCategory}-${isMobile ? 'mobile' : 'desktop'}`}
-                    src={videoUrl}
+                    key={`${project.id}-${activeCategory}-${isMobile ? 'mobile' : 'desktop'}-${startTime}`}
+                    src={videoSrc}
                     className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-500 pointer-events-none"
                     autoPlay
                     loop
                     muted
                     playsInline
                     preload={isActive ? "auto" : "none"}
-                    onLoadedData={(e) => {
-                      console.log("[v0] onLoadedData", project.id, "startTime:", startTime)
-                      if (startTime > 0) {
-                        e.currentTarget.currentTime = startTime
-                        console.log("[v0] Set time to", startTime)
-                      }
-                    }}
-                    onTimeUpdate={(e) => {
-                      // When video loops back near 0, seek to startTime
-                      if (startTime > 0 && e.currentTarget.currentTime < 0.5) {
-                        e.currentTarget.currentTime = startTime
-                      }
-                    }}
                     style={{
                       opacity: isActive ? 1 : 0,
                       width: videoWidth,
