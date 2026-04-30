@@ -712,6 +712,30 @@ export default function Home() {
                 )
               }
 
+              // If project has videoUrl (Blob), show as HTML5 video
+              if (project.videoUrl) {
+                return (
+                  <div
+                    key={`${project.id}-${activeCategory}`}
+                    className="absolute inset-0 transition-opacity duration-500 flex items-center justify-center bg-black"
+                    style={{ opacity: isActive ? 1 : 0 }}
+                  >
+                    <video
+                      src={project.videoUrl}
+                      className="max-w-full max-h-full object-contain pointer-events-none"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      style={{
+                        maxWidth: '100%',
+                        maxHeight: '100%',
+                      }}
+                    />
+                  </div>
+                )
+              }
+
               // If project has canvaUrl, show as Canva embed
               if (project.canvaUrl) {
                 return (
