@@ -48,7 +48,7 @@ const projects: Project[] = [
   { id: "8", title: "AT LARGE", client: "MAGAZINE", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/ATLARGE_IAM_JEANCLAUDETHIBAUT_3840x2160_1.mp4", category: "film" },
   { id: "9", title: "BLUE SERUM - LIU WEN", client: "CHANEL", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/CHANEL_BLUE%20SERUM_UK_LIUWEN_THIBAUT-.mp4", category: "film" },
   { id: "10", title: "WHEN LA IS A MAN", client: "LOUIS VUITTON", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/vuitton_-_la_is_a_man_v1%20%281080p%29.mp4", category: "film" },
-  { id: "11", title: "VIII", client: "DIOR", videoUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/THIBAUT_dior_8_v2-xp90cJiXsM9VJ23WlYNGm6bNWN4NYn.mp4", category: "film", aspectRatio: "16:9" },
+  { id: "11", title: "VIII", client: "DIOR", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/THIBAUT_dior_8_v2.mp4", category: "film", aspectRatio: "16:9" },
   { id: "12", title: "MOMENTS", client: "PENINSULA HOTELS", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/HOTELPENINSULA_MOMENT_JEANCLAUDETHIBAUT.mp4", category: "film" },
   // Photo projects - keeping Google Drive images
   { id: "p1", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1lHVls4Z5YVC9utIsi2C1l-Oml6KAq5lO/view?usp=share_link", category: "photo" },
