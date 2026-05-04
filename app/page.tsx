@@ -455,19 +455,27 @@ export default function Home() {
 
   // Slideshow vertical swipe handler for mobile - ONLY handles swiping, not taps
   const handleSlideshowTouchEnd = (e: React.TouchEvent) => {
-    const distanceY = touchStartY && touchEndY ? touchStartY - touchEndY : 0
+    // Get the final touch position from the event if touchEndY wasn't set by move
+    const finalY = touchEndY ?? e.changedTouches[0]?.clientY ?? touchStartY
+    const distanceY = touchStartY && finalY ? touchStartY - finalY : 0
+    
+    console.log("[v0] Touch end - startY:", touchStartY, "endY:", touchEndY, "finalY:", finalY, "distanceY:", distanceY)
     
     // Swipe threshold for vertical swiping
     const swipeThreshold = 30
     const isUpSwipe = distanceY > swipeThreshold
     const isDownSwipe = distanceY < -swipeThreshold
 
+    console.log("[v0] Swipe detection - isUp:", isUpSwipe, "isDown:", isDownSwipe)
+
     if (isUpSwipe) {
       // Swipe up = next project
+      console.log("[v0] Swiping to next project")
       setUserHasNavigated(true)
       setCurrentIndex((prev) => (prev + 1) % filteredProjects.length)
     } else if (isDownSwipe) {
       // Swipe down = previous project
+      console.log("[v0] Swiping to previous project")
       setUserHasNavigated(true)
       setCurrentIndex((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length)
     }
