@@ -438,11 +438,12 @@ export default function Home() {
   }
 
   // Slideshow vertical swipe handler for mobile
-  const handleSlideshowTouchEnd = () => {
-    if (!touchStartY || !touchEndY) return
-    const distanceY = touchStartY - touchEndY
+  const handleSlideshowTouchEnd = (e: React.TouchEvent) => {
+    const distanceY = touchStartY && touchEndY ? touchStartY - touchEndY : 0
+    const distanceX = touchStart && touchEnd ? touchStart - touchEnd : 0
     const isUpSwipe = distanceY > minSwipeDistance
     const isDownSwipe = distanceY < -minSwipeDistance
+    const isTap = Math.abs(distanceY) < 10 && Math.abs(distanceX) < 10
 
     if (isUpSwipe) {
       // Swipe up = next project
@@ -452,10 +453,22 @@ export default function Home() {
       // Swipe down = previous project
       setUserHasNavigated(true)
       setCurrentIndex((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length)
+    } else if (isTap && touchStartY) {
+      // Tap detected - only open modal if tap is in lower 1/3 of screen
+      const screenHeight = window.innerHeight
+      const tapY = touchStartY
+      const isLowerThird = tapY > screenHeight * (2/3)
+      
+      if (isLowerThird) {
+        // Open video/photo modal
+        handleProjectClick(currentIndex, true)
+      }
     }
 
     setTouchStartY(null)
     setTouchEndY(null)
+    setTouchStart(null)
+    setTouchEnd(null)
   }
 
   const handleVideoTouchEnd = () => {
@@ -640,7 +653,11 @@ export default function Home() {
     isPausedRef.current = index !== null
   }
 
-  const handleProjectClick = (index: number) => {
+  const handleProjectClick = (index: number, fromTouch = false) => {
+    // On mobile, only handle clicks from touch handler (lower 1/3 tap)
+    // Prevent regular click events from opening modal on mobile
+    if (isMobile && !fromTouch) return
+    
     setCurrentIndex(index)
     setUserHasNavigated(true)
 
@@ -674,6 +691,13 @@ export default function Home() {
       onTouchMove={isMobile ? handleTouchMove : undefined}
       onTouchEnd={isMobile ? handleSlideshowTouchEnd : undefined}
     >
+      {/* Mobile tap hint - lower 1/3 to open video */}
+      {isMobile && !isVideoModalOpen && !isPhotoModalOpen && (
+        <div className="fixed bottom-0 left-0 right-0 h-[33vh] z-10 pointer-events-none flex items-end justify-center pb-24">
+          <span className="text-white/40 text-xs tracking-widest uppercase animate-pulse">Tap to play</span>
+        </div>
+      )}
+      
       {/* Fullscreen Background - Video or Photo */}
       <div className="fixed inset-0 w-full h-full z-0 bg-black">
         {/* Transition overlay to prevent flash */}
