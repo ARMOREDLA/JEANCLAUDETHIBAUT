@@ -453,20 +453,14 @@ export default function Home() {
     setTouchEndY(e.targetTouches[0].clientY)
   }
 
-  // Slideshow vertical swipe handler for mobile
+  // Slideshow vertical swipe handler for mobile - ONLY handles swiping, not taps
   const handleSlideshowTouchEnd = (e: React.TouchEvent) => {
-    // If no movement was tracked, treat as potential tap
-    const didMove = touchEnd !== null || touchEndY !== null
     const distanceY = touchStartY && touchEndY ? touchStartY - touchEndY : 0
-    const distanceX = touchStart && touchEnd ? touchStart - touchEnd : 0
     
-    // Low swipe threshold for easy vertical swiping
-    const swipeThreshold = 20
+    // Swipe threshold for vertical swiping
+    const swipeThreshold = 30
     const isUpSwipe = distanceY > swipeThreshold
     const isDownSwipe = distanceY < -swipeThreshold
-    
-    // A tap is when there was NO movement tracked at all, or extremely minimal movement
-    const isTap = !didMove || (Math.abs(distanceY) < 3 && Math.abs(distanceX) < 3)
 
     if (isUpSwipe) {
       // Swipe up = next project
@@ -476,17 +470,8 @@ export default function Home() {
       // Swipe down = previous project
       setUserHasNavigated(true)
       setCurrentIndex((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length)
-    } else if (isTap && touchStartY) {
-      // Tap detected - only open modal if tap is in bottom 10% of screen (where "tap to play" is)
-      const screenHeight = window.innerHeight
-      const tapY = touchStartY
-      const isBottomArea = tapY > screenHeight * 0.90
-      
-      if (isBottomArea) {
-        // Open video/photo modal
-        handleProjectClick(currentIndex, true)
-      }
     }
+    // No tap handling here - tap is handled by the dedicated "Tap to play" button
 
     setTouchStartY(null)
     setTouchEndY(null)
@@ -735,11 +720,14 @@ export default function Home() {
       onTouchMove={isMobile ? handleTouchMove : undefined}
       onTouchEnd={isMobile ? handleSlideshowTouchEnd : undefined}
     >
-{/* Mobile tap hint - bottom 15% to open video */}
-{isMobile && !isVideoModalOpen && !isPhotoModalOpen && (
-        <div className="fixed bottom-0 left-0 right-0 h-[10vh] z-10 pointer-events-none flex items-center justify-center">
+{/* Mobile tap to play button - this is the ONLY way to open video on mobile */}
+      {isMobile && !isVideoModalOpen && !isPhotoModalOpen && (
+        <button
+          className="fixed bottom-0 left-0 right-0 h-24 z-40 flex items-center justify-center bg-transparent"
+          onClick={() => handleProjectClick(currentIndex, true)}
+        >
           <span className="text-white/40 text-xs tracking-widest uppercase animate-pulse">Tap to play</span>
-        </div>
+        </button>
       )}
       
       {/* Fullscreen Background - Video or Photo */}
