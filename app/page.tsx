@@ -93,7 +93,7 @@ export default function Home() {
   const [isMuted, setIsMuted] = useState(false)
   const [progress, setProgress] = useState(0)
   const [duration, setDuration] = useState(0)
-  const [isVideoLoading, setIsVideoLoading] = useState(true)
+  
   const modalPlayerRef = useRef<Player | null>(null)
   const modalIframeRef = useRef<HTMLIFrameElement>(null)
   const modalVideoRef = useRef<HTMLVideoElement>(null)
@@ -696,7 +696,6 @@ export default function Home() {
       setModalVideoIndex(index)
       setProgress(0)
       setIsMuted(false)
-      setIsVideoLoading(true)
       setIsVideoModalOpen(true)
     } else if (activeCategory === "photo") {
       // If photo has vimeoId, open video modal instead
@@ -1044,13 +1043,12 @@ export default function Home() {
                   : modalProject.videoUrl
                 
                 return modalVideoUrl ? (
-                <>
                   <video
-                    key={`modal-video-blob-${modalProject.id}-${isLandscape ? 'landscape' : 'portrait'}`}
+                    key={`modal-video-blob-${modalProject.id}`}
                     ref={modalVideoRef}
                     src={modalVideoUrl}
-                    className="absolute inset-0 w-full h-full bg-black"
-                    style={{ backgroundColor: '#000', objectFit: 'contain' }}
+                    className="absolute inset-0 w-full h-full"
+                    style={{ objectFit: 'contain' }}
                     autoPlay
                     playsInline
                     muted={isMuted}
@@ -1068,7 +1066,6 @@ export default function Home() {
                     onPause={() => setIsPlaying(false)}
                     onEnded={() => setIsPlaying(false)}
                   />
-                </>
                 ) : (
                   <iframe
                     key={`modal-video-${modalProject.vimeoId}`}
