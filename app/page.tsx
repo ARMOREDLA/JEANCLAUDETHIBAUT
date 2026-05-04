@@ -466,8 +466,8 @@ export default function Home() {
     
     const distanceY = startY - endY
     
-    // Swipe threshold for vertical swiping
-    const swipeThreshold = 30
+    // Swipe threshold for vertical swiping - small threshold for easy swiping
+    const swipeThreshold = 15
     const isUpSwipe = distanceY > swipeThreshold
     const isDownSwipe = distanceY < -swipeThreshold
 
@@ -759,8 +759,8 @@ export default function Home() {
             const distanceY = Math.abs(startY - endY)
             const distanceX = Math.abs(startX - endX)
             
-            // If it's a swipe (moved more than 20px), pass to slideshow handler
-            if (distanceY > 20 || distanceX > 20) {
+            // If it's a swipe (moved more than 8px), pass to slideshow handler
+            if (distanceY > 8 || distanceX > 8) {
               handleSlideshowTouchEnd(e)
             } else {
               // It's a tap - open the video
