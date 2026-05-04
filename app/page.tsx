@@ -28,7 +28,8 @@ interface Project {
   vimeoId?: string
   verticalVimeoId?: string
   videoUrl?: string // Vercel Blob video URL
-  verticalVideoUrl?: string // Vercel Blob vertical video URL
+  verticalVideoUrl?: string // Vercel Blob vertical video URL (full length for modal)
+  verticalPreviewUrl?: string // Short trailer for mobile slideshow preview
   imageUrl?: string
   canvaUrl?: string
   category: "film" | "photo"
@@ -618,9 +619,11 @@ export default function Home() {
               const shouldRender = isFirst || (initialLoadComplete && (isActive || isAdjacent))
               if (!shouldRender) return null
 
-              // Use vertical video on mobile if available
-              const useVertical = isMobile && (project.verticalVideoUrl || project.verticalVimeoId)
-              const videoUrl = useVertical ? (project.verticalVideoUrl || null) : project.videoUrl
+              // Use vertical preview on mobile if available, otherwise fall back to verticalVideoUrl or videoUrl
+              const useVertical = isMobile && (project.verticalPreviewUrl || project.verticalVideoUrl || project.verticalVimeoId)
+              const videoUrl = useVertical 
+                ? (project.verticalPreviewUrl || project.verticalVideoUrl || null) 
+                : project.videoUrl
               const videoId = useVertical ? project.verticalVimeoId : project.vimeoId
 
               // Use 9:16 sizing for vertical videos on mobile, otherwise use appropriate aspect ratio
@@ -882,11 +885,16 @@ export default function Home() {
           {/* Video player - Maximum size on all devices */}
           <div className="flex-1 flex items-center justify-center px-0 relative z-0 pointer-events-none w-full h-full">
             <div className="video-modal-container relative w-full h-full max-w-[100vw] max-h-[calc(100vh-4rem)] md:max-h-[calc(100vh-5rem)] bg-black" style={{ backgroundColor: '#000' }}>
-              {modalProject.videoUrl ? (
+              {/* On mobile, use verticalVideoUrl (full length) if available, else videoUrl */}
+              {(() => {
+                const modalVideoUrl = isMobile && modalProject.verticalVideoUrl 
+                  ? modalProject.verticalVideoUrl 
+                  : modalProject.videoUrl
+                return modalVideoUrl ? (
                 <video
-                  key={`modal-video-blob-${modalProject.id}`}
+                  key={`modal-video-blob-${modalProject.id}-${isMobile ? 'mobile' : 'desktop'}`}
                   ref={modalVideoRef}
-                  src={modalProject.videoUrl}
+                  src={modalVideoUrl}
                   className="absolute inset-0 w-full h-full bg-black"
                   style={{ backgroundColor: '#000', objectFit: 'contain' }}
                   autoPlay
@@ -906,18 +914,19 @@ export default function Home() {
                   onPause={() => setIsPlaying(false)}
                   onEnded={() => setIsPlaying(false)}
                 />
-              ) : (
-                <iframe
-                  key={`modal-video-${modalProject.vimeoId}`}
-                  ref={modalIframeRef}
-                  src={`https://player.vimeo.com/video/${modalProject.vimeoId}?autoplay=1&loop=0&muted=0&controls=0&title=0&byline=0&portrait=0&playsinline=1&transparent=0&quality=1080p`}
-                  className="absolute inset-0 w-full h-full bg-black"
-                  style={{ border: 'none', backgroundColor: '#000', objectFit: 'cover' }}
-                  allow="autoplay; fullscreen; picture-in-picture"
-                  title={modalProject.title || modalProject.client}
-                  loading="eager"
-                />
-              )}
+                ) : (
+                  <iframe
+                    key={`modal-video-${modalProject.vimeoId}`}
+                    ref={modalIframeRef}
+                    src={`https://player.vimeo.com/video/${modalProject.vimeoId}?autoplay=1&loop=0&muted=0&controls=0&title=0&byline=0&portrait=0&playsinline=1&transparent=0&quality=1080p`}
+                    className="absolute inset-0 w-full h-full bg-black"
+                    style={{ border: 'none', backgroundColor: '#000', objectFit: 'cover' }}
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    title={modalProject.title || modalProject.client}
+                    loading="eager"
+                  />
+                )
+              })()}
             </div>
           </div>
 
