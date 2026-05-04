@@ -493,19 +493,34 @@ export default function Home() {
   }
 
   const handleVideoTouchEnd = () => {
-    if (!touchStart || !touchEnd) return
-    const distance = touchStart - touchEnd
-    const isLeftSwipe = distance > minSwipeDistance
-    const isRightSwipe = distance < -minSwipeDistance
+    const distanceX = touchStart && touchEnd ? touchStart - touchEnd : 0
+    const distanceY = touchStartY && touchEndY ? touchStartY - touchEndY : 0
+    
+    const isLeftSwipe = distanceX > minSwipeDistance
+    const isRightSwipe = distanceX < -minSwipeDistance
+    
+    // Detect tap (minimal movement)
+    const isTap = Math.abs(distanceX) < 10 && Math.abs(distanceY) < 10
 
     if (isLeftSwipe) {
       handleModalNext()
     } else if (isRightSwipe) {
       handleModalPrev()
+    } else if (isTap && touchStartY) {
+      // Tap detected - play/pause if in upper 85% of screen, ignore bottom 15%
+      const screenHeight = window.innerHeight
+      const tapY = touchStartY
+      const isUpperArea = tapY < screenHeight * 0.85
+      
+      if (isUpperArea) {
+        togglePlay()
+      }
     }
 
     setTouchStart(null)
     setTouchEnd(null)
+    setTouchStartY(null)
+    setTouchEndY(null)
   }
 
   const handlePhotoTouchEnd = () => {
@@ -1007,28 +1022,28 @@ export default function Home() {
             </svg>
           </button>
 
-          {/* Navigation overlay zones - on top of video */}
-          {/* Left side - Previous video */}
-          <div
-            className="absolute left-0 top-0 bottom-20 w-1/4 md:w-20 cursor-pointer z-30"
-            onClick={handleModalPrev}
-            onTouchEnd={(e) => { e.preventDefault(); e.stopPropagation(); handleModalPrev(); }}
-          />
+          {/* Desktop-only click zones for navigation (swipe handles mobile) */}
+          {!isMobile && (
+            <>
+              {/* Left side - Previous video */}
+              <div
+                className="absolute left-0 top-0 bottom-20 w-20 cursor-pointer z-30"
+                onClick={handleModalPrev}
+              />
 
-          {/* Right side - Next video */}
-          <div
-            className="absolute right-0 top-0 bottom-20 w-1/4 md:w-20 cursor-pointer z-30"
-            onClick={handleModalNext}
-            onTouchEnd={(e) => { e.preventDefault(); e.stopPropagation(); handleModalNext(); }}
-          />
+              {/* Right side - Next video */}
+              <div
+                className="absolute right-0 top-0 bottom-20 w-20 cursor-pointer z-30"
+                onClick={handleModalNext}
+              />
 
-          {/* Center area - Play/Pause */}
-          <div
-            className="absolute left-1/4 right-1/4 md:left-20 md:right-20 top-0 bottom-20 cursor-pointer z-30"
-            onClick={togglePlay}
-            onTouchStart={(e) => { e.stopPropagation(); }}
-            onTouchEnd={(e) => { e.preventDefault(); e.stopPropagation(); togglePlay(); }}
-          />
+              {/* Center area - Play/Pause */}
+              <div
+                className="absolute left-20 right-20 top-0 bottom-20 cursor-pointer z-30"
+                onClick={togglePlay}
+              />
+            </>
+          )}
 
           {/* Video player - Maximum size on all devices */}
           <div className="flex-1 flex items-center justify-center px-0 relative z-0 pointer-events-none w-full h-full">
