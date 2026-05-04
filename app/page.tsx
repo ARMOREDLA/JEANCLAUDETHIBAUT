@@ -453,25 +453,25 @@ export default function Home() {
     setTouchEndY(e.targetTouches[0].clientY)
   }
 
-  // Slideshow horizontal swipe handler for mobile (like armoredpictures.com)
+  // Slideshow vertical swipe handler for mobile
   const handleSlideshowTouchEnd = (e: React.TouchEvent) => {
-    const distanceX = touchStart && touchEnd ? touchStart - touchEnd : 0
     const distanceY = touchStartY && touchEndY ? touchStartY - touchEndY : 0
+    const distanceX = touchStart && touchEnd ? touchStart - touchEnd : 0
     
-    // Low swipe threshold for easy horizontal swiping
-    const swipeThreshold = 30
-    const isLeftSwipe = distanceX > swipeThreshold
-    const isRightSwipe = distanceX < -swipeThreshold
+    // Low swipe threshold for easy vertical swiping
+    const swipeThreshold = 25
+    const isUpSwipe = distanceY > swipeThreshold
+    const isDownSwipe = distanceY < -swipeThreshold
     
     // Only count as tap if virtually no movement
-    const isTap = Math.abs(distanceX) < 5 && Math.abs(distanceY) < 5
+    const isTap = Math.abs(distanceY) < 5 && Math.abs(distanceX) < 5
 
-    if (isLeftSwipe) {
-      // Swipe left = next project
+    if (isUpSwipe) {
+      // Swipe up = next project
       setUserHasNavigated(true)
       setCurrentIndex((prev) => (prev + 1) % filteredProjects.length)
-    } else if (isRightSwipe) {
-      // Swipe right = previous project
+    } else if (isDownSwipe) {
+      // Swipe down = previous project
       setUserHasNavigated(true)
       setCurrentIndex((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length)
     } else if (isTap && touchStartY) {
