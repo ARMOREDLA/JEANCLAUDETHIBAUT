@@ -1186,14 +1186,7 @@ export default function Home() {
         </div>
       )}
 
-      {/* Mobile tap indicator */}
-      {isMobile && !isVideoModalOpen && activeCategory === "film" && (
-        <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-40 pointer-events-none">
-          <div className="text-[10px] uppercase tracking-[0.2em] text-foreground/60">
-            Tap for sound
-          </div>
-        </div>
-      )}
+      
 
       {/* Photo Lightbox Modal */}
       {isPhotoModalOpen && (modalPhoto?.imageUrl || modalPhoto?.canvaUrl || modalPhoto?.vimeoId) && (
