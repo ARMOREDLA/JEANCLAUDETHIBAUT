@@ -93,6 +93,7 @@ export default function Home() {
   const [isMuted, setIsMuted] = useState(false)
   const [progress, setProgress] = useState(0)
   const [duration, setDuration] = useState(0)
+  const [isVideoLoading, setIsVideoLoading] = useState(true)
   const modalPlayerRef = useRef<Player | null>(null)
   const modalIframeRef = useRef<HTMLIFrameElement>(null)
   const modalVideoRef = useRef<HTMLVideoElement>(null)
@@ -695,6 +696,7 @@ export default function Home() {
       setModalVideoIndex(index)
       setProgress(0)
       setIsMuted(false)
+      setIsVideoLoading(true)
       setIsVideoModalOpen(true)
     } else if (activeCategory === "photo") {
       // If photo has vimeoId, open video modal instead
@@ -702,6 +704,7 @@ export default function Home() {
         setModalVideoIndex(index)
         setProgress(0)
         setIsMuted(false)
+        setIsVideoLoading(true)
         setIsVideoModalOpen(true)
       } else if (clickedProject?.imageUrl || clickedProject?.canvaUrl) {
         // Open photo modal for images or Canva embeds
@@ -1037,29 +1040,39 @@ export default function Home() {
                   : modalProject.videoUrl
                 
                 return modalVideoUrl ? (
-                <video
-                  key={`modal-video-blob-${modalProject.id}-${isLandscape ? 'landscape' : 'portrait'}`}
-                  ref={modalVideoRef}
-                  src={modalVideoUrl}
-                  className="absolute inset-0 w-full h-full bg-black"
-                  style={{ backgroundColor: '#000', objectFit: 'contain' }}
-                  autoPlay
-                  playsInline
-                  muted={isMuted}
-                  onTimeUpdate={(e) => setProgress(e.currentTarget.currentTime)}
-                  onLoadedMetadata={(e) => {
-                    setDuration(e.currentTarget.duration)
-                    setIsPlaying(true)
-                    // Unmute after autoplay starts
-                    if (e.currentTarget) {
-                      e.currentTarget.muted = false
-                      setIsMuted(false)
-                    }
-                  }}
-                  onPlay={() => setIsPlaying(true)}
-                  onPause={() => setIsPlaying(false)}
-                  onEnded={() => setIsPlaying(false)}
-                />
+                <>
+                  {/* Loading indicator */}
+                  {isVideoLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black z-10">
+                      <div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                    </div>
+                  )}
+                  <video
+                    key={`modal-video-blob-${modalProject.id}-${isLandscape ? 'landscape' : 'portrait'}`}
+                    ref={modalVideoRef}
+                    src={modalVideoUrl}
+                    className="absolute inset-0 w-full h-full bg-black"
+                    style={{ backgroundColor: '#000', objectFit: 'contain', opacity: isVideoLoading ? 0 : 1, transition: 'opacity 0.3s' }}
+                    autoPlay
+                    playsInline
+                    muted={isMuted}
+                    onLoadStart={() => setIsVideoLoading(true)}
+                    onCanPlay={() => setIsVideoLoading(false)}
+                    onTimeUpdate={(e) => setProgress(e.currentTarget.currentTime)}
+                    onLoadedMetadata={(e) => {
+                      setDuration(e.currentTarget.duration)
+                      setIsPlaying(true)
+                      // Unmute after autoplay starts
+                      if (e.currentTarget) {
+                        e.currentTarget.muted = false
+                        setIsMuted(false)
+                      }
+                    }}
+                    onPlay={() => setIsPlaying(true)}
+                    onPause={() => setIsPlaying(false)}
+                    onEnded={() => setIsPlaying(false)}
+                  />
+                </>
                 ) : (
                   <iframe
                     key={`modal-video-${modalProject.vimeoId}`}
