@@ -1045,23 +1045,15 @@ export default function Home() {
                 
                 return modalVideoUrl ? (
                 <>
-                  {/* Loading indicator */}
-                  {isVideoLoading && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black z-10">
-                      <div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                    </div>
-                  )}
                   <video
                     key={`modal-video-blob-${modalProject.id}-${isLandscape ? 'landscape' : 'portrait'}`}
                     ref={modalVideoRef}
                     src={modalVideoUrl}
                     className="absolute inset-0 w-full h-full bg-black"
-                    style={{ backgroundColor: '#000', objectFit: 'contain', opacity: isVideoLoading ? 0 : 1, transition: 'opacity 0.3s' }}
+                    style={{ backgroundColor: '#000', objectFit: 'contain' }}
                     autoPlay
                     playsInline
                     muted={isMuted}
-                    onLoadStart={() => setIsVideoLoading(true)}
-                    onCanPlay={() => setIsVideoLoading(false)}
                     onTimeUpdate={(e) => setProgress(e.currentTarget.currentTime)}
                     onLoadedMetadata={(e) => {
                       setDuration(e.currentTarget.duration)
