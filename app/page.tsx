@@ -665,14 +665,18 @@ export default function Home() {
   }
 
   const handleProjectClick = (index: number, fromTouch = false) => {
-    // On mobile slideshow, only handle clicks from touch handler (lower 1/3 tap)
-    // BUT allow clicks from ProjectNav (tab dashes) - those have fromTouch=false but should work
-    // We differentiate by checking if index matches currentIndex (tap on current video) vs different index (tab click)
-    if (isMobile && !fromTouch && index === currentIndex) {
+    // If clicking on a different project (from dashed nav), just navigate to it - don't open modal
+    if (index !== currentIndex) {
+      setCurrentIndex(index)
+      setUserHasNavigated(true)
       return
     }
     
-    setCurrentIndex(index)
+    // Clicking on current project - only open modal if fromTouch (lower 1/3 tap) or on desktop
+    if (isMobile && !fromTouch) {
+      return
+    }
+    
     setUserHasNavigated(true)
 
     const clickedProject = filteredProjects[index]
