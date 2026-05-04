@@ -780,18 +780,22 @@ export default function Home() {
               if (videoUrl) {
                 return (
                   <video
-                    key={`${project.id}-${activeCategory}-${isMobile ? 'mobile' : 'desktop'}-${isActive}`}
+                    key={`${project.id}-${activeCategory}-${isMobile ? 'mobile' : 'desktop'}`}
                     src={videoUrl}
                     className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-                    autoPlay
+                    autoPlay={isActive}
                     loop={!isPreviewMode}
                     muted
                     playsInline
-                    preload={isActive ? "auto" : "metadata"}
+                    preload="metadata"
                     ref={(el) => {
-                      // Ensure video plays when it becomes active
-                      if (el && isActive) {
-                        el.play().catch(() => {})
+                      // Play/pause based on active state
+                      if (el) {
+                        if (isActive) {
+                          el.play().catch(() => {})
+                        } else {
+                          el.pause()
+                        }
                       }
                     }}
                     onEnded={isPreviewMode && isActive ? () => {
