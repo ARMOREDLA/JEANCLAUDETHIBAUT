@@ -104,6 +104,7 @@ export default function Home() {
   const reelIntervalRef = useRef<NodeJS.Timeout | null>(null)
   const isPausedRef = useRef(false)
   const videoAreaRef = useRef<HTMLDivElement>(null)
+  const modalVideoUrlRef = useRef<string | null>(null) // Track which video URL was opened in modal
 
   // Filter projects by category
   const filteredProjects = projects.filter(p => p.category === activeCategory)
@@ -114,9 +115,14 @@ export default function Home() {
   const modalProject = filteredProjects[modalVideoIndex]
   const modalPhoto = filteredProjects[modalPhotoIndex]
 
-  // Check if mobile
+// Check if mobile device (not just screen width)
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    const checkMobile = () => {
+      // Check for touch capability and screen size (considering both orientations)
+      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+      const isSmallScreen = Math.min(window.innerWidth, window.innerHeight) < 768
+      setIsMobile(isTouchDevice && isSmallScreen)
+    }
     checkMobile()
     window.addEventListener('resize', checkMobile)
     return () => window.removeEventListener('resize', checkMobile)
@@ -280,16 +286,18 @@ export default function Home() {
     setIsVideoModalOpen(false)
     setIsPlaying(false)
     setProgress(0)
+    modalVideoUrlRef.current = null // Clear cached video URL
     // Clear URL hash
     window.history.replaceState(null, '', window.location.pathname)
   }, [])
 
   const handleModalPrev = useCallback(() => {
-    // Find previous project with vimeoId
+    modalVideoUrlRef.current = null // Clear cached URL for new video
+    // Find previous project with vimeoId or videoUrl
     setModalVideoIndex((prev) => {
       let newIndex = (prev - 1 + filteredProjects.length) % filteredProjects.length
       let attempts = 0
-      while (!filteredProjects[newIndex]?.vimeoId && attempts < filteredProjects.length) {
+      while (!filteredProjects[newIndex]?.vimeoId && !filteredProjects[newIndex]?.videoUrl && attempts < filteredProjects.length) {
         newIndex = (newIndex - 1 + filteredProjects.length) % filteredProjects.length
         attempts++
       }
@@ -300,11 +308,12 @@ export default function Home() {
   }, [filteredProjects])
 
   const handleModalNext = useCallback(() => {
-    // Find next project with vimeoId
+    modalVideoUrlRef.current = null // Clear cached URL for new video
+    // Find next project with vimeoId or videoUrl
     setModalVideoIndex((prev) => {
       let newIndex = (prev + 1) % filteredProjects.length
       let attempts = 0
-      while (!filteredProjects[newIndex]?.vimeoId && attempts < filteredProjects.length) {
+      while (!filteredProjects[newIndex]?.vimeoId && !filteredProjects[newIndex]?.videoUrl && attempts < filteredProjects.length) {
         newIndex = (newIndex + 1) % filteredProjects.length
         attempts++
       }
@@ -999,14 +1008,22 @@ export default function Home() {
           {/* Video player - Maximum size on all devices */}
           <div className="flex-1 flex items-center justify-center px-0 relative z-0 pointer-events-none w-full h-full">
             <div className="video-modal-container relative w-full h-full max-w-[100vw] max-h-[calc(100vh-4rem)] md:max-h-[calc(100vh-5rem)] bg-black" style={{ backgroundColor: '#000' }}>
-              {/* On mobile, use verticalVideoUrl (full length) if available, else videoUrl */}
+              {/* Use stable video URL - don't change during orientation changes */}
               {(() => {
-                const modalVideoUrl = isMobile && modalProject.verticalVideoUrl 
+                // Determine video URL, but use cached ref if already playing to prevent orientation change issues
+                const preferredUrl = isMobile && modalProject.verticalVideoUrl 
                   ? modalProject.verticalVideoUrl 
                   : modalProject.videoUrl
+                
+                // Cache the URL when modal opens, use cached version during playback
+                if (!modalVideoUrlRef.current && preferredUrl) {
+                  modalVideoUrlRef.current = preferredUrl
+                }
+                const modalVideoUrl = modalVideoUrlRef.current || preferredUrl
+                
                 return modalVideoUrl ? (
                 <video
-                  key={`modal-video-blob-${modalProject.id}-${isMobile ? 'mobile' : 'desktop'}`}
+                  key={`modal-video-blob-${modalProject.id}`}
                   ref={modalVideoRef}
                   src={modalVideoUrl}
                   className="absolute inset-0 w-full h-full bg-black"
