@@ -539,8 +539,14 @@ export default function Home() {
   }, [])
 
   // Auto-rotating reel - every 8 seconds, stops once user navigates
+  // On mobile with verticalPreviewUrl, video onEnded handles the rotation instead
   useEffect(() => {
     if (userHasNavigated) return // Don't auto-rotate if user has navigated
+    
+    // Check if current project has a preview video - if so, let onEnded handle rotation
+    const currentProject = filteredProjects[currentIndex]
+    const hasPreviewOnMobile = isMobile && currentProject?.verticalPreviewUrl
+    if (hasPreviewOnMobile) return // Let video onEnded handle rotation
 
     const startInterval = () => {
       reelIntervalRef.current = setInterval(() => {
@@ -557,7 +563,7 @@ export default function Home() {
         clearInterval(reelIntervalRef.current)
       }
     }
-  }, [filteredProjects.length, userHasNavigated])
+  }, [filteredProjects.length, userHasNavigated, currentIndex, isMobile, filteredProjects])
 
   const handleProjectHover = (index: number | null) => {
     setHoveredIndex(index)
@@ -621,6 +627,7 @@ export default function Home() {
 
               // Use vertical preview on mobile if available, otherwise fall back to verticalVideoUrl or videoUrl
               const useVertical = isMobile && (project.verticalPreviewUrl || project.verticalVideoUrl || project.verticalVimeoId)
+              const isPreviewMode = isMobile && !!project.verticalPreviewUrl
               const videoUrl = useVertical 
                 ? (project.verticalPreviewUrl || project.verticalVideoUrl || null) 
                 : project.videoUrl
@@ -649,10 +656,13 @@ export default function Home() {
                     src={videoUrl}
                     className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
                     autoPlay
-                    loop
+                    loop={!isPreviewMode}
                     muted
                     playsInline
                     preload={isActive ? "auto" : "none"}
+                    onEnded={isPreviewMode && isActive ? () => {
+                      setCurrentIndex((prev) => (prev + 1) % filteredProjects.length)
+                    } : undefined}
                     style={{
                       opacity: isActive ? 1 : 0,
                       transition: 'opacity 0.5s',
