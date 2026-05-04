@@ -540,8 +540,8 @@ export default function Home() {
 
   // Auto-rotating reel - every 8 seconds, stops once user navigates
   // On mobile with verticalPreviewUrl, video onEnded handles the rotation instead
-  const currentProject = filteredProjects[currentIndex]
-  const hasPreviewOnMobile = isMobile && !!currentProject?.verticalPreviewUrl
+  const activeProject = filteredProjects[currentIndex]
+  const hasPreviewOnMobile = isMobile && !!activeProject?.verticalPreviewUrl
   
   useEffect(() => {
     if (userHasNavigated) return // Don't auto-rotate if user has navigated
