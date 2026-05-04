@@ -389,20 +389,22 @@ export default function Home() {
   }
 
   // Fullscreen toggle for mobile landscape video
+  // We fullscreen the modal container (not the video) so our touch handlers and navigation still work
+  const modalContainerRef = useRef<HTMLDivElement>(null)
+  
   const toggleFullscreen = async () => {
     try {
+      const container = modalContainerRef.current
+      if (!container) return
+      
       if (!document.fullscreenElement) {
-        // Try to fullscreen the video element directly for best mobile experience
-        const videoEl = modalVideoRef.current
-        if (videoEl) {
-          // Use webkit for iOS Safari
-          if ((videoEl as any).webkitEnterFullscreen) {
-            (videoEl as any).webkitEnterFullscreen()
-            setIsFullscreen(true)
-          } else if (videoEl.requestFullscreen) {
-            await videoEl.requestFullscreen()
-            setIsFullscreen(true)
-          }
+        // Fullscreen the modal container so we keep our custom controls
+        if ((container as any).webkitRequestFullscreen) {
+          (container as any).webkitRequestFullscreen()
+          setIsFullscreen(true)
+        } else if (container.requestFullscreen) {
+          await container.requestFullscreen()
+          setIsFullscreen(true)
         }
       } else {
         if (document.exitFullscreen) {
@@ -414,7 +416,7 @@ export default function Home() {
         }
       }
     } catch (err) {
-      console.log("[v0] Fullscreen error:", err)
+      // Silently handle fullscreen errors
     }
   }
 
@@ -663,17 +665,12 @@ export default function Home() {
   }
 
   const handleProjectClick = (index: number, fromTouch = false) => {
-    console.log("[v0] handleProjectClick called", { index, fromTouch, currentIndex, isMobile })
-    
     // On mobile slideshow, only handle clicks from touch handler (lower 1/3 tap)
     // BUT allow clicks from ProjectNav (tab dashes) - those have fromTouch=false but should work
     // We differentiate by checking if index matches currentIndex (tap on current video) vs different index (tab click)
     if (isMobile && !fromTouch && index === currentIndex) {
-      console.log("[v0] Blocked - mobile tap on current video without fromTouch")
       return
     }
-    
-    console.log("[v0] Opening modal for project", { index, project: filteredProjects[index]?.title })
     
     setCurrentIndex(index)
     setUserHasNavigated(true)
@@ -974,6 +971,7 @@ export default function Home() {
       {/* Video Modal with Custom Controls */}
       {isVideoModalOpen && modalProject && (modalProject.videoUrl || modalProject.vimeoId) && (
         <div
+          ref={modalContainerRef}
           className="fixed inset-0 z-[100] bg-black flex flex-col"
           style={{ backgroundColor: '#000' }}
           onTouchStart={handleTouchStart}
