@@ -540,12 +540,11 @@ export default function Home() {
 
   // Auto-rotating reel - every 8 seconds, stops once user navigates
   // On mobile with verticalPreviewUrl, video onEnded handles the rotation instead
+  const currentProject = filteredProjects[currentIndex]
+  const hasPreviewOnMobile = isMobile && !!currentProject?.verticalPreviewUrl
+  
   useEffect(() => {
     if (userHasNavigated) return // Don't auto-rotate if user has navigated
-    
-    // Check if current project has a preview video - if so, let onEnded handle rotation
-    const currentProject = filteredProjects[currentIndex]
-    const hasPreviewOnMobile = isMobile && currentProject?.verticalPreviewUrl
     if (hasPreviewOnMobile) return // Let video onEnded handle rotation
 
     const startInterval = () => {
@@ -563,7 +562,7 @@ export default function Home() {
         clearInterval(reelIntervalRef.current)
       }
     }
-  }, [filteredProjects.length, userHasNavigated, currentIndex, isMobile, filteredProjects])
+  }, [filteredProjects.length, userHasNavigated, hasPreviewOnMobile])
 
   const handleProjectHover = (index: number | null) => {
     setHoveredIndex(index)
