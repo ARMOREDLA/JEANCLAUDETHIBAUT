@@ -1021,28 +1021,24 @@ export default function Home() {
             </svg>
           </button>
 
-          {/* Desktop-only click zones for navigation (swipe handles mobile) */}
-          {!isMobile && (
-            <>
-              {/* Left side - Previous video */}
-              <div
-                className="absolute left-0 top-0 bottom-20 w-20 cursor-pointer z-30"
-                onClick={handleModalPrev}
-              />
+          {/* Click/tap zones for navigation - work on both mobile and desktop */}
+          {/* Left side - Previous video */}
+          <div
+            className="absolute left-0 top-0 bottom-20 w-1/4 md:w-20 cursor-pointer z-30"
+            onClick={handleModalPrev}
+          />
 
-              {/* Right side - Next video */}
-              <div
-                className="absolute right-0 top-0 bottom-20 w-20 cursor-pointer z-30"
-                onClick={handleModalNext}
-              />
+          {/* Right side - Next video */}
+          <div
+            className="absolute right-0 top-0 bottom-20 w-1/4 md:w-20 cursor-pointer z-30"
+            onClick={handleModalNext}
+          />
 
-              {/* Center area - Play/Pause */}
-              <div
-                className="absolute left-20 right-20 top-0 bottom-20 cursor-pointer z-30"
-                onClick={togglePlay}
-              />
-            </>
-          )}
+          {/* Center area - Play/Pause */}
+          <div
+            className="absolute left-1/4 right-1/4 md:left-20 md:right-20 top-0 bottom-20 cursor-pointer z-30"
+            onClick={togglePlay}
+          />
 
           {/* Video player - Maximum size on all devices */}
           <div className="flex-1 flex items-center justify-center px-0 relative z-0 pointer-events-none w-full h-full">
@@ -1200,8 +1196,8 @@ export default function Home() {
                   )}
                 </button>
 
-                {/* Fullscreen Button - Only show on mobile for Blob videos */}
-                {isMobile && modalProject.videoUrl && (
+                {/* Fullscreen Button - show on all devices for Blob videos */}
+                {modalProject.videoUrl && (
                   <button
                     onClick={toggleFullscreen}
                     className="text-foreground/70 hover:text-foreground transition-colors duration-300"
