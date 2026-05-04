@@ -455,16 +455,18 @@ export default function Home() {
 
   // Slideshow vertical swipe handler for mobile
   const handleSlideshowTouchEnd = (e: React.TouchEvent) => {
+    // If no movement was tracked, treat as potential tap
+    const didMove = touchEnd !== null || touchEndY !== null
     const distanceY = touchStartY && touchEndY ? touchStartY - touchEndY : 0
     const distanceX = touchStart && touchEnd ? touchStart - touchEnd : 0
     
     // Low swipe threshold for easy vertical swiping
-    const swipeThreshold = 25
+    const swipeThreshold = 20
     const isUpSwipe = distanceY > swipeThreshold
     const isDownSwipe = distanceY < -swipeThreshold
     
-    // Only count as tap if virtually no movement
-    const isTap = Math.abs(distanceY) < 5 && Math.abs(distanceX) < 5
+    // A tap is when there was NO movement tracked at all, or extremely minimal movement
+    const isTap = !didMove || (Math.abs(distanceY) < 3 && Math.abs(distanceX) < 3)
 
     if (isUpSwipe) {
       // Swipe up = next project
@@ -475,10 +477,10 @@ export default function Home() {
       setUserHasNavigated(true)
       setCurrentIndex((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length)
     } else if (isTap && touchStartY) {
-      // Tap detected - only open modal if tap is in bottom 15% of screen (where "tap to play" is)
+      // Tap detected - only open modal if tap is in bottom 10% of screen (where "tap to play" is)
       const screenHeight = window.innerHeight
       const tapY = touchStartY
-      const isBottomArea = tapY > screenHeight * 0.85
+      const isBottomArea = tapY > screenHeight * 0.90
       
       if (isBottomArea) {
         // Open video/photo modal
@@ -734,8 +736,8 @@ export default function Home() {
       onTouchEnd={isMobile ? handleSlideshowTouchEnd : undefined}
     >
 {/* Mobile tap hint - bottom 15% to open video */}
-      {isMobile && !isVideoModalOpen && !isPhotoModalOpen && (
-        <div className="fixed bottom-0 left-0 right-0 h-[15vh] z-10 pointer-events-none flex items-center justify-center">
+{isMobile && !isVideoModalOpen && !isPhotoModalOpen && (
+        <div className="fixed bottom-0 left-0 right-0 h-[10vh] z-10 pointer-events-none flex items-center justify-center">
           <span className="text-white/40 text-xs tracking-widest uppercase animate-pulse">Tap to play</span>
         </div>
       )}
