@@ -723,7 +723,7 @@ export default function Home() {
 {/* Mobile tap to play button - this is the ONLY way to open video on mobile */}
       {isMobile && !isVideoModalOpen && !isPhotoModalOpen && (
         <button
-          className="fixed bottom-0 left-0 right-0 h-24 z-40 flex items-center justify-center bg-transparent"
+          className="fixed bottom-16 left-0 right-0 h-20 z-40 flex items-center justify-center bg-transparent"
           onClick={() => handleProjectClick(currentIndex, true)}
         >
           <span className="text-white/40 text-xs tracking-widest uppercase animate-pulse">Tap to play</span>
