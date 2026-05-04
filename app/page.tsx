@@ -85,6 +85,7 @@ export default function Home() {
   const [isCursorVisible, setIsCursorVisible] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
+  const [isFullscreen, setIsFullscreen] = useState(false)
 
   // Modal video player state
   const [isPlaying, setIsPlaying] = useState(false)
@@ -377,6 +378,49 @@ export default function Home() {
       }
     }
   }
+
+  // Fullscreen toggle for mobile landscape video
+  const toggleFullscreen = async () => {
+    try {
+      if (!document.fullscreenElement) {
+        // Try to fullscreen the video element directly for best mobile experience
+        const videoEl = modalVideoRef.current
+        if (videoEl) {
+          // Use webkit for iOS Safari
+          if ((videoEl as any).webkitEnterFullscreen) {
+            (videoEl as any).webkitEnterFullscreen()
+            setIsFullscreen(true)
+          } else if (videoEl.requestFullscreen) {
+            await videoEl.requestFullscreen()
+            setIsFullscreen(true)
+          }
+        }
+      } else {
+        if (document.exitFullscreen) {
+          await document.exitFullscreen()
+          setIsFullscreen(false)
+        } else if ((document as any).webkitExitFullscreen) {
+          (document as any).webkitExitFullscreen()
+          setIsFullscreen(false)
+        }
+      }
+    } catch (err) {
+      console.log("[v0] Fullscreen error:", err)
+    }
+  }
+
+  // Listen for fullscreen changes
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement)
+    }
+    document.addEventListener('fullscreenchange', handleFullscreenChange)
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange)
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange)
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange)
+    }
+  }, [])
 
   // Swipe gesture handlers for mobile modal navigation
   const minSwipeDistance = 50
@@ -1079,6 +1123,24 @@ export default function Home() {
                     </svg>
                   )}
                 </button>
+
+                {/* Fullscreen Button - Only show on mobile for Blob videos */}
+                {isMobile && modalProject.videoUrl && (
+                  <button
+                    onClick={toggleFullscreen}
+                    className="text-foreground/70 hover:text-foreground transition-colors duration-300"
+                  >
+                    {isFullscreen ? (
+                      <svg className="w-4 h-4 landscape:w-3 landscape:h-3 landscape:md:w-5 landscape:md:h-5 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5l5.25 5.25" />
+                      </svg>
+                    ) : (
+                      <svg className="w-4 h-4 landscape:w-3 landscape:h-3 landscape:md:w-5 landscape:md:h-5 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+                      </svg>
+                    )}
+                  </button>
+                )}
 
                 {/* Time Display */}
                 <span className="text-[10px] landscape:text-[8px] landscape:md:text-xs md:text-xs text-foreground/50 font-light tracking-wider">
