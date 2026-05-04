@@ -458,14 +458,13 @@ export default function Home() {
     const distanceY = touchStartY && touchEndY ? touchStartY - touchEndY : 0
     const distanceX = touchStart && touchEnd ? touchStart - touchEnd : 0
     
-    // Lower swipe threshold to make swiping easier (30px instead of 50px)
-    const swipeThreshold = 30
+    // Low swipe threshold for easy swiping (20px)
+    const swipeThreshold = 20
     const isUpSwipe = distanceY > swipeThreshold
     const isDownSwipe = distanceY < -swipeThreshold
     
-    // Any significant movement in either direction means it's not a tap
-    const hasMovement = Math.abs(distanceY) > 8 || Math.abs(distanceX) > 8
-    const isTap = !hasMovement
+    // Very strict tap detection - virtually no movement allowed
+    const isTap = Math.abs(distanceY) < 3 && Math.abs(distanceX) < 3
 
     if (isUpSwipe) {
       // Swipe up = next project
@@ -476,12 +475,12 @@ export default function Home() {
       setUserHasNavigated(true)
       setCurrentIndex((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length)
     } else if (isTap && touchStartY) {
-      // Tap detected - only open modal if tap is in lower 1/4 of screen
+      // Tap detected - only open modal if tap is in bottom 15% of screen (where "tap to play" is)
       const screenHeight = window.innerHeight
       const tapY = touchStartY
-      const isLowerQuarter = tapY > screenHeight * 0.75
+      const isBottomArea = tapY > screenHeight * 0.85
       
-      if (isLowerQuarter) {
+      if (isBottomArea) {
         // Open video/photo modal
         handleProjectClick(currentIndex, true)
       }
@@ -734,9 +733,9 @@ export default function Home() {
       onTouchMove={isMobile ? handleTouchMove : undefined}
       onTouchEnd={isMobile ? handleSlideshowTouchEnd : undefined}
     >
-      {/* Mobile tap hint - lower 1/3 to open video */}
+{/* Mobile tap hint - bottom 15% to open video */}
       {isMobile && !isVideoModalOpen && !isPhotoModalOpen && (
-        <div className="fixed bottom-0 left-0 right-0 h-[25vh] z-10 pointer-events-none flex items-end justify-center pb-20">
+        <div className="fixed bottom-0 left-0 right-0 h-[15vh] z-10 pointer-events-none flex items-center justify-center">
           <span className="text-white/40 text-xs tracking-widest uppercase animate-pulse">Tap to play</span>
         </div>
       )}
