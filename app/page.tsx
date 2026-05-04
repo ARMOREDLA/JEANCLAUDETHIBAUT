@@ -496,11 +496,13 @@ export default function Home() {
     const distanceX = touchStart && touchEnd ? touchStart - touchEnd : 0
     const distanceY = touchStartY && touchEndY ? touchStartY - touchEndY : 0
     
-    const isLeftSwipe = distanceX > minSwipeDistance
-    const isRightSwipe = distanceX < -minSwipeDistance
+    // Lower swipe threshold for easier swiping (25px)
+    const swipeThreshold = 25
+    const isLeftSwipe = distanceX > swipeThreshold
+    const isRightSwipe = distanceX < -swipeThreshold
     
-    // Detect tap (minimal movement)
-    const isTap = Math.abs(distanceX) < 10 && Math.abs(distanceY) < 10
+    // Tap requires virtually no movement (< 5px) - be very strict
+    const isTap = Math.abs(distanceX) < 5 && Math.abs(distanceY) < 5
 
     if (isLeftSwipe) {
       handleModalNext()
