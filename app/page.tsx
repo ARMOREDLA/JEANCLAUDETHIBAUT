@@ -1099,8 +1099,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Custom Controls - Bottom - hidden in fullscreen */}
-          {!isFullscreen && (
+          {/* Custom Controls - Bottom */}
           <div className="px-4 landscape:px-3 landscape:md:px-10 md:px-10 pb-3 landscape:pb-2 landscape:md:pb-8 md:pb-8 relative z-20">
             {/* Progress Bar - Clickable/Draggable */}
             <div
@@ -1239,11 +1238,8 @@ export default function Home() {
               </div>
             </div>
           </div>
-          )}
         </div>
       )}
-
-      
 
       {/* Photo Lightbox Modal */}
       {isPhotoModalOpen && (modalPhoto?.imageUrl || modalPhoto?.canvaUrl || modalPhoto?.vimeoId) && (
