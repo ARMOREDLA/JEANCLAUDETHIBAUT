@@ -87,6 +87,7 @@ export default function Home() {
   const [isLandscape, setIsLandscape] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [userHasNavigated, setUserHasNavigated] = useState(false)
 
   // Modal video player state
   const [isPlaying, setIsPlaying] = useState(false)
@@ -629,32 +630,23 @@ export default function Home() {
   // Keyboard navigation for global page (when no modal is open)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      console.log("[v0] Key pressed:", e.key, "Video modal open:", isVideoModalOpen, "Photo modal open:", isPhotoModalOpen)
-      
       // Only handle when no modal is open
       if (isVideoModalOpen || isPhotoModalOpen) return
       
       if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
         e.preventDefault()
-        console.log("[v0] Going to previous project")
         setCurrentIndex((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length)
         setUserHasNavigated(true)
       } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
         e.preventDefault()
-        console.log("[v0] Going to next project")
         setCurrentIndex((prev) => (prev + 1) % filteredProjects.length)
         setUserHasNavigated(true)
       }
     }
 
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
   }, [isVideoModalOpen, isPhotoModalOpen, filteredProjects.length])
-
-
-
-  // Track if user has manually navigated
-  const [userHasNavigated, setUserHasNavigated] = useState(false)
 
   // Delay loading other videos until first video has time to load
   useEffect(() => {
