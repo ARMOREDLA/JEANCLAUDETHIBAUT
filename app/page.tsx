@@ -455,10 +455,15 @@ export default function Home() {
   const handleSlideshowTouchEnd = (e: React.TouchEvent) => {
     const distanceY = touchStartY && touchEndY ? touchStartY - touchEndY : 0
     const distanceX = touchStart && touchEnd ? touchStart - touchEnd : 0
-    const isUpSwipe = distanceY > minSwipeDistance
-    const isDownSwipe = distanceY < -minSwipeDistance
-    // Tap detection - allow some movement but not as much as a swipe
-    const isTap = Math.abs(distanceY) < 15 && Math.abs(distanceX) < 15
+    
+    // Lower swipe threshold to make swiping easier (30px instead of 50px)
+    const swipeThreshold = 30
+    const isUpSwipe = distanceY > swipeThreshold
+    const isDownSwipe = distanceY < -swipeThreshold
+    
+    // Any significant movement in either direction means it's not a tap
+    const hasMovement = Math.abs(distanceY) > 8 || Math.abs(distanceX) > 8
+    const isTap = !hasMovement
 
     if (isUpSwipe) {
       // Swipe up = next project
