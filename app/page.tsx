@@ -388,30 +388,33 @@ export default function Home() {
     }
   }
 
-  // Fullscreen toggle for mobile landscape video
-  // We fullscreen the modal container (not the video) so our touch handlers and navigation still work
+  // Fullscreen toggle for mobile video
   const modalContainerRef = useRef<HTMLDivElement>(null)
   
   const toggleFullscreen = async () => {
     try {
+      const videoEl = modalVideoRef.current
+      if (!videoEl) return
+      
+      // iOS Safari uses webkitEnterFullscreen on video element
+      if ((videoEl as any).webkitEnterFullscreen) {
+        (videoEl as any).webkitEnterFullscreen()
+        setIsFullscreen(true)
+        return
+      }
+      
+      // Standard fullscreen API for other browsers
       const container = modalContainerRef.current
       if (!container) return
       
       if (!document.fullscreenElement) {
-        // Fullscreen the modal container so we keep our custom controls
-        if ((container as any).webkitRequestFullscreen) {
-          (container as any).webkitRequestFullscreen()
-          setIsFullscreen(true)
-        } else if (container.requestFullscreen) {
+        if (container.requestFullscreen) {
           await container.requestFullscreen()
           setIsFullscreen(true)
         }
       } else {
         if (document.exitFullscreen) {
           await document.exitFullscreen()
-          setIsFullscreen(false)
-        } else if ((document as any).webkitExitFullscreen) {
-          (document as any).webkitExitFullscreen()
           setIsFullscreen(false)
         }
       }
