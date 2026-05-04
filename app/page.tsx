@@ -1044,7 +1044,7 @@ export default function Home() {
                 
                 return modalVideoUrl ? (
                   <video
-                    key={`modal-video-blob-${modalProject.id}`}
+                    key={`modal-video-blob-${modalProject.id}-${isLandscape ? 'h' : 'v'}`}
                     ref={modalVideoRef}
                     src={modalVideoUrl}
                     className="absolute inset-0 w-full h-full"
