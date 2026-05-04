@@ -1068,18 +1068,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Fullscreen exit button - always visible when in fullscreen */}
-          {isFullscreen && isMobile && modalProject.videoUrl && (
-            <button
-              onClick={toggleFullscreen}
-              className="fixed top-4 right-4 z-50 text-white/70 hover:text-white transition-colors duration-300 bg-black/30 rounded-full p-2"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5l5.25 5.25" />
-              </svg>
-            </button>
-          )}
-
           {/* Custom Controls - Bottom - hidden in fullscreen */}
           {!isFullscreen && (
           <div className="px-4 landscape:px-3 landscape:md:px-10 md:px-10 pb-3 landscape:pb-2 landscape:md:pb-8 md:pb-8 relative z-20">
