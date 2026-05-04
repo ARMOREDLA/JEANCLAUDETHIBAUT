@@ -742,13 +742,37 @@ export default function Home() {
       onTouchEnd={isMobile ? handleSlideshowTouchEnd : undefined}
     >
 {/* Mobile tap to play button - this is the ONLY way to open video on mobile */}
+      {/* Swipes pass through to main element, only true taps trigger open */}
       {isMobile && !isVideoModalOpen && !isPhotoModalOpen && (
-        <button
+        <div
           className="fixed bottom-16 left-0 right-0 h-32 z-40 flex items-center justify-center bg-transparent"
-          onClick={() => handleProjectClick(currentIndex, true)}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={(e) => {
+            const startY = touchStartYRef.current
+            const startX = touchStartXRef.current
+            const endY = e.changedTouches[0].clientY
+            const endX = e.changedTouches[0].clientX
+            
+            if (startY === null || startX === null) return
+            
+            const distanceY = Math.abs(startY - endY)
+            const distanceX = Math.abs(startX - endX)
+            
+            // If it's a swipe (moved more than 20px), pass to slideshow handler
+            if (distanceY > 20 || distanceX > 20) {
+              handleSlideshowTouchEnd(e)
+            } else {
+              // It's a tap - open the video
+              handleProjectClick(currentIndex, true)
+            }
+            
+            touchStartXRef.current = null
+            touchStartYRef.current = null
+          }}
         >
           <span className="text-white/40 text-xs tracking-widest uppercase animate-pulse">Tap to play</span>
-        </button>
+        </div>
       )}
       
       {/* Fullscreen Background - Video or Photo */}
