@@ -118,10 +118,11 @@ export default function Home() {
 // Check if mobile device (not just screen width)
   useEffect(() => {
     const checkMobile = () => {
-      // Check for touch capability and screen size (considering both orientations)
+      // Check for touch capability OR small screen (to work in preview and real devices)
       const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
       const isSmallScreen = Math.min(window.innerWidth, window.innerHeight) < 768
-      setIsMobile(isTouchDevice && isSmallScreen)
+      // Use touch device check OR small screen check (for preview compatibility)
+      setIsMobile(isTouchDevice || isSmallScreen)
     }
     checkMobile()
     window.addEventListener('resize', checkMobile)
