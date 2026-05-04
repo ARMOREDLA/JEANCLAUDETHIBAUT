@@ -454,8 +454,8 @@ export default function Home() {
     const distanceX = touchStart && touchEnd ? touchStart - touchEnd : 0
     const isUpSwipe = distanceY > minSwipeDistance
     const isDownSwipe = distanceY < -minSwipeDistance
-    // Stricter tap detection - must have very minimal movement to count as tap
-    const isTap = Math.abs(distanceY) < 5 && Math.abs(distanceX) < 5
+    // Tap detection - allow some movement but not as much as a swipe
+    const isTap = Math.abs(distanceY) < 15 && Math.abs(distanceX) < 15
 
     if (isUpSwipe) {
       // Swipe up = next project
@@ -466,12 +466,12 @@ export default function Home() {
       setUserHasNavigated(true)
       setCurrentIndex((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length)
     } else if (isTap && touchStartY) {
-      // Tap detected - only open modal if tap is in lower 1/5 of screen (smaller area)
+      // Tap detected - only open modal if tap is in lower 1/4 of screen
       const screenHeight = window.innerHeight
       const tapY = touchStartY
-      const isLowerFifth = tapY > screenHeight * 0.8
+      const isLowerQuarter = tapY > screenHeight * 0.75
       
-      if (isLowerFifth) {
+      if (isLowerQuarter) {
         // Open video/photo modal
         handleProjectClick(currentIndex, true)
       }
@@ -712,7 +712,7 @@ export default function Home() {
     >
       {/* Mobile tap hint - lower 1/3 to open video */}
       {isMobile && !isVideoModalOpen && !isPhotoModalOpen && (
-        <div className="fixed bottom-0 left-0 right-0 h-[20vh] z-10 pointer-events-none flex items-end justify-center pb-20">
+        <div className="fixed bottom-0 left-0 right-0 h-[25vh] z-10 pointer-events-none flex items-end justify-center pb-20">
           <span className="text-white/40 text-xs tracking-widest uppercase animate-pulse">Tap to play</span>
         </div>
       )}
