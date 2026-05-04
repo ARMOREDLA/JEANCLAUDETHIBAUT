@@ -438,10 +438,14 @@ export default function Home() {
     }
   }, [])
 
-  // Swipe gesture handlers for mobile modal navigation
+  // Swipe gesture handlers using refs for immediate tracking (like armoredpictures.com)
+  const touchStartXRef = useRef<number | null>(null)
+  const touchStartYRef = useRef<number | null>(null)
   const minSwipeDistance = 50
 
   const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartXRef.current = e.targetTouches[0].clientX
+    touchStartYRef.current = e.targetTouches[0].clientY
     setTouchEnd(null)
     setTouchStart(e.targetTouches[0].clientX)
     setTouchEndY(null)
@@ -455,32 +459,31 @@ export default function Home() {
 
   // Slideshow vertical swipe handler for mobile - ONLY handles swiping, not taps
   const handleSlideshowTouchEnd = (e: React.TouchEvent) => {
-    // Get the final touch position from the event if touchEndY wasn't set by move
-    const finalY = touchEndY ?? e.changedTouches[0]?.clientY ?? touchStartY
-    const distanceY = touchStartY && finalY ? touchStartY - finalY : 0
+    const startY = touchStartYRef.current
+    const endY = e.changedTouches[0].clientY
     
-    console.log("[v0] Touch end - startY:", touchStartY, "endY:", touchEndY, "finalY:", finalY, "distanceY:", distanceY)
+    if (startY === null) return
+    
+    const distanceY = startY - endY
     
     // Swipe threshold for vertical swiping
     const swipeThreshold = 30
     const isUpSwipe = distanceY > swipeThreshold
     const isDownSwipe = distanceY < -swipeThreshold
 
-    console.log("[v0] Swipe detection - isUp:", isUpSwipe, "isDown:", isDownSwipe)
-
     if (isUpSwipe) {
       // Swipe up = next project
-      console.log("[v0] Swiping to next project")
       setUserHasNavigated(true)
       setCurrentIndex((prev) => (prev + 1) % filteredProjects.length)
     } else if (isDownSwipe) {
       // Swipe down = previous project
-      console.log("[v0] Swiping to previous project")
       setUserHasNavigated(true)
       setCurrentIndex((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length)
     }
     // No tap handling here - tap is handled by the dedicated "Tap to play" button
 
+    touchStartXRef.current = null
+    touchStartYRef.current = null
     setTouchStartY(null)
     setTouchEndY(null)
     setTouchStart(null)
