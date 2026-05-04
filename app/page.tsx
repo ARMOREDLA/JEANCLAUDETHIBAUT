@@ -490,9 +490,18 @@ export default function Home() {
     setTouchEnd(null)
   }
 
-  const handleVideoTouchEnd = () => {
-    const distanceX = touchStart && touchEnd ? touchStart - touchEnd : 0
-    const distanceY = touchStartY && touchEndY ? touchStartY - touchEndY : 0
+  const handleVideoTouchEnd = (e: React.TouchEvent) => {
+    e.preventDefault() // Prevent iOS from exiting fullscreen on swipe
+    
+    const startX = touchStartXRef.current
+    const startY = touchStartYRef.current
+    const endX = e.changedTouches[0].clientX
+    const endY = e.changedTouches[0].clientY
+    
+    if (startX === null || startY === null) return
+    
+    const distanceX = startX - endX
+    const distanceY = startY - endY
     
     // Lower swipe threshold for easier swiping (25px)
     const swipeThreshold = 25
@@ -506,17 +515,18 @@ export default function Home() {
       handleModalNext()
     } else if (isRightSwipe) {
       handleModalPrev()
-    } else if (isTap && touchStartY) {
+    } else if (isTap) {
       // Tap detected - play/pause if in upper 85% of screen, ignore bottom 15%
       const screenHeight = window.innerHeight
-      const tapY = touchStartY
-      const isUpperArea = tapY < screenHeight * 0.85
+      const isUpperArea = startY < screenHeight * 0.85
       
       if (isUpperArea) {
         togglePlay()
       }
     }
 
+    touchStartXRef.current = null
+    touchStartYRef.current = null
     setTouchStart(null)
     setTouchEnd(null)
     setTouchStartY(null)
