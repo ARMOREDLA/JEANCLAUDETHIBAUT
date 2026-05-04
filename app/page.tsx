@@ -745,7 +745,7 @@ export default function Home() {
       {/* Swipes pass through to main element, only true taps trigger open */}
       {isMobile && !isVideoModalOpen && !isPhotoModalOpen && (
         <div
-          className="fixed bottom-16 left-0 right-0 h-32 z-40 flex items-center justify-center bg-transparent"
+          className="fixed bottom-16 left-0 right-0 h-32 z-50 flex items-center justify-center bg-transparent"
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={(e) => {
@@ -773,6 +773,17 @@ export default function Home() {
         >
           <span className="text-white/40 text-xs tracking-widest uppercase animate-pulse">Tap to play</span>
         </div>
+      )}
+      
+      {/* Mobile swipe overlay - covers entire screen for swipe detection */}
+      {isMobile && !isVideoModalOpen && !isPhotoModalOpen && (
+        <div 
+          className="fixed inset-0 z-30"
+          style={{ touchAction: 'none' }}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleSlideshowTouchEnd}
+        />
       )}
       
       {/* Fullscreen Background - Video or Photo */}
