@@ -84,6 +84,7 @@ export default function Home() {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 })
   const [isCursorVisible, setIsCursorVisible] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [isLandscape, setIsLandscape] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
 
@@ -104,7 +105,6 @@ export default function Home() {
   const reelIntervalRef = useRef<NodeJS.Timeout | null>(null)
   const isPausedRef = useRef(false)
   const videoAreaRef = useRef<HTMLDivElement>(null)
-  const modalVideoUrlRef = useRef<string | null>(null) // Track which video URL was opened in modal
 
   // Filter projects by category
   const filteredProjects = projects.filter(p => p.category === activeCategory)
@@ -115,18 +115,20 @@ export default function Home() {
   const modalProject = filteredProjects[modalVideoIndex]
   const modalPhoto = filteredProjects[modalPhotoIndex]
 
-// Check if mobile device (not just screen width)
+// Check if mobile device and orientation
   useEffect(() => {
-    const checkMobile = () => {
+    const checkMobileAndOrientation = () => {
       // Check for touch capability OR small screen (to work in preview and real devices)
       const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
       const isSmallScreen = Math.min(window.innerWidth, window.innerHeight) < 768
       // Use touch device check OR small screen check (for preview compatibility)
       setIsMobile(isTouchDevice || isSmallScreen)
+      // Check landscape orientation
+      setIsLandscape(window.innerWidth > window.innerHeight)
     }
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
+    checkMobileAndOrientation()
+    window.addEventListener('resize', checkMobileAndOrientation)
+    return () => window.removeEventListener('resize', checkMobileAndOrientation)
   }, [])
 
   // Reset index when category changes
@@ -287,13 +289,11 @@ export default function Home() {
     setIsVideoModalOpen(false)
     setIsPlaying(false)
     setProgress(0)
-    modalVideoUrlRef.current = null // Clear cached video URL
     // Clear URL hash
     window.history.replaceState(null, '', window.location.pathname)
   }, [])
 
   const handleModalPrev = useCallback(() => {
-    modalVideoUrlRef.current = null // Clear cached URL for new video
     // Find previous project with vimeoId or videoUrl
     setModalVideoIndex((prev) => {
       let newIndex = (prev - 1 + filteredProjects.length) % filteredProjects.length
@@ -309,7 +309,6 @@ export default function Home() {
   }, [filteredProjects])
 
   const handleModalNext = useCallback(() => {
-    modalVideoUrlRef.current = null // Clear cached URL for new video
     // Find next project with vimeoId or videoUrl
     setModalVideoIndex((prev) => {
       let newIndex = (prev + 1) % filteredProjects.length
@@ -1009,22 +1008,18 @@ export default function Home() {
           {/* Video player - Maximum size on all devices */}
           <div className="flex-1 flex items-center justify-center px-0 relative z-0 pointer-events-none w-full h-full">
             <div className="video-modal-container relative w-full h-full max-w-[100vw] max-h-[calc(100vh-4rem)] md:max-h-[calc(100vh-5rem)] bg-black" style={{ backgroundColor: '#000' }}>
-              {/* Use stable video URL - don't change during orientation changes */}
+              {/* Select video based on orientation - landscape uses horizontal, portrait uses vertical */}
               {(() => {
-                // Determine video URL, but use cached ref if already playing to prevent orientation change issues
-                const preferredUrl = isMobile && modalProject.verticalVideoUrl 
+                // In landscape mode (even on mobile), use horizontal video
+                // In portrait mode on mobile, use vertical video if available
+                const useVerticalVideo = isMobile && !isLandscape && modalProject.verticalVideoUrl
+                const modalVideoUrl = useVerticalVideo 
                   ? modalProject.verticalVideoUrl 
                   : modalProject.videoUrl
                 
-                // Cache the URL when modal opens, use cached version during playback
-                if (!modalVideoUrlRef.current && preferredUrl) {
-                  modalVideoUrlRef.current = preferredUrl
-                }
-                const modalVideoUrl = modalVideoUrlRef.current || preferredUrl
-                
                 return modalVideoUrl ? (
                 <video
-                  key={`modal-video-blob-${modalProject.id}`}
+                  key={`modal-video-blob-${modalProject.id}-${isLandscape ? 'landscape' : 'portrait'}`}
                   ref={modalVideoRef}
                   src={modalVideoUrl}
                   className="absolute inset-0 w-full h-full bg-black"
