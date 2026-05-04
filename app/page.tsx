@@ -1024,6 +1024,7 @@ export default function Home() {
           {/* Close button */}
           <button
             onClick={(e) => { e.stopPropagation(); handleCloseModal(); }}
+            onTouchEnd={(e) => { e.stopPropagation(); e.preventDefault(); handleCloseModal(); }}
             className="absolute top-5 right-5 md:top-8 md:right-8 text-foreground/60 hover:text-foreground transition-colors duration-300 z-[150] p-2 -m-2"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
