@@ -76,6 +76,8 @@ export default function Home() {
   const [initialLoadComplete, setInitialLoadComplete] = useState(false)
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
+  const [touchStartY, setTouchStartY] = useState<number | null>(null)
+  const [touchEndY, setTouchEndY] = useState<number | null>(null)
   const [modalVideoIndex, setModalVideoIndex] = useState(0)
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false)
   const [modalPhotoIndex, setModalPhotoIndex] = useState(0)
@@ -382,10 +384,34 @@ export default function Home() {
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchEnd(null)
     setTouchStart(e.targetTouches[0].clientX)
+    setTouchEndY(null)
+    setTouchStartY(e.targetTouches[0].clientY)
   }
 
   const handleTouchMove = (e: React.TouchEvent) => {
     setTouchEnd(e.targetTouches[0].clientX)
+    setTouchEndY(e.targetTouches[0].clientY)
+  }
+
+  // Slideshow vertical swipe handler for mobile
+  const handleSlideshowTouchEnd = () => {
+    if (!touchStartY || !touchEndY) return
+    const distanceY = touchStartY - touchEndY
+    const isUpSwipe = distanceY > minSwipeDistance
+    const isDownSwipe = distanceY < -minSwipeDistance
+
+    if (isUpSwipe) {
+      // Swipe up = next project
+      setUserHasNavigated(true)
+      setCurrentIndex((prev) => (prev + 1) % filteredProjects.length)
+    } else if (isDownSwipe) {
+      // Swipe down = previous project
+      setUserHasNavigated(true)
+      setCurrentIndex((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length)
+    }
+
+    setTouchStartY(null)
+    setTouchEndY(null)
   }
 
   const handleVideoTouchEnd = () => {
@@ -598,7 +624,12 @@ export default function Home() {
   }
 
   return (
-    <main className="relative h-screen h-[100dvh] overflow-hidden bg-background">
+    <main 
+      className="relative h-screen h-[100dvh] overflow-hidden bg-background"
+      onTouchStart={isMobile ? handleTouchStart : undefined}
+      onTouchMove={isMobile ? handleTouchMove : undefined}
+      onTouchEnd={isMobile ? handleSlideshowTouchEnd : undefined}
+    >
       {/* Fullscreen Background - Video or Photo */}
       <div className="fixed inset-0 w-full h-full z-0 bg-black">
         {/* Transition overlay to prevent flash */}
@@ -651,14 +682,20 @@ export default function Home() {
               if (videoUrl) {
                 return (
                   <video
-                    key={`${project.id}-${activeCategory}-${isMobile ? 'mobile' : 'desktop'}`}
+                    key={`${project.id}-${activeCategory}-${isMobile ? 'mobile' : 'desktop'}-${isActive}`}
                     src={videoUrl}
                     className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
                     autoPlay
                     loop={!isPreviewMode}
                     muted
                     playsInline
-                    preload={isActive ? "auto" : "none"}
+                    preload={isActive ? "auto" : "metadata"}
+                    ref={(el) => {
+                      // Ensure video plays when it becomes active
+                      if (el && isActive) {
+                        el.play().catch(() => {})
+                      }
+                    }}
                     onEnded={isPreviewMode && isActive ? () => {
                       setCurrentIndex((prev) => (prev + 1) % filteredProjects.length)
                     } : undefined}
