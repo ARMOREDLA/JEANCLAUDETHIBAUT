@@ -27,7 +27,8 @@ interface Project {
   client: string
   vimeoId?: string
   verticalVimeoId?: string
-  videoUrl?: string // Vercel Blob video URL
+  videoUrl?: string // Vercel Blob video URL (full length for modal)
+  horizontalPreviewUrl?: string // Short horizontal preview for desktop slideshow
   verticalVideoUrl?: string // Vercel Blob vertical video URL (full length for modal)
   verticalPreviewUrl?: string // Short trailer for mobile slideshow preview
   imageUrl?: string
@@ -813,11 +814,12 @@ export default function Home() {
               if (!shouldRender) return null
 
               // Use vertical preview on mobile if available, otherwise fall back to verticalVideoUrl or videoUrl
+              // On desktop, use horizontalPreviewUrl if available, otherwise fall back to videoUrl
               const useVertical = isMobile && (project.verticalPreviewUrl || project.verticalVideoUrl || project.verticalVimeoId)
-              const isPreviewMode = isMobile && !!project.verticalPreviewUrl
+              const isPreviewMode = isMobile ? !!project.verticalPreviewUrl : !!project.horizontalPreviewUrl
               const videoUrl = useVertical 
                 ? (project.verticalPreviewUrl || project.verticalVideoUrl || null) 
-                : project.videoUrl
+                : (project.horizontalPreviewUrl || project.videoUrl)
               const videoId = useVertical ? project.verticalVimeoId : project.vimeoId
 
               // Use 9:16 sizing for vertical videos on mobile, otherwise use appropriate aspect ratio
