@@ -808,9 +808,10 @@ export default function Home() {
               const prevIndex = (activeIndex - 1 + totalProjects) % totalProjects
               const nextIndex = (activeIndex + 1) % totalProjects
 
-              // Only render active video and adjacent ones for performance
+              // Only render active video, hovered video, and adjacent ones for performance
               const isAdjacent = index === prevIndex || index === nextIndex
-              const shouldRender = isFirst || (initialLoadComplete && (isActive || isAdjacent))
+              const isHovered = hoveredIndex === index
+              const shouldRender = isFirst || (initialLoadComplete && (isActive || isAdjacent || isHovered))
               if (!shouldRender) return null
 
               // Use vertical preview on mobile if available, otherwise fall back to verticalVideoUrl or videoUrl
