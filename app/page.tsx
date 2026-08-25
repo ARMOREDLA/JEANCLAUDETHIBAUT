@@ -33,6 +33,7 @@ interface Project {
   verticalPreviewUrl?: string // Short trailer for mobile slideshow preview
   imageUrl?: string
   canvaUrl?: string
+  dp?: string // Director of Photography credit, shown in the video modal
   category: "film" | "photo"
   aspectRatio?: "cinemascope" | "16:9" // defaults to cinemascope
 }
@@ -42,7 +43,7 @@ const projects: Project[] = [
   // Film projects - using Vercel Blob URLs
   { id: "1", title: "THE INVITATION", client: "S9 HUAWEI", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/JEANCLAUDETHIBAUT_s9.mp4", verticalPreviewUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/VERTICALS/S9_short%20vertical%2025.mp4", category: "film" },
   { id: "2", title: "INTUITION - DWAYNE WADE", client: "ARAMIS", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/ARAMIS%20THIBAUT_ARMORED.mp4", verticalVideoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/ARAMIS_HERO_30_2160x3840_webmix_Super_global_Compressed_1.mp4", category: "film" },
-  { id: "3", title: "OLD FASHIONED - LUCIEN LAVISCOUNT", client: "KILIAN PARIS", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/KILIANPARIS_OLD%20FASHIONED_JEANCLAUDETHIBAUT_ARMORED.mp4", verticalPreviewUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/VERTICALS/Old_short%20vertical%2025.mp4", category: "film", aspectRatio: "16:9" },
+  { id: "3", title: "OLD FASHIONED - LUCIEN LAVISCOUNT", client: "KILIAN PARIS", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/KILIANPARIS_OLD%20FASHIONED_JEANCLAUDETHIBAUT_ARMORED.mp4", verticalPreviewUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/VERTICALS/Old_short%20vertical%2025.mp4", dp: "Erik Messerschmidt, ASC", category: "film", aspectRatio: "16:9" },
   { id: "4", title: "RE-Nutriv DIAMOND LIPS - ANA DE ARMAS", client: "ESTÉE LAUDER", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/RN_DiamondLips.mp4", verticalPreviewUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/VERTICALS/ANA_short_vertical%2025.mp4", category: "film" },
   { id: "5", title: "DARE - IMAAN HAMMAM, GRACE ELIZABETH", client: "ESTÉE LAUDER", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/EL_PURECOLOR_DARE_THIBAUT.mov-.mp4", verticalPreviewUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/VERTICALS/PURE_short_%20VERTICAL.mp4", category: "film" },
   { id: "7", title: "BLUE SERUM - LIU WEN", client: "CHANEL", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/CHANEL_BLUE%20SERUM_UK_LIUWEN_THIBAUT-.mp4", category: "film" },
@@ -1275,6 +1276,11 @@ export default function Home() {
                 <p className="text-[8px] landscape:text-[7px] landscape:md:text-xs md:text-xs text-foreground/50 font-light uppercase tracking-[0.15em]">
                   {modalProject.client}
                 </p>
+                {modalProject.dp && (
+                  <p className="mt-1 landscape:mt-0.5 text-[7px] landscape:text-[6px] landscape:md:text-[10px] md:text-[10px] text-foreground/35 font-light uppercase tracking-[0.2em]">
+                    <span className="text-foreground/25">DP</span> {modalProject.dp}
+                  </p>
+                )}
               </div>
             </div>
           </div>
