@@ -73,7 +73,7 @@ export function InfoPanel({ isOpen, onClose }: InfoPanelProps) {
                     General Inquiries
                   </span>
                   <a
-                    href="mailto:hello@jeanclaudethibaut.com"
+                    href="mailto:contact@jeanclaudethibaut.com"
                     className="hover:text-foreground transition-colors duration-300"
                   >
                     contact@jeanclaudethibaut.com
