@@ -20,12 +20,12 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
+        url: '/icon.jpg',
+        type: 'image/jpeg',
       },
     ],
-    shortcut: '/icon.svg',
-    apple: '/apple-icon.png',
+    shortcut: '/icon.jpg',
+    apple: '/apple-icon.jpg',
   },
   openGraph: {
     title: 'JEAN CLAUDE THIBAUT - Director',
