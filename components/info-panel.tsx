@@ -29,14 +29,14 @@ export function InfoPanel({ isOpen, onClose }: InfoPanelProps) {
     <>
       {/* Backdrop */}
       <div
-        className={`fixed inset-0 bg-background/90 backdrop-blur-sm z-50 transition-opacity duration-500 ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        className={`fixed inset-0 bg-background/90 backdrop-blur-sm z-[200] transition-opacity duration-500 ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
         onClick={onClose}
       />
 
       {/* Panel */}
       <div
-        className={`fixed inset-y-0 right-0 w-full md:w-[480px] lg:w-[520px] bg-background z-50 transition-transform duration-500 ease-out ${isOpen ? "translate-x-0" : "translate-x-full"
+        className={`fixed inset-y-0 right-0 w-full md:w-[480px] lg:w-[520px] bg-background z-[200] transition-transform duration-500 ease-out ${isOpen ? "translate-x-0" : "translate-x-full pointer-events-none"
           }`}
       >
         <div className="h-full overflow-y-auto px-8 py-8 md:px-12 md:py-10">
