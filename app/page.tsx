@@ -1281,9 +1281,9 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Credits Row - spans full width beneath the controls */}
+            {/* Credits Row - right aligned beneath the controls */}
             {(modalProject.dp || modalProject.cd || modalProject.agency || modalProject.production) && (
-              <div className="mt-3 landscape:mt-2 landscape:md:mt-3 pt-3 landscape:pt-2 landscape:md:pt-3 border-t border-foreground/10 flex flex-wrap items-center gap-x-6 landscape:gap-x-4 landscape:md:gap-x-8 md:gap-x-8 gap-y-1">
+              <div className="mt-3 landscape:mt-2 landscape:md:mt-3 pt-3 landscape:pt-2 landscape:md:pt-3 border-t border-foreground/10 flex flex-wrap items-center justify-end gap-x-6 landscape:gap-x-4 landscape:md:gap-x-8 md:gap-x-8 gap-y-1">
                 {[
                   { label: "DP", value: modalProject.dp },
                   { label: "CD", value: modalProject.cd },
