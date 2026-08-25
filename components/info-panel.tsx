@@ -84,7 +84,7 @@ export function InfoPanel({ isOpen, onClose }: InfoPanelProps) {
                     Representation
                   </span>
                   <a
-                    href="mailto:rep@jeanclaudethibaut.com"
+                    href="mailto:k@armorednyc.com"
                     className="hover:text-foreground transition-colors duration-300"
                   >
                     k@armorednyc.com
