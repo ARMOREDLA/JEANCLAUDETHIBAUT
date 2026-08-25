@@ -51,8 +51,8 @@ const projects: Project[] = [
   { id: "10", title: "WHEN LA IS A MAN", client: "LOUIS VUITTON", videoUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/vuitton_-_la_is_a_man_v1%20%281080p%29.mp4", verticalPreviewUrl: "https://uzvtibhpi3h7z7yz.public.blob.vercel-storage.com/VERTICALS/LV_short%20vertical%2025.mp4", category: "film" },
   // Photo projects - keeping Google Drive images
   { id: "p1", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1p2rjTkcWrtRinbOEGpUeziNZhANVZK7E/view?usp=sharing", category: "photo" },
-  { id: "p2", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1lHVls4Z5YVC9utIsi2C1l-Oml6KAq5lO/view?usp=share_link", category: "photo" },
-  { id: "p3", title: "", client: "AT LARGE Magazine", imageUrl: "https://drive.google.com/file/d/1mqUKGNTViuVZyupQg7cwxE8wJ8Z7-Lpy/view?usp=share_link", category: "photo" },
+  { id: "p2", title: "", client: "AT LARGE Magazine", imageUrl: "https://drive.google.com/file/d/1mqUKGNTViuVZyupQg7cwxE8wJ8Z7-Lpy/view?usp=share_link", category: "photo" },
+  { id: "p3", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1lHVls4Z5YVC9utIsi2C1l-Oml6KAq5lO/view?usp=share_link", category: "photo" },
   { id: "p4", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1j1ag9ga5RFul5aHDieeeuV5Lq8X0HM8c/view?usp=share_link", category: "photo" },
   { id: "p5", title: "INTUITION", client: "ARAMIS", imageUrl: "https://drive.google.com/file/d/15OQJfRWsY0bIOX6UejBSm-ZkkF0vD8uQ/view?usp=share_link", category: "photo" },
   { id: "p6", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1Ws9d3HNIht2dn0UVMkwUEu0HJqefmjL9/view?usp=share_link", category: "photo" },
