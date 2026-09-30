@@ -62,7 +62,6 @@ const projects: Project[] = [
   { id: "p5", title: "INTUITION", client: "ARAMIS", imageUrl: "https://drive.google.com/file/d/15OQJfRWsY0bIOX6UejBSm-ZkkF0vD8uQ/view?usp=share_link", category: "photo" },
   { id: "p6", title: "INTUITION", client: "ARAMIS", imageUrl: "https://drive.google.com/file/d/1qZOeysLIVFpE30rQ7hJms0QhkgIEKzwn/view?usp=sharing", category: "photo" },
   { id: "p7", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1Ws9d3HNIht2dn0UVMkwUEu0HJqefmjL9/view?usp=share_link", category: "photo" },
-  { id: "p8", title: "", client: "ESTÉE LAUDER", imageUrl: "https://drive.google.com/file/d/1iz2RKVJGWxVMxHn7ZZp-XTp7mlAG5hK9/view?usp=share_link", category: "photo" },
   { id: "p9", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1dSTXYWxDqSkRniRdg_7MJhhsdiMKKeWp/view?usp=share_link", category: "photo" },
   { id: "p10", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1mCbhZh-wlS7Z2QtzmEyivl3s4-QndL9Y/view?usp=share_link", category: "photo" },
   { id: "p11", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1-Rc5VbDz9Sc0h5Mdmz5sLPgcQXuE0bpe/view?usp=share_link", category: "photo" },
