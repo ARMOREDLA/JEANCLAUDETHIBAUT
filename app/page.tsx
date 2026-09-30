@@ -1024,7 +1024,7 @@ export default function Home() {
       </div>
 
       {/* Header */}
-      <div className="relative z-50">
+      <div className="relative z-[70]">
         <Header
           activeCategory={activeCategory}
           onCategoryChange={handleCategoryChange}

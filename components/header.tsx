@@ -11,8 +11,8 @@ interface HeaderProps {
 
 export function Header({ activeCategory, onCategoryChange }: HeaderProps) {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-5 py-5 md:px-8 md:py-6">
-      <nav className="flex items-center justify-between">
+    <header className="fixed top-0 left-0 right-0 z-[70] px-5 py-5 md:px-8 md:py-6 pointer-events-none">
+      <nav className="flex items-center justify-between [&>*]:pointer-events-auto">
         {/* Logo - Left */}
         <Link
           href="/"
