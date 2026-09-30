@@ -64,8 +64,8 @@ const projects: Project[] = [
   { id: "p7", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1Ws9d3HNIht2dn0UVMkwUEu0HJqefmjL9/view?usp=share_link", category: "photo" },
   { id: "p9", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1dSTXYWxDqSkRniRdg_7MJhhsdiMKKeWp/view?usp=share_link", category: "photo" },
   { id: "p10", title: "", client: "", imageUrl: "https://drive.google.com/file/d/1mCbhZh-wlS7Z2QtzmEyivl3s4-QndL9Y/view?usp=share_link", category: "photo" },
+  { id: "p11", title: "", client: "ESTÉE LAUDER", imageUrl: "https://drive.google.com/file/d/1ux8X7Kz1s5F7bV4OwOABC1zCAY7CuY6x/view?usp=share_link", category: "photo" },
   { id: "p12", title: "", client: "", imageUrl: "https://drive.google.com/file/d/12p0-Ykp337COjRfcdD8lrNc6FGSSpUWc/view?usp=share_link", category: "photo" },
-  { id: "p13", title: "", client: "ESTÉE LAUDER", imageUrl: "https://drive.google.com/file/d/1ux8X7Kz1s5F7bV4OwOABC1zCAY7CuY6x/view?usp=share_link", category: "photo" },
 ]
 
 export default function Home() {
