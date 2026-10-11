@@ -79,16 +79,6 @@ export function InfoPanel({ isOpen, onClose }: InfoPanelProps) {
                     contact@jeanclaudethibaut.com
                   </a>
                 </div>
-                <div>
-                  <span className="text-foreground/40 text-xs tracking-[0.15em] font-[family-name:var(--font-display)] font-light uppercase block mb-1">
-                    Representation
-                  </span>
-                  <a
-                    href="mailto:k@armorednyc.com"
-                    className="hover:text-foreground transition-colors duration-300"
-                  >
-                    k@armorednyc.com
-                  </a>
                 </div>
               </div>
             </div>
