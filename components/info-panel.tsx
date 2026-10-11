@@ -79,10 +79,8 @@ export function InfoPanel({ isOpen, onClose }: InfoPanelProps) {
                     contact@jeanclaudethibaut.com
                   </a>
                 </div>
-                </div>
               </div>
             </div>
-
 
             <div>
               <h3 className="text-sm font-[family-name:var(--font-display)] font-light uppercase tracking-[0.2em] text-foreground/50 mb-5">
